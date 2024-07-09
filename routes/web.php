@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Administrator;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -14,11 +15,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('administrator')->name('administrator.')->group(function () {
+        Route::get('/dashboard', [Administrator\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/kategori', [Administrator\KategoriController::class, 'index'])->name('kategori');
+        Route::get('/nasabah', [Administrator\KategoriController::class, 'index'])->name('nasabah');
+    });
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
