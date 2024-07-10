@@ -1,16 +1,17 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
+import Button from "@/Components/Button";
+import { Link } from "@inertiajs/react";
 
 export default function Guest({ children }) {
     return (
-        <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                </Link>
-            </div>
+        <div className="grid min-h-screen place-items-center items place ">
+            <Button className="absolute top-0 left-0 m-5">
+                <Link href={route("/")}>Kembali Ke Beranda</Link>
+            </Button>
 
-            <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div className="w-full px-6 py-4 overflow-hidden sm:max-w-md sm:rounded-lg">
+                <p className="mb-6 text-4xl font-bold uppercase text-primary">
+                    Atras
+                </p>
                 {children}
             </div>
         </div>
