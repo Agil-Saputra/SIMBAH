@@ -3,13 +3,13 @@ import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
+import Button from '@/Components/Button';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
+        noHp: '',
         password: '',
         remember: false,
     });
@@ -30,24 +30,24 @@ export default function Login({ status, canResetPassword }) {
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className=''>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="No Hp" value="No Handphone" />
 
                     <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
+                        id="noHp"
+                        type="number"
+                        name="noHp"
+						placeholder="Masukkan No Handphone"
                         value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
+                        className="block w-full mt-2"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.noHp} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -57,8 +57,9 @@ export default function Login({ status, canResetPassword }) {
                         id="password"
                         type="password"
                         name="password"
+						placeholder="Masukkan Password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-2"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
@@ -73,24 +74,22 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
+                        <span className="text-sm text-gray-600 ms-2">Ingat Saya</span>
                     </label>
                 </div>
+                
+                    <Button className="w-full mt-6 mb-3" disabled={processing}>
+                        Masuk
+                    </Button>
 
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
+					{canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Forgot your password?
                         </Link>
                     )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
             </form>
         </GuestLayout>
     );
