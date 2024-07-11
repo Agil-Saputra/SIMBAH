@@ -32,20 +32,23 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'noHP' => 'required|string|max:16|unique:'.User::class,
+            'phone_number' => 'required|string|max:16|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'full_name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        ]);     
+    
+        try {
+            $user = User::create([
+                'full_name' => $request->name,
+                'phone_number' => $request->phone_number,
+                'password' => Hash::make($request->password),
+            ]);
+            event(new Registered($user));
+    
+            Auth::login($user);
+    
+            return redirect()->route('dashboard')->with('success', 'Registration successful!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()])->withInput($request->only('name', 'phone_number'))->with('error', 'Registrasi gagal. Silahkan coba lagi.');
+        }
     }
 }

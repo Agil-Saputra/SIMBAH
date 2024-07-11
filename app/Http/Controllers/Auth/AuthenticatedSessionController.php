@@ -27,13 +27,21 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->authenticate();
+        $request->validate([
+            'phone_number' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+    
+        if (Auth::attempt(['phone_number' => $request->phone_number, 'password' => $request->password])) {
+            $request->session()->regenerate();
 
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('administrator.dashboard', absolute: false));
+            return redirect()->intended('dashboard');
+        }
+        return back()->withErrors([
+            'phone' => 'The provided credentials do not match our records.',
+        ])->withInput($request->only('phone'))->with('error', 'Login Gagal! silahkan cek no handphone atau password anda')  ;
     }
 
     /**

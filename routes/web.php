@@ -13,13 +13,15 @@ Route::get('/', function () {
     ]);
 })->name('/');
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+            Route::get('/dashboard', function () {
+                return Inertia::render('Dashboard');
+            })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/administrator/login', [Administrator\LoginController::class, 'index'])->middleware('guest');
+Route::post('/administrator/login', [Administrator\LoginController::class, 'store'])->name('administrator.login');
 Route::middleware('auth')->group(function () {
-    Route::prefix('administrator')->name('administrator.')->group(function () {
+    Route::prefix('administrator')->name('administrator.')->group(function () {     
         Route::get('/dashboard', [Administrator\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/kategori', [Administrator\KategoriController::class, 'index'])->name('kategori');
         Route::get('/nasabah', [Administrator\KategoriController::class, 'index'])->name('nasabah');

@@ -3,14 +3,14 @@ import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import Button from '@/Components/Button';
+import Button from '@/Components/Button';       
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm,usePage } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
     const {flash} = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
-        phone_number: '',
+        email: '',
         password: '',
         remember: false,
     });
@@ -24,9 +24,9 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('login'), {
+        post(route('administrator.login'), {
             onError: () => {
-                setData('password', '');
+                    setData('password', '');
             },
         });
     };
@@ -56,20 +56,20 @@ export default function Login({ status, canResetPassword }) {
             )}
             <form onSubmit={submit} className=''>
                 <div>
-                    <InputLabel htmlFor="No Hp" value="No Handphone" />
+                    <InputLabel htmlFor="Email" value="Email" />
 
                     <TextInput
-                        id="phone_number"
-                        type="number"
-                        name="phone_number"
-                        placeholder="Masukkan No Handphone"
-                        value={data.phone_number}
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Masukkan Email Anda"
+                        value={data.email}
                         className="block w-full mt-2"
                         isFocused={true}
-                        onChange={(e) => setData('phone_number', e.target.value)}
+                        onChange={(e) => setData('email', e.target.value)}
                     />
 
-                    <InputError message={errors.phone_number} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -103,15 +103,6 @@ export default function Login({ status, canResetPassword }) {
                 <Button className="w-full mt-6 mb-3" disabled={processing}>
                     Masuk
                 </Button>
-
-                {canResetPassword && (
-                    <Link
-                        href={route('password.request')}
-                        className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Forgot your password?
-                    </Link>
-                )}
             </form>
         </GuestLayout>
     );

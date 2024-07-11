@@ -173,7 +173,7 @@ export default function HomePage({ auth }) {
                     <div className="items-center hidden gap-4 lg:flex">
                         {auth.user ? (
                             <Button>
-                                <Link href={route("dashboard")}>Dashboard</Link>
+                                <Link href={route("administrator.dashboard")}>Dashboard</Link>
                             </Button>
                         ) : (
                             <>
@@ -210,7 +210,7 @@ export default function HomePage({ auth }) {
 
                             {auth.user ? (
                                 <Button>
-                                    <Link href={route("dashboard")}>
+                                    <Link href={route("administrator.dashboard")}>
                                         Dashboard
                                     </Link>
                                 </Button>
