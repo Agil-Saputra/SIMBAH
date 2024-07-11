@@ -31,7 +31,7 @@ export default function Login({ status, canResetPassword }) {
             <Head title="Log in" />
 
             {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
-
+            <div className="mb-4 text-sm font-medium text-red-600">Login gagal, silahkan cek no telp atau password anda</div>
             <form onSubmit={submit} className=''>
                 <div>
                     <InputLabel htmlFor="No Hp" value="No Handphone" />
