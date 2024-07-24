@@ -4,11 +4,13 @@ import { Link, usePage } from "@inertiajs/react";
 export default function Guest({ children }) {
     const { component } = usePage();
     return (
-        <div className="grid min-h-screen place-items-center items place ">
+        <div className="grid min-h-[80vh] place-items-center items place ">
             {component !== "Administrator/Login" ? (
-                <Button className="absolute top-0 left-0 m-5">
-                    <Link href={route("/")}>Kembali Ke Beranda</Link>
-                </Button>
+                <Link href={route("/")}>
+                    <Button className="absolute top-0 left-0 m-5">
+                        Kembali Ke Beranda
+                    </Button>
+                </Link>
             ) : null}
 
             <div className="w-full px-6 py-4 overflow-hidden sm:max-w-md sm:rounded-lg">
