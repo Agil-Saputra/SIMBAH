@@ -104,14 +104,22 @@ export default function Login({ status, canResetPassword }) {
                     Masuk
                 </Button>
 
-                {canResetPassword && (
+                <div className='flex justify-between'>
+				{canResetPassword && (
                     <Link
                         href={route('password.request')}
                         className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Forgot your password?
+                        Lupa password?
                     </Link>
                 )}
+				<Link
+                        href={route('register')}
+                        className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Belum Punya Akun?
+                    </Link>
+				</div>
             </form>
         </GuestLayout>
     );
