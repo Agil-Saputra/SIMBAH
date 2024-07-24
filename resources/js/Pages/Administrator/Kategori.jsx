@@ -1,8 +1,13 @@
 import React from 'react'
+import AdministratorLayout from '@/Layouts/AdministratorLayout'
+import { Head } from '@inertiajs/react'
 
 const Kategori = () => {
   return (
-    <div>Halaman Kategori</div>
+   <>
+   <Head title="Kategori" />
+	 <AdministratorLayout>Halaman Kategori</AdministratorLayout>
+   </>
   )
 }       
 

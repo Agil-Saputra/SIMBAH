@@ -1,5 +1,6 @@
 import { Link, Head } from "@inertiajs/react";
 import Button from "@/Components/Button";
+import OperationalCard from "@/Components/OperationalCard";
 import {
     IoMenu,
     IoClose,
@@ -7,8 +8,12 @@ import {
     IoArrowUpCircle,
 } from "react-icons/io5";
 import { useState } from "react";
+
 import binIlustration from "../../assets/bin-Ilustration.png";
 import Baloon from "../../assets/baloon.png";
+import recycle from "../../assets/recycle.svg";
+import data from "../../assets/data.svg";
+import menu from "../../assets/menu.svg";
 // Components
 import Heading from "@/Components/Heading";
 
@@ -91,26 +96,27 @@ export default function HomePage({ auth }) {
             startDate: Date.now(),
             endDate: Date.now(),
         },
-       
-       
     ];
     const dataSampah = [
         {
             title: "daur ulang",
-            icon: "total sampah",
-            description: "list sampah",
+            image: recycle,
+            description:
+                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
             data: [],
         },
         {
             title: "daur ulang",
-            icon: "total sampah",
-            description: "list sampah",
+            image: data,
+            description:
+                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
             data: [],
         },
         {
             title: "daur ulang",
-            icon: "total sampah",
-            description: "list sampah",
+            image: menu,
+            description:
+                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
             data: [],
         },
     ];
@@ -173,19 +179,19 @@ export default function HomePage({ auth }) {
                     <div className="items-center hidden gap-4 lg:flex">
                         {auth.user ? (
                             <Button>
-                                <Link href={route("administrator.dashboard")}>Dashboard</Link>
+                                <Link href={route("dashboard")}>
+                                    Dashboard
+                                </Link>
                             </Button>
                         ) : (
                             <>
-                                <Button>
-                                    <Link href={route("login")}>Log in</Link>
-                                </Button>
+                                <Link href={route("login")}>
+                                    <Button>Log in</Button>
+                                </Link>
 
-                                <Button type="secondary">
-                                    <Link href={route("register")}>
-                                        Register
-                                    </Link>
-                                </Button>
+                                <Link href={route("register")}>
+                                    <Button type="secondary">Register</Button>
+                                </Link>
                             </>
                         )}
                     </div>
@@ -209,24 +215,20 @@ export default function HomePage({ auth }) {
                             })}
 
                             {auth.user ? (
-                                <Button>
-                                    <Link href={route("administrator.dashboard")}>
-                                        Dashboard
-                                    </Link>
-                                </Button>
+                                <Link href={route("dashboard")}>
+                                    <Button>Dashboard</Button>
+                                </Link>
                             ) : (
                                 <>
-                                    <Button>
-                                        <Link href={route("login")}>
-                                            Log in
-                                        </Link>
-                                    </Button>
+                                    <Link href={route("login")}>
+                                        <Button>Log in</Button>
+                                    </Link>
 
-                                    <Button type="secondary">
-                                        <Link href={route("register")}>
+                                    <Link href={route("register")}>
+                                        <Button type="secondary">
                                             Register
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 </>
                             )}
                         </div>
@@ -257,9 +259,9 @@ export default function HomePage({ auth }) {
                         permasalahan persampahan dan ingin menjadi bagian dalam
                         solusi mewujudkan Indonesia Bebas Sampah.
                     </p>
-                    <Button className="w-fit">
-                        <Link href={route("register")}>Daftar Sekarang</Link>
-                    </Button>
+                    <Link href={route("register")}>
+                        <Button className="w-fit">Daftar Sekarang</Button>
+                    </Link>
                 </div>
             </section>
 
@@ -293,7 +295,12 @@ export default function HomePage({ auth }) {
                     description="Ikut berbagai gerakan Indonesia bebas sampah "
                 />
 
-                <div className={"grid grid-flow-col  gap-10 px-5 pb-10 mt-16 overflow-auto overflow-x-scroll overflow-y-hidden no-scrollbar snap-x snap-mandatory snap-always [mask-image:_linear-gradient(to_right,transparent_0,_black_32px,_black_calc(100%-64px),transparent_100%)] " + (activities.length <= 3 && "lg:justify-center")}>
+                <div
+                    className={
+                        "grid grid-flow-col  gap-10 px-5 pb-10 mt-16 overflow-auto overflow-x-scroll overflow-y-hidden no-scrollbar snap-x snap-mandatory snap-always [mask-image:_linear-gradient(to_right,transparent_0,_black_32px,_black_calc(100%-64px),transparent_100%)] " +
+                        (activities.length <= 3 && "lg:justify-center")
+                    }
+                >
                     {activities.map((item, index) => {
                         return (
                             <div
@@ -334,6 +341,15 @@ export default function HomePage({ auth }) {
                     title="Data Operasional Sampah"
                     description="Ikut berbagai gerakan Indonesia bebas sampah "
                 />
+                <div className="flex items-center justify-between gap-10">
+                    {dataSampah.map((item, index) => (
+                        <OperationalCard
+                            title={item.title}
+                            image={item.image}
+                            desc={item.description}
+                        />
+                    ))}
+                </div>
             </section>
 
             <section className="container mt-32">
@@ -341,6 +357,27 @@ export default function HomePage({ auth }) {
                     title="Visi dan Misi Atras"
                     description="Ikut berbagai gerakan Indonesia bebas sampah "
                 />
+                <div className="flex justify-center mt-10 gap-16 md:flex-row flex-col">
+                    <img
+                        src={Baloon}
+                        alt=""
+                        className="md:max-w-[20rem] object-cover w-full rounded-lg"
+                    />
+                    <div className="max-w-[35ch]">
+                        <h1 className="text-[2rem] font-bold">Visi</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Est hic quod obcaecati excepturi libero
+                            dolorum dicta adipisci in, repellendus eveniet.
+                        </p>
+                        <h1 className="text-[2rem] font-bold">Misi</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Est hic quod obcaecati excepturi libero
+                            dolorum dicta adipisci in, repellendus eveniet.
+                        </p>
+                    </div>
+                </div>
             </section>
 
             <section className="container mt-32">
@@ -354,7 +391,7 @@ export default function HomePage({ auth }) {
                             return (
                                 <div
                                     key={index}
-									onClick={() => handleToggle(index)}
+                                    onClick={() => handleToggle(index)}
                                 >
                                     <div className="relative z-30 flex items-center justify-between w-full p-4 rounded-lg bg-primary">
                                         <p className="text-xl font-semibold text-left text-white">
@@ -390,7 +427,9 @@ export default function HomePage({ auth }) {
                 </div>
             </section>
 
-            <footer>Atras</footer>
+            <footer className="grid place-items-center mt-16 bg-slate-50 font-bold">
+                ATRAS - Copyright@2024
+            </footer>
         </>
     );
 }

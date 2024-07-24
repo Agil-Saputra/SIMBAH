@@ -89,7 +89,7 @@ export default function Register() {
                         id="password"
                         type="password"
                         name="password"
-						placeholder="Harus lebih dari 6 karakter"
+						placeholder="Harus lebih dari 8 karakter"
                         value={data.password}
                         className="block w-full mt-1"
                         autoComplete="new-password"
@@ -97,7 +97,9 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                 {
+					errors.password && <InputError message="Password Harus lebih dari 8 karakter" className="mt-2" />
+				 }
                 </div>
 
                 <div className="mt-4">
@@ -110,7 +112,7 @@ export default function Register() {
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"
-						placeholder="Harus lebih dari 6 karakter"
+						placeholder="Harus lebih dari 8 karakter"
                         value={data.password_confirmation}
                         className="block w-full mt-1"
                         autoComplete="new-password"
