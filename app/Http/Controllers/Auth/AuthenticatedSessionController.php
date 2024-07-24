@@ -32,6 +32,9 @@ class AuthenticatedSessionController extends Controller
         $request->validate([
             'phone_number' => ['required', 'string'],
             'password' => ['required', 'string'],
+        ],[
+            'phone_number.required' => "Silahkan masukkan no handphone anda",
+            'password.required' => "Silahkan masukkan password anda"
         ]);
     
         if (Auth::attempt(['phone_number' => $request->phone_number, 'password' => $request->password])) {

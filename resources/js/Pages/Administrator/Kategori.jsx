@@ -4,6 +4,6 @@ const Kategori = () => {
   return (
     <div>Halaman Kategori</div>
   )
-}
+}       
 
 export default Kategori    

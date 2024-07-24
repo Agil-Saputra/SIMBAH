@@ -31,10 +31,20 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|min:3',
             'phone_number' => 'required|string|max:16|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);     
+            'password' => ['required','min:8', 'confirmed', Rules\Password::defaults()],
+        ],[
+            'name.required' => 'Silahkan isi nama lengkap anda',
+            'name.min' => 'Nama minimal 3 Karakter',
+            'phone_number' => "Silahkan isi no handphone anda",
+            'phone_number.unique' => "No handphone anda sudah digunakan, silahkan login",
+            'phone_number.max' => "No handphone maksimal 16 digit",
+            'password.required' => "Silahkan isi password anda",
+            'password.confirmed' => "Password anda tidak cocok dengan konfirmasi password",
+            "password.min" => "Password minimal 8 karakter"
+        ]
+    );     
     
         try {
             $user = User::create([

@@ -26,7 +26,7 @@ export default function Login({ status, canResetPassword }) {
 
         post(route('login'), {
             onError: () => {
-                setData('password', '');
+                    setData('password', '');
             },
         });
     };

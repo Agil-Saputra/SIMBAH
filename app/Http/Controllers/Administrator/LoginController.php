@@ -21,7 +21,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
 
-            return redirect()->intended('administrator/dashboard');
+            return redirect()->intended('administrator/dashboard');     
         }
         return back()->withErrors([
             'phone' => 'The provided credentials do not match our records.',

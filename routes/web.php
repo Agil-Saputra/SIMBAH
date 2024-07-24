@@ -19,7 +19,8 @@ Route::get('/', function () {
 
 
 Route::get('/administrator/login', [Administrator\LoginController::class, 'index'])->middleware('guest');
-Route::post('/administrator/login', [Administrator\LoginController::class, 'store'])->name('administrator.login');
+Route::post('/administrator/login', [Administrator\LoginController::class, 'store'])->name('administrator.login')
+;
 Route::middleware('auth')->group(function () {
     Route::prefix('administrator')->name('administrator.')->group(function () {     
         Route::get('/dashboard', [Administrator\DashboardController::class, 'index'])->name('dashboard');

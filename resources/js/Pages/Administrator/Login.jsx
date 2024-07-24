@@ -24,7 +24,7 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('administrator.login'), {
+        post(route('administrator.      login'), {
             onError: () => {
                     setData('password', '');
             },
