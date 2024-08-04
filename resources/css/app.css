@@ -23,6 +23,11 @@ input[type=number] {
     scrollbar-width: none;  /* Firefox */
 }
 
+.gradient {
+	background: rgb(40, 34, 70);
+	background: linear-gradient(rgba(40, 34, 70, 1) 0%, rgba(30, 47, 131, 1) 100%);
+}
+
 .container {
 	@apply w-full sm:max-w-[625px] md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1280px] mx-auto px-5 md:px-12 xl:px-0
 }

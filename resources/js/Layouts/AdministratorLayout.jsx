@@ -16,19 +16,19 @@ import {
     Stack,
 } from "@mui/material";
 // import all icons
-import { Logout, Note, Search, Settings, Today } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Logout, Menu, People, Category, Dashboard, Recycling, Paid } from "@mui/icons-material";
+
 
 export default function AdministratorLayout({ children}) {
     // Hooks
     const [mobileOpen, setMobileOpen] = useState(false);
-    const drawerWidth = 210;
+    const drawerWidth = 240;
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
     // Computed Properties
 	const currPath = window.location.href.split('/')
-    const pageName = currPath[currPath.length - 1]
+    const pageName = currPath[currPath.length - 1].replace("-", " ")
     const icon = {
         sx: { color: "primary.main", fontSize: { sm: "1.6rem", xs: "1.2rem" } },
     };
@@ -36,18 +36,28 @@ export default function AdministratorLayout({ children}) {
         {
             title: "Dashboard",
             path: "administrator.dashboard",
-            icon: <Note {...icon} />,
+            icon: <Dashboard {...icon} />,
         },
         {
             title: "Kategori",
             path: "administrator.kategori",
-            icon: <Today {...icon} />,
+            icon: <Category {...icon} />,
         },
         {
             title: "Nasabah",
             path: "administrator.nasabah",
-            icon: <Settings {...icon} />,
+            icon: <People {...icon} />,
         },
+        {
+            title: "Kelola Sampah",
+            path: "administrator.kelola-sampah",
+            icon: <Recycling {...icon} />,
+        },
+        // {
+        //     title: "Keuangan",
+        //     path: "administrator.keuangan",
+        //     icon: <Paid {...icon} />,
+        // },
     ];
     const drawer = (
         <>
@@ -90,6 +100,7 @@ export default function AdministratorLayout({ children}) {
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
+					zIndex: 99,
                     display: { xs: "block", sm: "none" },
                     "& .MuiDrawer-paper": {
                         width: drawerWidth,
@@ -106,6 +117,7 @@ export default function AdministratorLayout({ children}) {
                 sx={{
                     width: drawerWidth,
                     display: { xs: "none", sm: "block" },
+					zIndex: 99,
                     "& .MuiDrawer-paper": {
                         boxSizing: "border-box",
                         width: drawerWidth,
@@ -124,6 +136,7 @@ export default function AdministratorLayout({ children}) {
                         boxShadow: "none",
                         borderBottom: "solid rgba(0, 0, 0, 0.12)",
                         borderBottomWidth: "thin",
+						zIndex: 99,
                     }}
                     position="sticky"
                 >
@@ -141,18 +154,18 @@ export default function AdministratorLayout({ children}) {
 						<IconButton
                             aria-label="open drawer"
                             onClick={handleDrawerToggle}
-                            sx={{ display: { sm: "none" } }}
+                            sx={{ display: { sm: "none" }, border: "1px solid #ababab", borderRadius: "5px",}}
                         >
-                            <MenuIcon {...icon} />
+                            <Menu {...icon} />
                         </IconButton>
 
-						<h2 className="text-black text-lg capitalize">{pageName}</h2>
+						<h2 className="text-black text-2xl font-bold capitalize">{pageName}</h2>
 						</div>
                     </Box>
                 </AppBar>
 
                 <Box component="main" sx={{ maxWidth: "100%" }}>
-                    <Box sx={{ py: 3, px: 2 }}>{children}</Box>
+                    <Box sx={{ py: 3, px: '1rem', }}>{children}</Box>
                 </Box>
             </Box>
         </Box>
