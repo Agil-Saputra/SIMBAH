@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [Administrator\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/kategori', [Administrator\KategoriController::class, 'index'])->name('kategori');
         Route::get('/nasabah', [Administrator\NasabahController::class, 'index'])->name('nasabah');
+        Route::get('/kelola-sampah', [Administrator\KelolaSampahController::class, 'index'])->name('kelola-sampah');
+        Route::get('/keuangan', [Administrator\KeuanganController::class, 'index'])->name('keuangan');
     });
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
