@@ -2,26 +2,15 @@ import React from 'react'
 import AdministratorLayout from '@/Layouts/AdministratorLayout'
 import { Head } from '@inertiajs/react'
 import Table from '@/Components/Administrator/Table'
-function createData(nama, noHp, password) {
-    return { nama, noHp, password};
-}
-
-const rows = [
-    createData("Frozen yoghurt", 159, 4040),
-    createData("Ice cream sandwich", 237, 4040),
-    createData("Eclair", 262, 4040),
-    createData("Cupcake", 305, 4040),
-    createData("Gingerbread", 356, 4040),
-];
-
-const headers = ["nama", "noHp", "password"];
-
-const Nasabah = () => {
+const Nasabah = (nasabah) => {
+  console.log(nasabah);
+  const keys = ["full_name", "phone_number", "formatted_created_at"];
+  const headers = ["Nama", "No Telepon","Tanggal Bergabung"]
   return (
     <>
 	<Head title="Nasabah" />
 		<AdministratorLayout>
-		<Table headers={headers} rows={rows} tableTitle="Data Nasabah"/>
+		<Table headers={headers} rows={nasabah.nasabah} keys={keys} tableTitle="Data Nasabah"/>
 		</AdministratorLayout>
 	</>
   )

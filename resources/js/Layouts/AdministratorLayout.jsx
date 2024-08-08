@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "@inertiajs/react";
+import { Inertia } from '@inertiajs/inertia';
 // import all material UI components
 import {
     Drawer,
@@ -17,9 +18,14 @@ import {
 } from "@mui/material";
 // import all icons
 import { Logout, Menu, People, Category, Dashboard, Recycling, Paid } from "@mui/icons-material";
-
-
 export default function AdministratorLayout({ children}) {
+    const handleLogout = () => {
+        Inertia.post('/administrator/logout', {}, {
+            onFinish: () => {
+                Inertia.visit('/administrator/login');
+            },
+        });
+    };
     // Hooks
     const [mobileOpen, setMobileOpen] = useState(false);
     const drawerWidth = 240;
@@ -40,12 +46,12 @@ export default function AdministratorLayout({ children}) {
         },
         {
             title: "Kategori",
-            path: "administrator.kategori",
+            path: "administrator.kategori.index",
             icon: <Category {...icon} />,
         },
         {
             title: "Nasabah",
-            path: "administrator.nasabah",
+            path: "administrator.nasabah.index",
             icon: <People {...icon} />,
         },
         {
@@ -78,7 +84,7 @@ export default function AdministratorLayout({ children}) {
                         </Link>
                     </ListItem>
                 ))}
-                <ListItemButton>
+                <ListItemButton onClick={handleLogout}>
                     <ListItemIcon sx={{ minWidth: "30px" }}>
                         <Logout {...icon} />
                     </ListItemIcon>

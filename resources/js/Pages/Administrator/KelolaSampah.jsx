@@ -14,14 +14,14 @@ const rows = [
     createData("Gingerbread", 356, 4040, 44, 84),
 ];
 
-const headers = ["tanggal", "jumlah", "namaNasabah", "jumlahSampah", "detail"];
-
+const keys = ["tanggal", "jumlah", "namaNasabah", "jumlahSampah", "detail"];
+const headers = ["Tanggal","Jumlah","Nama Nasabah","Jumlah Sampai","Detail      "]
 const KelolaSampah = () => {
     return (
         <>
             <Head title="KelolaSampah" />
             <AdministratorLayout>
-                <Table headers={headers} rows={rows} tableTitle={"Data Sampah"}/>
+                <Table headers={headers} keys={keys} rows={rows} tableTitle={"Data Sampah"}/>
             </AdministratorLayout>
         </>
     );
