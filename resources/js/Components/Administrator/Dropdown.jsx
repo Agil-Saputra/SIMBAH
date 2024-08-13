@@ -22,17 +22,10 @@ export default function Dropdown({placeholder, menuItems, ...props}) {
         <Select
           displayEmpty
           input={<OutlinedInput />}
-		  sx={{width: '100%',
-		  borderRadius: '8px',
-		  '& .MuiSelect-select': {
-			padding: '.7rem',
-			fontSize: '1rem',
-			border : '1px solid black',
-			borderRadius: '8px'
-		  }}}
+		  sx={{width: '100%',}}
           renderValue={(selected) => {
             if (selected.length === 0) {
-              return <span>{placeholder}</span>;
+              return <span className='opacity-60'>{placeholder}</span>;
             }
             return selected;
           }}

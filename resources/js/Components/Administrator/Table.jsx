@@ -15,7 +15,6 @@ import { router, usePage } from '@inertiajs/react';
 import Modal from "../Modal";
 import DangerButton from "../DangerButton";
 import PrimaryButton from "../PrimaryButton";
-import ModifySampahModal from "./ModifySampahModal";
 import ModifyNasabahModal from "./ModifyNasabahModal";
 import ModifyKategoriModal from "./ModifyKategoriModal";
 
@@ -86,32 +85,26 @@ export default function DataTable({ headers, rows, tableTitle, keys }) {
     return (
         <>
             <Modal show={deleteModal} onClose={() => setDeleteModal(false)}>
-                <p>Apakah Anda yakin Ingin menghapus data ini? Data Anda tidak akan bisa dipulihkan!</p>
-                <DangerButton onClick={handleDelete} className="mt-4 mr-4">Hapus Sekarang</DangerButton>
-                <button onClick={() => setDeleteModal(false)}>Kembali</button>
-            </Modal>
-            {tableTitle === "Data Sampah" && (
-                <>
-                    <ModifySampahModal data={data} type="edit" show={editModal} onClose={() => setEditModal(false)} />
-                    <ModifySampahModal type="add" show={addModal} onClose={() => setAddModal(false)} />
-                </>
-            )}
-            {tableTitle === "Data Nasabah" && (
-                <>
-                    <ModifyNasabahModal dataEdit={data} type="edit" show={editModal} onClose={() => setEditModal(false)} />
-                    <ModifyNasabahModal type="add" show={addModal} onClose={() => setAddModal(false)} />
-                </>
-            )}
-            {tableTitle === "Data Kategori" && (
-                <>
-                    <ModifyKategoriModal dataEdit={data} type="edit" show={editModal} onClose={() => setEditModal(false)} />
-                    <ModifyKategoriModal type="add" show={addModal} onClose={() => setAddModal(false)} />
-                </>
-            )}
-            <div className="flex items-start gap-4 justify-between max-w-[62.5rem] mb-2">
-                <h1 className="text-2xl font-bold mb-6">{tableTitle}</h1>
-                <PrimaryButton onClick={() => setAddModal(true)}>Tambah Data Baru</PrimaryButton>
-            </div>
+				<p>Apakah Anda yakin Ingin menghapus data ini?, data anda tidak akan bisa dipulihkan!</p>
+				<DangerButton onClick={deleteData} className="mt-4 mr-4">Hapus Sekarang</DangerButton>
+				<button onClick={() => setDeleteModal(false)}>Kembali</button>
+			</Modal>
+			{tableTitle == "Data Nasabah" && (
+				<>
+				<ModifyNasabahModal id={id} type="edit" show={editModal} onClose={() => setEditModal(false)} />
+				<ModifyNasabahModal type="add" show={addModal} onClose={() => setAddModal(false)}/>
+				</>
+			)}
+			{tableTitle == "Data Kategori" && (
+				<>
+				<ModifyKategoriModal id={id} type="edit" show={editModal} onClose={() => setEditModal(false)} />
+				<ModifyKategoriModal type="add" show={addModal} onClose={() => setAddModal(false)}/>
+				</>
+			)}
+			<div className="flex items-start gap-4 justify-between max-w-[62.5rem] mb-2">
+			<h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
+			{tableTitle == "Data Sampah" ? null : <PrimaryButton onClick={() => setAddModal(true)}>Tambah Data Baru</PrimaryButton>}
+			</div>
             <TableContainer sx={{ maxWidth: 1000 }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>

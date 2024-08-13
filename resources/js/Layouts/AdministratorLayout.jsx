@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "@inertiajs/react";
-import { Inertia } from '@inertiajs/inertia';
+import logo from "../../assets/logo.png"
 // import all material UI components
 import {
     Drawer,
     Box,
-    Typography,
     Divider,
     AppBar,
     List,
@@ -17,7 +16,9 @@ import {
     Stack,
 } from "@mui/material";
 // import all icons
-import { Logout, Menu, People, Category, Dashboard, Recycling, Paid } from "@mui/icons-material";
+import { Logout, Menu, People, Category, Dashboard, Recycling } from "@mui/icons-material";
+
+
 export default function AdministratorLayout({ children}) {
     const handleLogout = () => {
         Inertia.post('/administrator/logout', {}, {
@@ -67,8 +68,9 @@ export default function AdministratorLayout({ children}) {
     ];
     const drawer = (
         <>
-            <Box sx={{ display: "flex", alignItems: "center", p: 0 }}>
-                <h1 className="font-bold text-2xl m-3 ">ATRAS</h1>
+            <Box sx={{ display: "flex", alignItems: "center", pl: 1 }}>
+                <img src={logo} alt="atras logo" className="w-[56px]"/>
+				<h2 className="uppercase font-bold text-xl">Atras</h2>
             </Box>
             <Divider />
             <List>
