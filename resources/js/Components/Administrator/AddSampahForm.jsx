@@ -10,6 +10,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import { TaskAlt, Cancel } from "@mui/icons-material";
 
 export default function AddSampahForm({ dataNasabah, dataKategori }) {
+
     const [isSuccess, setIsSucces] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -21,12 +22,11 @@ export default function AddSampahForm({ dataNasabah, dataKategori }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("add"), {
+        post(route("administrator.kelolaSampah.store"), {
             onError: () => {
                 setIsError(true);
             },
             onSuccess: () => {
-                // clear input after successful submission
                 setData("totalSampah", "");
                 setData("kategori", "");
                 setIsSucces(true);
@@ -37,7 +37,7 @@ export default function AddSampahForm({ dataNasabah, dataKategori }) {
     return (
         <>
             <Modal show={isSuccess} onClose={() => setIsSucces(false)}>
-                <TaskAlt className="text-green-600 "/>
+                <TaskAlt className="text-green-600 " />
                 <h1 className="text-xl font-bold text-green-600">
                     Data Berhasil Ditambahkan
                 </h1>
@@ -52,45 +52,32 @@ export default function AddSampahForm({ dataNasabah, dataKategori }) {
             <form onSubmit={submit} className="max-w-[62.5rem]">
                 <div>
                     <InputLabel value="Pilih Nasabah" className="mb-2" />
-                    <Autocomplete
-                        disablePortal
-                        disableClearable
-                        options={dataNasabah}
+                    <Dropdown
+                        placeholder="Masukkan Kategori Sampah"
                         value={data.nasabah}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                className="rounded-xl"
-                                placeholder="Masukkan Nama Nasabah"
-                            />
-                        )}
-                        onChange={(e, newValue) => {
-                            setData("nasabah", newValue);
-                        }}
-                        onInputChange={(e, newValue) => {
-                            setData("nasabah", newValue);
-                        }}
+                        menuItems={dataNasabah.map((nasabah) => ({
+                            value: nasabah.id,
+                            label: nasabah.full_name
+                        }))}
+                        onChange={(e) => setData("nasabah", e.target.value)}
                     />
                     <InputError message={errors.nasabah} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel
-                        value="Pilih Kategori Sampah"
-                        className="mb-2"
-                    />
+                    <InputLabel value="Pilih Kategori Sampah" className="mb-2" />
                     <Dropdown
                         placeholder="Masukkan Kategori Sampah"
                         value={data.kategori}
-                        menuItems={dataKategori}
+                        menuItems={dataKategori.map((kategori) => ({
+                            value: kategori.id,
+                            label: kategori.nama_kategori
+                        }))}
                         onChange={(e) => setData("kategori", e.target.value)}
                     />
                     <InputError message={errors.kategori} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                    <InputLabel
-                        htmlFor="totalSampah"
-                        value="Total Sampah(Kg)"
-                    />
+                    <InputLabel htmlFor="totalSampah" value="Total Sampah(Kg)" />
                     <TextInput
                         id="totalSampah"
                         name="totalSampah"
@@ -101,8 +88,7 @@ export default function AddSampahForm({ dataNasabah, dataKategori }) {
                         autoComplete="current-totalSampah"
                         onChange={(e) => setData("totalSampah", e.target.value)}
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.totalSampah} className="mt-2" />
                 </div>
                 <Button className="w-full mt-6 mb-3" disabled={processing}>
                     Tambah Data Sampah

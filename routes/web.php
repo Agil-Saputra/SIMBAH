@@ -41,8 +41,11 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{user}', [Administrator\NasabahController::class, 'destroy'])->name('delete');
         });
 
-        // Kelola Sampah dan Keuangan
-        Route::get('/kelola-sampah', [Administrator\KelolaSampahController::class, 'index'])->name('kelola-sampah');
+        // Kelola Sampah
+        Route::prefix('kelola-sampah')->name('kelolaSampah.')->group(function () {
+            Route::get('/', [Administrator\KelolaSampahController::class, 'index'])->name('index');
+            Route::post('/', [Administrator\KelolaSampahController::class, 'store'])->name('store');
+        });
         Route::get('/keuangan', [Administrator\KeuanganController::class, 'index'])->name('keuangan');
 
         // Logout Route

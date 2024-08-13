@@ -44,4 +44,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function sampahs()
+    {
+        return $this->hasMany(Sampah::class);
+    }
 }

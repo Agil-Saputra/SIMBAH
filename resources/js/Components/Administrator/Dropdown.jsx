@@ -15,34 +15,34 @@ const MenuProps = {
   },
 };
 
-
-export default function Dropdown({placeholder, menuItems, ...props}) {
+export default function Dropdown({ placeholder, menuItems, ...props }) {
   return (
     <div>
-        <Select
-          displayEmpty
-          input={<OutlinedInput />}
-		  sx={{width: '100%',}}
-          renderValue={(selected) => {
-            if (selected.length === 0) {
-              return <span className='opacity-60'>{placeholder}</span>;
-            }
-            return selected;
-          }}
-          MenuProps={MenuProps}
-          inputProps={{ 'aria-label': 'Without label' }}
-		  {...props}
-        >
-          {menuItems.map((items) => (
-            <MenuItem
-              key={items}
-              value={items}
-			  sx={{borderBottom: '1px solid rgba(0,0,0,0.6'}}
-            >
-              {items}
-            </MenuItem>
-          ))}
-        </Select>
+      <Select
+        displayEmpty
+        input={<OutlinedInput />}
+        sx={{ width: '100%' }}
+        renderValue={(selected) => {
+          if (!selected) {
+            return <span className='opacity-60'>{placeholder}</span>;
+          }
+          const selectedItem = menuItems.find((item) => item.value === selected);
+          return selectedItem ? selectedItem.label : placeholder;
+        }}
+        MenuProps={MenuProps}
+        inputProps={{ 'aria-label': 'Without label' }}
+        {...props}
+      >
+        {menuItems.map((item) => (
+          <MenuItem
+            key={item.value}
+            value={item.value}
+            sx={{ borderBottom: '1px solid rgba(0,0,0,0.6' }}
+          >
+            {item.label}
+          </MenuItem>
+        ))}
+      </Select>
     </div>
   );
 }

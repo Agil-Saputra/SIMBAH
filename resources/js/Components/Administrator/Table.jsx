@@ -85,26 +85,26 @@ export default function DataTable({ headers, rows, tableTitle, keys }) {
     return (
         <>
             <Modal show={deleteModal} onClose={() => setDeleteModal(false)}>
-				<p>Apakah Anda yakin Ingin menghapus data ini?, data anda tidak akan bisa dipulihkan!</p>
-				<DangerButton onClick={deleteData} className="mt-4 mr-4">Hapus Sekarang</DangerButton>
-				<button onClick={() => setDeleteModal(false)}>Kembali</button>
-			</Modal>
-			{tableTitle == "Data Nasabah" && (
-				<>
-				<ModifyNasabahModal id={id} type="edit" show={editModal} onClose={() => setEditModal(false)} />
-				<ModifyNasabahModal type="add" show={addModal} onClose={() => setAddModal(false)}/>
-				</>
-			)}
-			{tableTitle == "Data Kategori" && (
-				<>
-				<ModifyKategoriModal id={id} type="edit" show={editModal} onClose={() => setEditModal(false)} />
-				<ModifyKategoriModal type="add" show={addModal} onClose={() => setAddModal(false)}/>
-				</>
-			)}
-			<div className="flex items-start gap-4 justify-between max-w-[62.5rem] mb-2">
-			<h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
-			{tableTitle == "Data Sampah" ? null : <PrimaryButton onClick={() => setAddModal(true)}>Tambah Data Baru</PrimaryButton>}
-			</div>
+                <p>Apakah Anda yakin Ingin menghapus data ini?, data anda tidak akan bisa dipulihkan!</p>
+                <DangerButton onClick={handleDelete} className="mt-4 mr-4">Hapus Sekarang</DangerButton>
+                <button onClick={() => setDeleteModal(false)}>Kembali</button>
+            </Modal>
+            {tableTitle == "Data Nasabah" && (
+                <>
+                    <ModifyNasabahModal id={id} type="edit" show={editModal} onClose={() => setEditModal(false)} />
+                    <ModifyNasabahModal type="add" show={addModal} onClose={() => setAddModal(false)} />
+                </>
+            )}
+            {tableTitle == "Data Kategori" && (
+                <>
+                    <ModifyKategoriModal id={id} type="edit" show={editModal} onClose={() => setEditModal(false)} />
+                    <ModifyKategoriModal type="add" show={addModal} onClose={() => setAddModal(false)} />
+                </>
+            )}
+            <div className="flex items-start gap-4 justify-between max-w-[62.5rem] mb-2">
+                <h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
+                {tableTitle == "Data Sampah" ? null : <PrimaryButton onClick={() => setAddModal(true)}>Tambah Data Baru</PrimaryButton>}
+            </div>
             <TableContainer sx={{ maxWidth: 1000 }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
@@ -126,7 +126,10 @@ export default function DataTable({ headers, rows, tableTitle, keys }) {
                                 </StyledTableCell>
                                 {keys.map((key, cellIndex) => (
                                     <StyledTableCell key={cellIndex}>
-                                        {row[key]}
+                                        {key === 'kategori' && row.kategori ? row.kategori.nama_kategori : ""}
+                                        {key === 'user' && row.user ? row.user.full_name : ""}
+                                        {key === 'total_sampah' && row[key]+' KG'}
+                                        {key !== 'kategori' && key !== 'user' && key !== 'total_sampah' && row[key]}
                                     </StyledTableCell>
                                 ))}
                                 <StyledTableCell>

@@ -10,5 +10,9 @@ class Kategori extends Model
     use HasFactory;
 
     protected $guarded = [];
+    public function sampahs()
+    {
+        return $this->hasMany(Sampah::class);
+    }
 }
     

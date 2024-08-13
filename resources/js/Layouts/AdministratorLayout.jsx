@@ -57,7 +57,7 @@ export default function AdministratorLayout({ children}) {
         },
         {
             title: "Kelola Sampah",
-            path: "administrator.kelola-sampah",
+            path: "administrator.kelolaSampah.index",
             icon: <Recycling {...icon} />,
         },
         // {
