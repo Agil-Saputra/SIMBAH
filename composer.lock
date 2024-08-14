@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "940a6dea4acc6e6662fc35b0a8bd0bf9",
+    "content-hash": "6d5bab3de17f28872ce9aaff4c87cc5f",
     "packages": [
         {
             "name": "brick/math",
@@ -505,6 +505,80 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "flowframe/laravel-trend",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flowframe/laravel-trend.git",
+                "reference": "bae1232325a59a7c9e99a372c80afab82309503b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flowframe/laravel-trend/zipball/bae1232325a59a7c9e99a372c80afab82309503b",
+                "reference": "bae1232325a59a7c9e99a372c80afab82309503b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.37|^9|^10.0|^11.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.4.3"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.3|^6.1|^8.0",
+                "orchestra/testbench": "^6.15|^7.0|^8.0|^9.0",
+                "pestphp/pest": "^1.18|^2.34",
+                "pestphp/pest-plugin-laravel": "^1.1|^2.3",
+                "spatie/laravel-ray": "^1.23",
+                "vimeo/psalm": "^4.8|^5.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Flowframe\\Trend\\TrendServiceProvider"
+                    ],
+                    "aliases": {
+                        "Trend": "Flowframe\\Trend\\TrendFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Flowframe\\Trend\\": "src",
+                    "Flowframe\\Trend\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lars Klopstra",
+                    "email": "lars@flowframe.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily generate model trends",
+            "homepage": "https://github.com/flowframe/laravel-trend",
+            "keywords": [
+                "Flowframe",
+                "laravel",
+                "laravel-trend"
+            ],
+            "support": {
+                "issues": "https://github.com/Flowframe/laravel-trend/issues",
+                "source": "https://github.com/Flowframe/laravel-trend/tree/v0.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/larsklopstra",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-14T13:45:40+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -3246,6 +3320,66 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.16.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
+                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.28|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.24",
+                "spatie/pest-plugin-test-time": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-20T07:29:11+00:00"
         },
         {
             "name": "symfony/clock",
