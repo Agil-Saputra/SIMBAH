@@ -27,8 +27,11 @@ export default function AddSampahForm({ dataNasabah, dataKategori }) {
                 setIsError(true);
             },
             onSuccess: () => {
-                setData("totalSampah", "");
-                setData("kategori", "");
+                setData(prevData => ({
+                    ...prevData,
+                    totalSampah: "",
+                    kategori: "",
+                }));
                 setIsSucces(true);
             },
         });
@@ -53,7 +56,7 @@ export default function AddSampahForm({ dataNasabah, dataKategori }) {
                 <div>
                     <InputLabel value="Pilih Nasabah" className="mb-2" />
                     <Dropdown
-                        placeholder="Masukkan Kategori Sampah"
+                        placeholder="Masukkan Nama Nasbaah"
                         value={data.nasabah}
                         menuItems={dataNasabah.map((nasabah) => ({
                             value: nasabah.id,
@@ -81,11 +84,11 @@ export default function AddSampahForm({ dataNasabah, dataKategori }) {
                     <TextInput
                         id="totalSampah"
                         name="totalSampah"
-                        type="number"
+                        type="number" 
                         placeholder="Masukkan Total Berat Sampah(Kg)"
                         value={data.totalSampah}
                         className="block w-full mt-2 text-black"
-                        autoComplete="current-totalSampah"
+                        autoComplete="current-totalSampah" required
                         onChange={(e) => setData("totalSampah", e.target.value)}
                     />
                     <InputError message={errors.totalSampah} className="mt-2" />

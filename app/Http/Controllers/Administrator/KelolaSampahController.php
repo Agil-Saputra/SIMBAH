@@ -13,7 +13,7 @@ class KelolaSampahController extends Controller
 {
     public function index(){
         $kategori = Kategori::all();
-        $nasabah = User::where('role', 'user')->get();
+        $nasabah = User::where('role', 'user')->orderBy('full_name','asc')->get();
         $sampah = Sampah::with(['user', 'kategori'])->orderBy('id','desc')->get();
         return Inertia::render('Administrator/KelolaSampah',compact('kategori','nasabah','sampah'));
     } 
@@ -34,8 +34,11 @@ class KelolaSampahController extends Controller
             'total_sampah' => $request->totalSampah,
             'tanggal' => date('Y-m-d')
         ];
+        $kategori = Kategori::findOrFail($request->kategori);
+        $sampah = $request->totalSampah;
+        $kategori->update(['jumlah' => $sampah + $kategori->jumlah]);
         Sampah::create($data);
-    
+
         return redirect()->back()->with('message', 'Data Sampah berhasil disimpan');
     }
 }
