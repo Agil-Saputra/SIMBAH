@@ -63,7 +63,7 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
     const handleDelete = () => {
         const routeDeleteMap = {
             "Data Nasabah": `/administrator/nasabah/delete/${id}`,
-            "Data Sampah": `/administrator/sampah/delete/${id}`,
+            "Data Sampah": `/administrator/kelola-sampah/delete/${id}`,
             "Data Kategori": `/administrator/kategori/delete/${id}`
         };
         const routeDelete = routeDeleteMap[tableTitle];

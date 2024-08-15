@@ -41,4 +41,35 @@ class KelolaSampahController extends Controller
 
         return redirect()->back()->with('message', 'Data Sampah berhasil disimpan');
     }
+
+    public function update(Request $request, Sampah $sampah){ 
+        $request->validate([            
+            'nasabah' => 'required',     
+            'kategori' => 'required',     
+            'totalSampah' => 'required',     
+        ],[
+            'nasabah.required' => 'Nama Nasabah harus diisi',
+            'kategori.required' => 'Nama Kategori harus diisi',
+            'totalSampah.required' => 'Total sampah harus diisi',
+        ]);
+        $data = [
+            'user_id' => $request->nasabah,
+            'kategori_id' => $request->kategori,
+            'total_sampah' => $request->totalSampah,
+        ];
+        $totalSampahLama = $sampah->total_sampah;
+        $kategoriLama = Kategori::findOrFail($sampah->kategori_id);
+        $kategoriLama->update(['jumlah' => $kategoriLama->jumlah - $totalSampahLama]);
+        $sampah->update($data);
+        $kategoriBaru = Kategori::findOrFail($request->kategori);
+        $sampahBaru = $request->totalSampah;
+        $kategoriBaru->update(['jumlah' => $sampahBaru + $kategoriBaru->jumlah]);
+        return back()->with('message','Data sampah berhasil diupdate');
+    }
+    public function destroy(Sampah $sampah){
+        $kategori = Kategori::findOrFail($sampah->kategori_id);
+        $kategori->update(['jumlah' => $kategori->jumlah - $sampah->total_sampah]);
+        $sampah->delete();
+        return back()->with('message','Data sampah berhasil dihapus');
+    } 
 }

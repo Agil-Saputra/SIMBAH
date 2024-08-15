@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::prefix('kelola-sampah')->name('kelolaSampah.')->group(function () {
             Route::get('/', [Administrator\KelolaSampahController::class, 'index'])->name('index');
             Route::post('/', [Administrator\KelolaSampahController::class, 'store'])->name('store');
+            Route::post('/update/{sampah}', [Administrator\KelolaSampahController::class, 'update'])->name('update');
+            Route::delete('/delete/{sampah}', [Administrator\KelolaSampahController::class, 'destroy'])->name('delete');
         });
         Route::get('/keuangan', [Administrator\KeuanganController::class, 'index'])->name('keuangan');
 

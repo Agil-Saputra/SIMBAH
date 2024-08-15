@@ -27,42 +27,40 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
 	useEffect(() => {
         if (dataEdit) {
             setData({
-				nasabah : dataEdit.user.full_name,
-				kategori : dataEdit.kategori.nama_kategori,
+				nasabah : dataEdit.user.id,
+				kategori : dataEdit.kategori.id,
 				totalSampah : dataEdit.total_sampah
 			});
         }
     }, [dataEdit]);
-
-
     const submit = (e) => {
         e.preventDefault();
-		if (dataEdit) {
-			post(route("administrator.kelolaSampah.store"), {
-				onError: () => {
-					setIsEditError(true);
-				},
-				onSuccess: () => {
-					setIsEditSuccess(true);
-				},
-			});
-		  } else {
-			post(route("administrator.kelolaSampah.store"), {
-				onError: () => {
-					setIsError(true);
-				},
-				onSuccess: () => {
-					setData(prevData => ({
-						...prevData,
-						totalSampah: "",
-						kategori: "",
-					}));
-					setIsSuccess(true);
-				},
-			});
-		  }
-	   }
-	
+        if (dataEdit) {
+            post(route("administrator.kelolaSampah.update", { id: dataEdit.id }), { // Menambahkan id di sini
+                onError: () => {
+                    setIsEditError(true);
+                },
+                onSuccess: () => {
+                    setIsEditSuccess(true);
+                },
+            });
+        } else {
+            post(route("administrator.kelolaSampah.store"), {
+                onError: () => {
+                    setIsError(true);
+                },
+                onSuccess: () => {
+                    setData(prevData => ({
+                        ...prevData,
+                        totalSampah: "",
+                        kategori: "",
+                    }));
+                    setIsSuccess(true);
+                },
+            });
+        }
+    }
+
     return (
         <>
             <Modal show={isSuccess} onClose={() => setIsSuccess(false)}>
@@ -93,12 +91,12 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
             </Modal>
             <form onSubmit={submit} className="w-full">
                 <div>
-                    <InputLabel value="Pilih Nasabah"/>
+                    <InputLabel value="Pilih Nasabah"/> 
                     <Dropdown
                         placeholder="Masukkan Nasabah"
                         value={data.nasabah}
                         menuItems={sortedNasabah?.map((nasabah) => ({
-                            value: nasabah.full_name,
+                            value: nasabah.id,
                             label: nasabah.full_name
                         }))}
                         onChange={(e) => setData("nasabah", e.target.value)}
@@ -111,7 +109,7 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
                         placeholder="Masukkan Kategori Sampah"
                         value={data.kategori}
                         menuItems={sortedKategori?.map((kategori) => ({
-                            value: kategori.nama_kategori,
+                            value: kategori.id,
                             label: kategori.nama_kategori
                         }))}
                         onChange={(e) => setData("kategori", e.target.value)}
