@@ -7,6 +7,7 @@ import InputLabel from '../InputLabel';
 import InputError from '../InputError';
 import Button from '../Button';
 import { Inertia } from '@inertiajs/inertia';
+
 export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     namaKategori: '',
@@ -19,6 +20,7 @@ export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
       setData('namaKategori', dataEdit.nama_kategori);
     }
   }, [dataEdit]);
+
 
   useEffect(() => {
     if (flash.message) {

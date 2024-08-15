@@ -3,8 +3,9 @@ import AdministratorLayout from "@/Layouts/AdministratorLayout";
 import { Head } from "@inertiajs/react";
 import Table from "@/Components/Administrator/Table";
 import AddSampahForm from "@/Components/Administrator/AddSampahForm";
-const headers = ["Tanggal","Nama Nasabah", "Kategori", "Total Sampah"];
-const keys = ["tanggal","user", "kategori", "total_sampah"];
+import ElevatedContainer from "@/Components/ElevatedContainer";
+const headers = ["Tanggal", "Nama Nasabah", "Kategori", "Total Sampah"];
+const keys = ["tanggal", "user", "kategori", "total_sampah"];
 const KelolaSampah = (data) => {
     const sampah = data.sampah;
     const kategori = data.kategori;
@@ -13,19 +14,26 @@ const KelolaSampah = (data) => {
         <>
             <Head title="KelolaSampah" />
             <AdministratorLayout>
-                <h1 className="text-2xl font-bold mb-6">
-                    Tambahkan Data Sampah Baru
-                </h1>
-                <AddSampahForm
-                    dataKategori={kategori}
-                    dataNasabah={nasabah}
-                />
-                <div className="mt-16">
-                    <Table
-                        headers={headers}
-                        rows={sampah} keys={keys}
-                        tableTitle={"Data Sampah"}
+                <ElevatedContainer>
+                    <h1 className="text-2xl font-bold mb-6">
+                        Tambahkan Data Sampah Baru
+                    </h1>
+                    <AddSampahForm
+                        dataKategori={kategori}
+                        dataNasabah={nasabah}
                     />
+                </ElevatedContainer>
+                <div className="mt-16">
+                    <ElevatedContainer>
+                        <Table
+                            headers={headers}
+                            rows={sampah}
+                            keys={keys}
+                            tableTitle={"Data Sampah"}
+							dataKategori={kategori}
+                            dataNasabah={nasabah}
+                        />
+                    </ElevatedContainer>
                 </div>
             </AdministratorLayout>
         </>

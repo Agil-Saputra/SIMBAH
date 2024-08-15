@@ -7,6 +7,7 @@ import Button from '@/Components/Button';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm,usePage } from '@inertiajs/react';
 
+
 export default function Login({ status, canResetPassword }) {
     const {flash} = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({

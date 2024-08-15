@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import logo from "../../assets/logo.png"
 // import all material UI components
@@ -13,13 +13,17 @@ import {
     ListItemButton,
     ListItemIcon,
     IconButton,
-    Stack,
 } from "@mui/material";
 // import all icons
 import { Logout, Menu, People, Category, Dashboard, Recycling } from "@mui/icons-material";
+import { Inertia } from "@inertiajs/inertia";
 
 
 export default function AdministratorLayout({ children}) {
+	useEffect(() => {
+		document.body.classList.add("bg-[#F3F4F6]");
+	}, [0])
+	
     const handleLogout = () => {
         Inertia.post('/administrator/logout', {}, {
             onFinish: () => {
@@ -68,29 +72,37 @@ export default function AdministratorLayout({ children}) {
     ];
     const drawer = (
         <>
-            <Box sx={{ display: "flex", alignItems: "center", pl: 1 }}>
-                <img src={logo} alt="atras logo" className="w-[56px]"/>
-				<h2 className="uppercase font-bold text-xl">Atras</h2>
+            <Box sx={{ display: "flex", alignItems: "center", p: 2 }}>
+                <Link href="/">
+                    <img src={logo} alt="atras logo" className="w-[70%]" />
+                </Link>
             </Box>
-            <Divider />
             <List>
                 {menus.map((menu, i) => (
-                    <ListItem disablePadding key={i}>
+                    <ListItem disablePadding key={i} className={pageName.toLocaleLowerCase() == menu.title.toLocaleLowerCase() ? "bg-[#f5f5f5]" : null}>
                         <Link className="w-full" href={route(menu.path)}>
-                            <ListItemButton>
+                            <ListItemButton sx={{gap: 2}} >
                                 <ListItemIcon sx={{ minWidth: "30px" }}>
                                     {menu.icon}
                                 </ListItemIcon>
-                                <ListItemText>{menu.title}</ListItemText>
+                                <ListItemText sx={{fontWeight: 'bold'}}>{menu.title}</ListItemText>
                             </ListItemButton>
                         </Link>
                     </ListItem>
                 ))}
-                <ListItemButton onClick={handleLogout}>
+                <ListItemButton  sx={{gap: 2}} onClick={handleLogout}>
                     <ListItemIcon sx={{ minWidth: "30px" }}>
                         <Logout {...icon} />
                     </ListItemIcon>
-                    <ListItemText>Log Out</ListItemText>
+                    <ListItemText>
+					<Link
+                        href={route('logout')}
+                        method="post"
+                        as="button"
+                    >
+                        Log Out
+                    </Link>
+					</ListItemText>
                 </ListItemButton>
             </List>
         </>
@@ -173,7 +185,7 @@ export default function AdministratorLayout({ children}) {
                 </AppBar>
 
                 <Box component="main" sx={{ maxWidth: "100%" }}>
-                    <Box sx={{ py: 3, px: '1rem', }}>{children}</Box>
+                    <Box sx={{ py: 3, px: '1rem'}}>{children}</Box>
                 </Box>
             </Box>
         </Box>

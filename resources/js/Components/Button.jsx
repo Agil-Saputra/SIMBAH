@@ -12,7 +12,7 @@ export default function Button({
         <button
             {...props}
             className={
-                "hover:bg-[0CB5A7] transition-all ease-in-out duration-200 py-2 px-6 rounded-lg font-bold " +
+                "hover:bg-opacity-80 transition-all ease-in-out duration-200 py-2 sm:px-6 px-3 rounded-lg font-bold " +
                 (type == "secondary"
                     ? "bg-white text-primary border-primary border-2"
                     : "bg-primary text-white ") +

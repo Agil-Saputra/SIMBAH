@@ -1,15 +1,18 @@
 import { TextField } from "@mui/material";
+import {forwardRef, useRef} from 'react'
 
-export default function TextInput({ type = 'text', className = '', ...props }) {
 
+export default forwardRef(function TextInput({ type = 'text', className = '', isFocused = false, ...props }, ref) {
+	const input = ref ? ref : useRef();
     return (
         <TextField
             {...props}
             type={type}
             className={
-                'rounded-[4px] shadow-sm' +
+                'rounded-[4px] shadow-sm mt-3' +
                 className
             }
+			ref={input}
         />
     );
-};
+});

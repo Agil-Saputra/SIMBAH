@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "@inertiajs/react";
+import logo from "../../assets/logo.png";
 // import all material UI components
 import {
     Drawer,
@@ -13,13 +14,11 @@ import {
     ListItemButton,
     ListItemIcon,
     IconButton,
-    Stack,
 } from "@mui/material";
 // import all icons
-import { Logout, Menu, People, Category, Dashboard, Recycling, Paid } from "@mui/icons-material";
+import { Logout, Menu, People, Dashboard } from "@mui/icons-material";
 
-
-export default function AdministratorLayout({ children}) {
+export default function AuthenticatedLayout({ children }) {
     // Hooks
     const [mobileOpen, setMobileOpen] = useState(false);
     const drawerWidth = 240;
@@ -27,41 +26,48 @@ export default function AdministratorLayout({ children}) {
         setMobileOpen(!mobileOpen);
     };
     // Computed Properties
-	const currPath = window.location.href.split('/')
-    const pageName = currPath[currPath.length - 1].replace("-", " ")
+    const currPath = window.location.href.split("/");
+    const pageName = currPath[currPath.length - 1].replace("-", " ");
 
-	const icon = {
+    const icon = {
         sx: { color: "primary.main", fontSize: { sm: "1.6rem", xs: "1.2rem" } },
     };
 
     const drawer = (
         <>
-            <Box sx={{ display: "flex", alignItems: "center", p: 0 }}>
-                <h1 className="font-bold text-2xl m-3 ">ATRAS</h1>
+            <Box sx={{ display: "flex", alignItems: "center", p: 2 }}>
+                <Link href="/">
+                    <img src={logo} alt="atras logo" className="w-[70%]" />
+                </Link>
             </Box>
-            <Divider />
             <List>
-                    <ListItem disablePadding>
-                        <Link className="w-full" href={route('/')}>
-                            <ListItemButton>
-                                <ListItemText>Table Penyetoran</ListItemText>
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <Link className="w-full" href={route('/')}>
-                            <ListItemButton>
-                                <ListItemText>Profile</ListItemText>
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-				<Link method="post" href={route('logout')} as="button">
-                <ListItemButton>
-                    <ListItemIcon sx={{ minWidth: "30px" }}>
-                        <Logout {...icon} />
-                    </ListItemIcon>
-                    <ListItemText>Log Out</ListItemText>
-                </ListItemButton>
+                <ListItem disablePadding>
+                    <Link className="w-full" href={"/dashboard"}>
+                        <ListItemButton  sx={{gap: 2}}>
+                            <ListItemIcon sx={{ minWidth: "30px" }}>
+                                <Dashboard {...icon} />
+                            </ListItemIcon>
+                            <ListItemText>Table Penyetoran</ListItemText>
+                        </ListItemButton>
+                    </Link>
+                </ListItem>
+                <ListItem disablePadding>
+                    <Link className="w-full" href={"/profile"}>
+                        <ListItemButton  sx={{gap: 2}}>
+                            <ListItemIcon sx={{ minWidth: "30px" }}>
+                                <People {...icon} />
+                            </ListItemIcon>
+                            <ListItemText>Profile</ListItemText>
+                        </ListItemButton>
+                    </Link>
+                </ListItem>
+                <Link className="w-full"  method="post" href={route("logout")} as="button">
+                    <ListItemButton  sx={{gap: 2}}>
+                        <ListItemIcon sx={{ minWidth: "30px" }}>
+                            <Logout {...icon} />
+                        </ListItemIcon>
+                        <ListItemText>Log Out</ListItemText>
+                    </ListItemButton>
                 </Link>
             </List>
         </>
@@ -127,20 +133,26 @@ export default function AdministratorLayout({ children}) {
                         }}
                     >
                         <div className="items-center flex gap-2">
-						<IconButton
-                            aria-label="open drawer"
-                            onClick={handleDrawerToggle}
-                            sx={{ display: { sm: "none" }, border: "1px solid #ababab", borderRadius: "5px",}}
-                        >
-                            <Menu {...icon} />
-                        </IconButton>
+                            <IconButton
+                                aria-label="open drawer"
+                                onClick={handleDrawerToggle}
+                                sx={{
+                                    display: { sm: "none" },
+                                    border: "1px solid #ababab",
+                                    borderRadius: "5px",
+                                }}
+                            >
+                                <Menu {...icon} />
+                            </IconButton>
 
-						<h2 className="text-black text-2xl font-bold capitalize">{pageName}</h2>
-						</div>
+                            <h2 className="text-black text-2xl font-bold capitalize">
+                                {pageName}
+                            </h2>
+                        </div>
                     </Box>
                 </AppBar>
 
-                <Box component="main" sx={{ maxWidth: "100%" }}>
+                <Box component="main" sx={{ maxWidth: "100%", }}>
                     <Box sx={{ py: 3, px: 2 }}>{children}</Box>
                 </Box>
             </Box>
