@@ -9,8 +9,8 @@ export default function UpdateProfileInformation({className = '' }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
-        email: user.email,
+        name: user.full_name,
+        phoneNumber: user.phone_number,
     });
 
     const submit = (e) => {
@@ -25,19 +25,34 @@ export default function UpdateProfileInformation({className = '' }) {
                 <h2 className="text-lg font-medium text-gray-900">Informasi Profile</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Perbarui Nama Anda
+                    Perbarui Nama & Nomor Telepon Anda
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Nama" />
 
                     <TextInput
                         id="name"
                         className="mt-1 block w-full"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
+                        required
+                        isFocused
+                        autoComplete="name"
+                    />
+
+                    <InputError className="mt-2" message={errors.name} />
+                </div>
+                <div>
+                    <InputLabel htmlFor="phoneNumber" value="Nomor Telepon" />
+
+                    <TextInput
+                        id="phoneNumber"
+                        className="mt-1 block w-full"
+                        value={data.phoneNumber}
+                        onChange={(e) => setData('phoneNumber', e.target.value)}
                         required
                         isFocused
                         autoComplete="name"

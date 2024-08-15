@@ -7,13 +7,14 @@ import {
     IoArrowDownCircle,
     IoArrowUpCircle,
 } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import binIlustration from "../../assets/bin-Ilustration.png";
 import Baloon from "../../assets/baloon.png";
 import recycle from "../../assets/recycle.svg";
 import data from "../../assets/data.svg";
 import menu from "../../assets/menu.svg";
+import logo from "../../assets/logo.png"
 // Components
 import Heading from "@/Components/Heading";
 
@@ -143,6 +144,10 @@ export default function HomePage({ auth }) {
         },
     ]);
 
+	useEffect(() => {
+		document.body.classList.add("bg-[#ffffff]");
+	}, [0])
+
     const handleToggle = (index) => {
         setFaqs(
             faqs.map((faq, i) => {
@@ -162,7 +167,9 @@ export default function HomePage({ auth }) {
             <Head title="Beranda" />
             <nav className="sticky top-0 z-50 bg-white shadow-md">
                 <div className="container flex items-center justify-between py-4">
-                    <p className="text-xl font-bold">ATRAS</p>
+                    <Link href="/">
+                        <img src={logo} alt="atras logo" className="md:w-[8rem] w-[5rem]" />
+                    </Link>
                     <div className="hidden gap-12 lg:flex ">
                         {menus.map((menu, index) => {
                             return (
@@ -179,9 +186,7 @@ export default function HomePage({ auth }) {
                     <div className="items-center hidden gap-4 lg:flex">
                         {auth.user ? (
                             <Button>
-                                <Link href={route("dashboard")}>
-                                    Dashboard
-                                </Link>
+                                <Link href={route("dashboard")}>Dashboard</Link>
                             </Button>
                         ) : (
                             <>
@@ -341,7 +346,7 @@ export default function HomePage({ auth }) {
                     title="Data Operasional Sampah"
                     description="Ikut berbagai gerakan Indonesia bebas sampah "
                 />
-                <div className="flex items-center justify-between gap-10">
+                <div className="flex items-center max-md:flex-col justify-between gap-10">
                     {dataSampah.map((item, index) => (
                         <OperationalCard
                             title={item.title}

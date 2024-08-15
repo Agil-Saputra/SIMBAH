@@ -4,7 +4,7 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head } from '@inertiajs/react';
 import ElevatedContainer from '@/Components/ElevatedContainer';
 
-export default function Edit({ auth, mustVerifyEmail, status }) {
+export default function Edit({ auth, status }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -13,7 +13,6 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
             <Head title="Profile" />
                     <ElevatedContainer>
                         <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
                             status={status}
                             className="max-w-xl"
                         />

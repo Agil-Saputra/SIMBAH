@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import logo from "../../assets/logo.png";
 // import all material UI components
 import {
     Drawer,
     Box,
-    Typography,
-    Divider,
     AppBar,
     List,
     ListItem,
@@ -19,6 +17,9 @@ import {
 import { Logout, Menu, People, Dashboard } from "@mui/icons-material";
 
 export default function AuthenticatedLayout({ children }) {
+	useEffect(() => {
+		document.body.classList.add("bg-[#F3F4F6]");
+	}, [0])
     // Hooks
     const [mobileOpen, setMobileOpen] = useState(false);
     const drawerWidth = 240;
@@ -32,6 +33,18 @@ export default function AuthenticatedLayout({ children }) {
     const icon = {
         sx: { color: "primary.main", fontSize: { sm: "1.6rem", xs: "1.2rem" } },
     };
+	const menus = [
+        {
+            title: "Dashboard",
+            path: "/dashboard",
+            icon: <Dashboard {...icon} />,
+        },
+        {
+            title: "Profile",
+            path: "/profile",
+            icon: <People {...icon} />,
+        },
+	]
 
     const drawer = (
         <>
@@ -41,26 +54,20 @@ export default function AuthenticatedLayout({ children }) {
                 </Link>
             </Box>
             <List>
-                <ListItem disablePadding>
-                    <Link className="w-full" href={"/dashboard"}>
-                        <ListItemButton  sx={{gap: 2}}>
-                            <ListItemIcon sx={{ minWidth: "30px" }}>
-                                <Dashboard {...icon} />
-                            </ListItemIcon>
-                            <ListItemText>Table Penyetoran</ListItemText>
-                        </ListItemButton>
-                    </Link>
-                </ListItem>
-                <ListItem disablePadding>
-                    <Link className="w-full" href={"/profile"}>
-                        <ListItemButton  sx={{gap: 2}}>
-                            <ListItemIcon sx={{ minWidth: "30px" }}>
-                                <People {...icon} />
-                            </ListItemIcon>
-                            <ListItemText>Profile</ListItemText>
-                        </ListItemButton>
-                    </Link>
-                </ListItem>
+			{menus.map((menu, i) => (
+                    <ListItem disablePadding key={i} className={pageName.toLocaleLowerCase() == menu.title.toLocaleLowerCase() ? "bg-[#f5f5f5]" : null}>
+                        <Link className="w-full" href={menu.path}>
+                            <ListItemButton sx={{gap: 2}} >
+                                <ListItemIcon sx={{ minWidth: "30px" }}>
+                                    {menu.icon}
+                                </ListItemIcon>
+                                <ListItemText sx={{fontWeight: 'bold'}}>{menu.title}</ListItemText>
+                            </ListItemButton>
+                        </Link>
+                    </ListItem>
+                ))}
+               
+    
                 <Link className="w-full"  method="post" href={route("logout")} as="button">
                     <ListItemButton  sx={{gap: 2}}>
                         <ListItemIcon sx={{ minWidth: "30px" }}>

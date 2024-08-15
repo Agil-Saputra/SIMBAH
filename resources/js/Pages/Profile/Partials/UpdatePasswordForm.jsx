@@ -39,7 +39,7 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900"> Password</h2>
+                <h2 className="text-lg font-medium text-gray-900">Ganti Password</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
 					Pastikan Password yang anda masukkan aman dan random untuk menjaga akun anda tetap aman
