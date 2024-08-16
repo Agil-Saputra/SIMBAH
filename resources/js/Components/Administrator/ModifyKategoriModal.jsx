@@ -9,7 +9,7 @@ import Button from '../Button';
 import { Inertia } from '@inertiajs/inertia';
 
 export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, patch, processing, errors, reset } = useForm({
     namaKategori: '',
   });
 
@@ -21,27 +21,34 @@ export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
     }
   }, [dataEdit]);
 
-
-  useEffect(() => {
-    if (flash.message) {
-      reset();
-      swal({
-        title: "Success",
-        text: flash.message,
-        icon: "success",
-      });
-      onClose();
-    }
-  }, [flash.message]);
-
   const submit = (e) => {
     e.preventDefault();
-
-    const url = type === "edit" ? `/administrator/kategori/edit/${dataEdit?.id}` : '/administrator/kategori';
     if (type === "edit") {
-      Inertia.patch(url, data);
+      patch(route("administrator.kategori.update", { id: dataEdit.id }), {
+        onSuccess: () => {
+          swal({
+            title: "Success",
+            text: "Kategori berhasil diupdate!",
+            icon: "success",
+          }).then(() => {
+            reset();
+            onClose();
+          });
+        }
+      });
     } else {
-      Inertia.post(url, data);
+      post(route("administrator.kategori.store"), {
+        onSuccess: () => {
+          swal({
+            title: "Success",
+            text: "Kategori berhasil ditambahkan!",
+            icon: "success",
+          }).then(() => {
+            reset();
+            onClose();
+          });
+        }
+      });
     }
   };
 

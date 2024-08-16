@@ -9,7 +9,7 @@ import Button from "../Button";
 import { Inertia } from "@inertiajs/inertia";
 
 export default function ModifyNasabahModal({ show, onClose, type, dataEdit }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post,patch, processing, errors, reset } = useForm({
         phoneNumber: "",
         fullName: "",
         password: "",
@@ -25,31 +25,48 @@ export default function ModifyNasabahModal({ show, onClose, type, dataEdit }) {
         }
     }, [dataEdit]);
 
-    useEffect(() => {
-        if (flash.message) {
-            reset();
-            swal({
-                title: "Success",
-                text: flash.message,
-                icon: "success",
-            });
-            onClose();
-        }
-    }, [flash.message]);
+    // useEffect(() => {
+    //     if (flash.message) {
+    //         reset();
+    //         swal({
+    //             title: "Success",
+    //             text: flash.message,
+    //             icon: "success",
+    //         });
+    //         onClose();
+    //     }
+    // }, [flash.message]);
 
     const submit = (e) => {
         e.preventDefault();
-
-        const url =
-            type === "edit"
-                ? `/administrator/nasabah/edit/${dataEdit.id}`
-                : "/administrator/nasabah";
         if (type === "edit") {
-            Inertia.patch(url, data);
+          patch(route("administrator.nasabah.update", { id: dataEdit.id }), {
+            onSuccess: () => {
+              swal({
+                title: "Success",
+                text: "Nasabah berhasil diupdate!",
+                icon: "success",
+              }).then(() => {
+                reset();
+                onClose();
+              });
+            }
+          });
         } else {
-            Inertia.post(url, data);
+          post(route("administrator.nasabah.store"), {
+            onSuccess: () => {
+              swal({
+                title: "Success",
+                text: "Nasabah berhasil ditambahkan!",
+                icon: "success",
+              }).then(() => {
+                reset();
+                onClose();
+              });
+            }
+          });
         }
-    };
+      };
 
     return (
         <Modal show={show} onClose={onClose}>

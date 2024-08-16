@@ -42,6 +42,7 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
                 },
                 onSuccess: () => {
                     setIsEditSuccess(true);
+                    onClose();
                 },
             });
         } else {

@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import Button from '@/Components/Button';
+import swal from 'sweetalert';
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
@@ -18,10 +19,16 @@ export default function UpdatePasswordForm({ className = '' }) {
 
     const updatePassword = (e) => {
         e.preventDefault();
-
         put(route('password.update'), {
             preserveScroll: true,
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                swal({
+                    title: "Success",
+                    text: "Password berhasil di update!",
+                    icon: "success",
+                });
+                reset()
+            },
             onError: (errors) => {
                 if (errors.password) {
                     reset('password', 'password_confirmation');
@@ -42,7 +49,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 <h2 className="text-lg font-medium text-gray-900">Ganti Password</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-					Pastikan Password yang anda masukkan aman dan random untuk menjaga akun anda tetap aman
+                    Pastikan Password yang anda masukkan aman dan random untuk menjaga akun anda tetap aman
                 </p>
             </header>
 

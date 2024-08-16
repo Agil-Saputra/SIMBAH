@@ -4,20 +4,36 @@ import Button from '@/Components/Button';
 import TextInput from '@/Components/TextInput';
 import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import swal from 'sweetalert';
 
 export default function UpdateProfileInformation({className = '' }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.full_name,
-        phoneNumber: user.phone_number,
+        full_name: user.full_name,
+        phone_number: user.phone_number,
     });
 
     const submit = (e) => {
         e.preventDefault();
-
-        patch(route('profile.update'));
+        patch(route('profile.update'), {
+            onSuccess: () => {
+                swal({
+                    title: "Success",
+                    text: "Profile berhasil diperbarui!",
+                    icon: "success",
+                  });
+            },
+            onError: (errors) => {
+                swal({
+                    title: "Error",
+                    text: "Profile gagal diperbarui!",
+                    icon: "error",
+                  });
+            }
+        });
     };
+    
 
     return (
         <section className={className}>
@@ -31,34 +47,34 @@ export default function UpdateProfileInformation({className = '' }) {
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Nama" />
+                    <InputLabel htmlFor="full_name" value="Nama" />
 
                     <TextInput
-                        id="name"
+                        id="full_name"
                         className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
+                        value={data.full_name}
+                        onChange={(e) => setData('full_name', e.target.value)}
                         required
                         isFocused
-                        autoComplete="name"
+                        autoComplete="full_name"
                     />
 
                     <InputError className="mt-2" message={errors.name} />
                 </div>
                 <div>
-                    <InputLabel htmlFor="phoneNumber" value="Nomor Telepon" />
+                    <InputLabel htmlFor="phone_number" value="Nomor Telepon" />
 
                     <TextInput
-                        id="phoneNumber"
+                        id="phone_number"
                         className="mt-1 block w-full"
-                        value={data.phoneNumber}
-                        onChange={(e) => setData('phoneNumber', e.target.value)}
+                        value={data.phone_number}
+                        onChange={(e) => setData('phone_number', e.target.value)}
                         required
                         isFocused
-                        autoComplete="name"
+                        autoComplete="phone_number"
                     />
 
-                    <InputError className="mt-2" message={errors.name} />
+                    <InputError className="mt-2" message={errors.phone_number} />
                 </div>
 
                 <div className="flex items-center gap-4">
