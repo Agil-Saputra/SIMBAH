@@ -15,5 +15,5 @@ class LogoutController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return Inertia::location(route('administrator.login'));
-    }
+    }       
 }

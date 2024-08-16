@@ -13,17 +13,12 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
     ]);
 })->name('/');
-
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
-
-
 Route::get('/administrator/login', [Administrator\LoginController::class, 'index'])->middleware('guest');
-Route::post('/administrator/login', [Administrator\LoginController::class, 'store'])->name('administrator.login')
-;
+Route::post('/administrator/login', [Administrator\LoginController::class, 'store'])->name('administrator.login');
 Route::middleware('auth')->group(function () {
     Route::prefix('administrator')->name('administrator.')->group(function () {     
         Route::get('/dashboard', [Administrator\DashboardController::class, 'index'])->name('dashboard');
-
         // Kategori Routes
         Route::prefix('kategori')->name('kategori.')->group(function () {
             Route::get('/', [Administrator\KategoriController::class, 'index'])->name('index');
@@ -31,7 +26,6 @@ Route::middleware('auth')->group(function () {
             Route::patch('/edit/{kategori}', [Administrator\KategoriController::class, 'update'])->name('update');
             Route::delete('/delete/{kategori}', [Administrator\KategoriController::class, 'destroy'])->name('delete');
         });
-
         // Nasabah Routes
         Route::prefix('nasabah')->name('nasabah.')->group(function () {
             Route::get('/', [Administrator\NasabahController::class, 'index'])->name('index');
@@ -39,7 +33,6 @@ Route::middleware('auth')->group(function () {
             Route::patch('/edit/{user}', [Administrator\NasabahController::class, 'update'])->name('update');
             Route::delete('/delete/{user}', [Administrator\NasabahController::class, 'destroy'])->name('delete');
         });
-
         // Kelola Sampah
         Route::prefix('kelola-sampah')->name('kelolaSampah.')->group(function () {
             Route::get('/', [Administrator\KelolaSampahController::class, 'index'])->name('index');
@@ -48,7 +41,6 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{sampah}', [Administrator\KelolaSampahController::class, 'destroy'])->name('delete');
         });
         Route::get('/keuangan', [Administrator\KeuanganController::class, 'index'])->name('keuangan');
-
         // Logout Route
         Route::post('/logout', [Administrator\LogoutController::class, 'index'])->name('logout');
     });

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import logo from "../../assets/logo.png"
+import { useForm } from '@inertiajs/react';
+
 // import all material UI components
 import {
     Drawer,
@@ -16,18 +18,17 @@ import {
 } from "@mui/material";
 // import all icons
 import { Logout, Menu, People, Category, Dashboard, Recycling } from "@mui/icons-material";
-import { Inertia } from "@inertiajs/inertia";
 
+export default function AdministratorLayout({ children }) {
+    useEffect(() => {
+        document.body.classList.add("bg-[#F3F4F6]");
+    }, [0])
+    const { post } = useForm();
 
-export default function AdministratorLayout({ children}) {
-	useEffect(() => {
-		document.body.classList.add("bg-[#F3F4F6]");
-	}, [0])
-	
     const handleLogout = () => {
-        Inertia.post('/administrator/logout', {}, {
-            onFinish: () => {
-                Inertia.visit('/administrator/login');
+        post(route('administrator.logout'), {
+            onSuccess: () => {
+                window.location.href = '/';
             },
         });
     };
@@ -38,7 +39,7 @@ export default function AdministratorLayout({ children}) {
         setMobileOpen(!mobileOpen);
     };
     // Computed Properties
-	const currPath = window.location.href.split('/')
+    const currPath = window.location.href.split('/')
     const pageName = currPath[currPath.length - 1].replace("-", " ")
     const icon = {
         sx: { color: "primary.main", fontSize: { sm: "1.6rem", xs: "1.2rem" } },
@@ -81,28 +82,28 @@ export default function AdministratorLayout({ children}) {
                 {menus.map((menu, i) => (
                     <ListItem disablePadding key={i} className={pageName.toLocaleLowerCase() == menu.title.toLocaleLowerCase() ? "bg-[#f5f5f5]" : null}>
                         <Link className="w-full" href={route(menu.path)}>
-                            <ListItemButton sx={{gap: 2}} >
+                            <ListItemButton sx={{ gap: 2 }} >
                                 <ListItemIcon sx={{ minWidth: "30px" }}>
                                     {menu.icon}
                                 </ListItemIcon>
-                                <ListItemText sx={{fontWeight: 'bold'}}>{menu.title}</ListItemText>
+                                <ListItemText sx={{ fontWeight: 'bold' }}>{menu.title}</ListItemText>
                             </ListItemButton>
                         </Link>
                     </ListItem>
                 ))}
-                <ListItemButton  sx={{gap: 2}} onClick={handleLogout}>
+                <ListItemButton sx={{ gap: 2 }} onClick={handleLogout}>
                     <ListItemIcon sx={{ minWidth: "30px" }}>
                         <Logout {...icon} />
                     </ListItemIcon>
                     <ListItemText>
-					<Link
-                        href={route('logout')}
-                        method="post"
-                        as="button"
-                    >
-                        Log Out
-                    </Link>
-					</ListItemText>
+                        <Link
+                            href={route('logout')}
+                            method="post"
+                            as="button"
+                        >
+                            Log Out
+                        </Link>
+                    </ListItemText>
                 </ListItemButton>
             </List>
         </>
@@ -120,7 +121,7 @@ export default function AdministratorLayout({ children}) {
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
-					zIndex: 99,
+                    zIndex: 99,
                     display: { xs: "block", sm: "none" },
                     "& .MuiDrawer-paper": {
                         width: drawerWidth,
@@ -137,7 +138,7 @@ export default function AdministratorLayout({ children}) {
                 sx={{
                     width: drawerWidth,
                     display: { xs: "none", sm: "block" },
-					zIndex: 99,
+                    zIndex: 99,
                     "& .MuiDrawer-paper": {
                         boxSizing: "border-box",
                         width: drawerWidth,
@@ -156,7 +157,7 @@ export default function AdministratorLayout({ children}) {
                         boxShadow: "none",
                         borderBottom: "solid rgba(0, 0, 0, 0.12)",
                         borderBottomWidth: "thin",
-						zIndex: 99,
+                        zIndex: 99,
                     }}
                     position="sticky"
                 >
@@ -171,21 +172,21 @@ export default function AdministratorLayout({ children}) {
                         }}
                     >
                         <div className="items-center flex gap-2">
-						<IconButton
-                            aria-label="open drawer"
-                            onClick={handleDrawerToggle}
-                            sx={{ display: { sm: "none" }, border: "1px solid #ababab", borderRadius: "5px",}}
-                        >
-                            <Menu {...icon} />
-                        </IconButton>
+                            <IconButton
+                                aria-label="open drawer"
+                                onClick={handleDrawerToggle}
+                                sx={{ display: { sm: "none" }, border: "1px solid #ababab", borderRadius: "5px", }}
+                            >
+                                <Menu {...icon} />
+                            </IconButton>
 
-						<h2 className="text-black text-2xl font-bold capitalize">{pageName}</h2>
-						</div>
+                            <h2 className="text-black text-2xl font-bold capitalize">{pageName}</h2>
+                        </div>
                     </Box>
                 </AppBar>
 
                 <Box component="main" sx={{ maxWidth: "100%" }}>
-                    <Box sx={{ py: 3, px: '1rem'}}>{children}</Box>
+                    <Box sx={{ py: 3, px: '1rem' }}>{children}</Box>
                 </Box>
             </Box>
         </Box>
