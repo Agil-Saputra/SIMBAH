@@ -1,6 +1,6 @@
 import { Link, Head } from "@inertiajs/react";
 import Button from "@/Components/Button";
-import OperationalCard from "@/Components/OperationalCard";
+// import OperationalCard from "@/Components/OperationalCard";
 import {
     IoMenu,
     IoClose,
@@ -11,12 +11,16 @@ import { useState, useEffect } from "react";
 
 import binIlustration from "../../assets/bin-Ilustration.png";
 import Baloon from "../../assets/baloon.png";
-import recycle from "../../assets/recycle.svg";
-import data from "../../assets/data.svg";
-import menu from "../../assets/menu.svg";
-import logo from "../../assets/logo.png"
+// import recycle from "../../assets/recycle.svg";
+// import data from "../../assets/data.svg";
+// import menu from "../../assets/menu.svg";
+import logo from "../../assets/logo.png";
 // Components
 import Heading from "@/Components/Heading";
+
+import heroVideo from "../../assets/hero-vid.mp4"
+import fotokegiatan1 from "../../assets/kegiatan1.jpg"
+import fotoVisiMisi from "../../assets/visimisi.jpg"
 
 export default function HomePage({ auth }) {
     const [showNav, setShowNav] = useState(false);
@@ -56,16 +60,8 @@ export default function HomePage({ auth }) {
             total: 12,
         },
         {
-            name: "Daur Ulang",
-            total: 123,
-        },
-        {
             name: "Total Berat Sampah",
             total: 839,
-        },
-        {
-            name: "Total Sampah",
-            total: 455,
         },
         {
             name: "Nasabah",
@@ -74,79 +70,71 @@ export default function HomePage({ auth }) {
     ];
     const activities = [
         {
-            title: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis.",
-            description:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis.",
-            bannerImage: Baloon,
-            startDate: Date.now(),
-            endDate: Date.now(),
-        },
-        {
-            title: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis.",
-            description:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis.",
-            bannerImage: Baloon,
-            startDate: Date.now(),
-            endDate: Date.now(),
-        },
-        {
-            title: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis.",
-            description:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, facilis.",
-            bannerImage: Baloon,
-            startDate: Date.now(),
-            endDate: Date.now(),
+            title: "Sosialisasi Pengelolaan Sampah Terpadu",
+            description: "Dalam Kegiatan ini kami melakukan sosialisasi terkait pengelolaan sampah terpadu kepada masyarakat Desa Triharjo Sleman Yogyakarta, kegiatan ini kami lakukan untuk mengatasi permasalahan sampah yang ada di sekitar Desa Triharjo. ",
+            bannerImage: fotokegiatan1,
+            date: "5 Agustus 2024",
         },
     ];
-    const dataSampah = [
-        {
-            title: "daur ulang",
-            image: recycle,
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
-            data: [],
-        },
-        {
-            title: "daur ulang",
-            image: data,
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
-            data: [],
-        },
-        {
-            title: "daur ulang",
-            image: menu,
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
-            data: [],
-        },
-    ];
+    // const dataSampah = [
+    //     {
+    //         title: "daur ulang",
+    //         image: recycle,
+    //         description:
+    //             "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
+    //         data: [],
+    //     },
+    //     {
+    //         title: "daur ulang",
+    //         image: data,
+    //         description:
+    //             "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
+    //         data: [],
+    //     },
+    //     {
+    //         title: "daur ulang",
+    //         image: menu,
+    //         description:
+    //             "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
+    //         data: [],
+    //     },
+    // ];
     const [faqs, setFaqs] = useState([
         {
             question: "Bagaimana Cara Setor Sampah?",
-            answer: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni laudantium repudiandae quos iusto assumenda voluptas! Vero aliquid a dolorem optio.",
+            answer: "Mampir aja ke posko kami, ya! Petugas kami siap bantuin kamu dari awal sampai akhir.",
             open: false,
         },
         {
             question: "Apa Benefit yang saya dapatkan?",
-            answer: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni laudantium repudiandae quos iusto assumenda voluptas! Vero aliquid a dolorem optio.",
+            answer: "Dengan menyetorkan sampah, Anda turut berkontribusi dalam menjaga lingkungan agar tetap bersih dan sehat dalam kehidupan sehari-hari, Anda akan mendapat manfaat yang sangat berarti.",
             open: false,
         },
         {
-            question: "Apa Keuntungan Menggunakan Atras?",
-            answer: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni laudantium repudiandae quos iusto assumenda voluptas! Vero aliquid a dolorem optio.",
+            question: "Bagaimana cara memastikan sampah tidak mencemari lingkungan sekitar?",
+            answer: "Kami memiliki prosedur ketat dalam pengelolaan sampah, mulai dari pengumpulan hingga pengolahan akhir. Semua proses dilakukan sesuai dengan standar lingkungan yang berlaku. Kami juga bekerja sama dengan lembaga terkait untuk memastikan limbah hasil pengolahan tidak mencemari lingkungan.",
             open: false,
         },
         {
             question: "Apa yang membuat Atras Berbeda dengan yang lain?",
-            answer: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni laudantium repudiandae quos iusto assumenda voluptas! Vero aliquid a dolorem optio.",
+            answer: "Kami tidak hanya mengelola sampah, tetapi juga mendaur ulang semaksimal mungkin untuk mengurangi dampak lingkungan. Berbeda dengan layanan lain, kami berkomitmen untuk memberikan solusi pengelolaan sampah yang berkelanjutan",
+            open: false,
+        },
+        {
+            question: "Jenis sampah apa saja yang bisa dikelola oleh Atras?",
+            answer: "Layanan kami menerima berbagai jenis sampah, mulai dari sampah organik (sisa makanan, daun-daun kering), anorganik (plastik, kertas, kaleng), hingga sampah B3 (baterai bekas, lampu fluorescent) dengan syarat dan ketentuan tertentu. Kami memiliki fasilitas pengolahan yang lengkap untuk mengelola setiap jenis sampah secara terpisah.",
+            open: false,
+        },
+        {
+            question: "Bagaimana cara memastikan sampah tidak mencemari lingkungan sekitar?",
+            answer: "Kami memiliki prosedur ketat dalam pengelolaan sampah, mulai dari pengumpulan hingga pengolahan akhir. Semua proses dilakukan sesuai dengan standar lingkungan yang berlaku. Kami juga bekerja sama dengan lembaga terkait untuk memastikan limbah hasil pengolahan tidak mencemari lingkungan",
             open: false,
         },
     ]);
 
-	useEffect(() => {
-		document.body.classList.add("bg-[#ffffff]");
-	}, [0])
+    useEffect(() => {
+        document.body.classList.add("bg-[#ffffff]");
+    }, [0]);
 
     const handleToggle = (index) => {
         setFaqs(
@@ -168,7 +156,11 @@ export default function HomePage({ auth }) {
             <nav className="sticky top-0 z-50 bg-white shadow-md">
                 <div className="container flex items-center justify-between py-4">
                     <Link href="/">
-                        <img src={logo} alt="atras logo" className="md:w-[8rem] w-[5rem]" />
+                        <img
+                            src={logo}
+                            alt="atras logo"
+                            className="md:w-[8rem] w-[5rem]"
+                        />
                     </Link>
                     <div className="hidden gap-12 lg:flex ">
                         {menus.map((menu, index) => {
@@ -247,35 +239,37 @@ export default function HomePage({ auth }) {
                 </div>
             </nav>
 
-            <section class="h-screen w-screen bg-blue-200"></section>
+            <section className="h-fit w-screen bg-gray-200 relative">
+                <video autoPlay muted loop id="myVideo">
+                    <source src={heroVideo} type="video/mp4" />
+                </video>
+            </section>
 
-            <section class="container flex gap-4 justify-between flex-col lg:flex-row">
+            <section class="container flex gap-4 justify-between flex-col lg:flex-row mt-10">
                 <img
                     src={binIlustration}
                     alt="Trash Bin Ilustration"
                     class="max-w-[40rem] object-cover h-auto"
                 />
-                <div class="py-10 pl-10 flex flex-col gap-4">
+                <div class="py-10 md:pl-10 flex flex-col gap-4">
                     <h1 class="text-4xl font-bold ">
-                        Ayo Bergabung Bersama Kami
+					Yuk, bersama kita bersihkan Indonesia! Jadilah bagian dari solusi
                     </h1>
                     <p>
-                        Aktor ialah individu yang memiliki kesadaranakan
-                        permasalahan persampahan dan ingin menjadi bagian dalam
-                        solusi mewujudkan Indonesia Bebas Sampah.
+					Ayo Bergabung Menjadi individu yang memiliki kesadaran akan permasalahan persampahan dan ingin menjadi bagian dalam solusi mewujudkan Indonesia Bebas Sampah
                     </p>
                     <Link href={route("register")}>
                         <Button className="w-fit">Daftar Sekarang</Button>
                     </Link>
                 </div>
             </section>
-
+			{/* Statistik */}
             <section className="container mt-32 text-center">
                 <Heading
                     title="Statistik"
-                    description="Ikut berbagai gerakan Indonesia bebas sampah"
+                    description="Berikut adalah rincian data sampah yang berhasil kami tangani."
                 />
-                <div className="grid mt-12 md:grid-cols-3 gap-7">
+                <div className="grid mt-12 md:grid-cols-2 gap-7">
                     {stats.map((stat, index) => {
                         return (
                             <div
@@ -293,16 +287,16 @@ export default function HomePage({ auth }) {
                     })}
                 </div>
             </section>
-
+			{/* Kegiatan */}
             <section className="container mt-32">
                 <Heading
-                    title="Gerakan Indonesia Bebas Sampah"
-                    description="Ikut berbagai gerakan Indonesia bebas sampah "
+                    title="Gerakan Bebas Sampah"
+                    description="Bergabunglah dalam berbagai gerakan bebas sampah kami yang ada di desa Triharjo."
                 />
 
                 <div
                     className={
-                        "grid grid-flow-col  gap-10 px-5 pb-10 mt-16 overflow-auto overflow-x-scroll overflow-y-hidden no-scrollbar snap-x snap-mandatory snap-always [mask-image:_linear-gradient(to_right,transparent_0,_black_32px,_black_calc(100%-64px),transparent_100%)] " +
+                        "grid grid-flow-col gap-10 pb-10 mt-16 px-2 overflow-auto overflow-x-scroll overflow-y-hidden no-scrollbar snap-x snap-mandatory snap-always [mask-image:_linear-gradient(to_right,transparent_0,_black_0px,_black_calc(100%-0px),transparent_100%)] w-full " +
                         (activities.length <= 3 && "lg:justify-center")
                     }
                 >
@@ -310,28 +304,27 @@ export default function HomePage({ auth }) {
                         return (
                             <div
                                 key={index}
-                                className="shadow-lg rounded-xl snap-end snap-always w-80"
+                                className="shadow-lg rounded-xl snap-end snap-always w-full"
                             >
                                 <img
                                     src={item.bannerImage}
                                     alt={item.title}
-                                    className="object-cover w-full h-48 rounded-t-xl"
+                                    className="object-cover w-full h-[32rem] rounded-t-xl"
                                 />
                                 <div className="p-4">
-                                    <h2 className="text-xl font-medium">
+                                    <h2 className="text-2xl font-bold">
                                         {item.title}
                                     </h2>
-                                    <p className="text-[1rem] mb-10">
+                                    <p className="text-[1.1rem] mb-10">
                                         {item.description}
                                     </p>
                                     <hr />
                                     <footer>
-                                        <p className="text-lg font-semibold">
-                                            Periode :
+                                        <p className="text-xl font-semibold mt-2">
+                                            Tanggal Kegiatan :
                                         </p>
-                                        <p className="text-sm">
-                                            <span>{item.startDate}</span> -{" "}
-                                            <span>{item.endDate}</span>
+                                        <p className="text-md">
+                                            <span>{item.date}</span>
                                         </p>
                                     </footer>
                                 </div>
@@ -340,8 +333,8 @@ export default function HomePage({ auth }) {
                     })}
                 </div>
             </section>
-
-            <section className="container mt-32">
+			{/* Data Operasional Sampah */}
+            {/* <section className="container mt-32">
                 <Heading
                     title="Data Operasional Sampah"
                     description="Ikut berbagai gerakan Indonesia bebas sampah "
@@ -355,20 +348,20 @@ export default function HomePage({ auth }) {
                         />
                     ))}
                 </div>
-            </section>
-
+            </section> */}
+			{/* Visi Misi  */}
             <section className="container mt-32">
                 <Heading
                     title="Visi dan Misi Atras"
-                    description="Ikut berbagai gerakan Indonesia bebas sampah "
+                    description="Berikut Komitmen yang kami junjung dan menjadi pedoman kami mewujudkan lingkungan Bebas Sampah!"
                 />
-                <div className="flex justify-center mt-10 gap-16 md:flex-row flex-col">
+                <div className="grid grid-cols-2 justify-center mt-10 gap-16 md:flex-row flex-col">
                     <img
-                        src={Baloon}
+                        src={fotoVisiMisi}
                         alt=""
-                        className="md:max-w-[20rem] object-cover w-full rounded-lg"
+                        className="object-cover w-full rounded-lg"
                     />
-                    <div className="max-w-[35ch]">
+                    <div >
                         <h1 className="text-[2rem] font-bold">Visi</h1>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing
@@ -384,7 +377,7 @@ export default function HomePage({ auth }) {
                     </div>
                 </div>
             </section>
-
+			{/* Frequently Asked Questions  */}
             <section className="container mt-32">
                 <Heading
                     title="Bantuan"
