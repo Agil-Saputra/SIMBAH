@@ -7,19 +7,16 @@ export default function DangerButton({
     ...props
 }) {
     return (
-        <Button
+        <button
             variant="contained"
             color="error"
-            sx={{ marginRight: 2 }}
             {...props}
             className={
-                `inline-flex items-center px-4 py-2 mr-4 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
-                    disabled && "opacity-25"
-                } ` + className
+                `hover:bg-opacity-80 transition-all ease-in-out duration-200 py-2 sm:px-6 px-3 rounded-lg font-bold bg-red-500 text-white ` + className
             }
             disabled={disabled}
         >
             {children}
-        </Button>
+        </button>
     );
 }

@@ -44,7 +44,7 @@ export default function Modal({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="absolute inset-0 bg-black bg-opacity-30 left-0 top-0" />
+                    <div className="absolute inset-0 bg-black bg-opacity-50 left-0 top-0" />
                 </TransitionChild>
 
                 <TransitionChild
@@ -58,7 +58,7 @@ export default function Modal({
                     <DialogPanel
                         className={`mb-6 relative p-4 pt-10 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto w-full max-w-[30rem]`}
                     >
-                        <div onClick={onClose} className="absolute top-0 right-0 m-2">
+                        <div onClick={onClose} className="absolute top-0 right-0 m-2 cursor-pointer">
                             <Close />
                         </div>
                         {children}
