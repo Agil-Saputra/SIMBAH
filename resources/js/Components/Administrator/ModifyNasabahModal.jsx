@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { useForm, router, usePage } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import swal from "sweetalert";
 import Modal from "../Modal";
 import TextInput from "../TextInput";
 import InputLabel from "../InputLabel";
 import InputError from "../InputError";
 import Button from "../Button";
-import { Inertia } from "@inertiajs/inertia";
 
 export default function ModifyNasabahModal({ show, onClose, type, dataEdit }) {
     const { data, setData, post,patch, processing, errors, reset } = useForm({
@@ -14,7 +13,6 @@ export default function ModifyNasabahModal({ show, onClose, type, dataEdit }) {
         fullName: "",
         password: "",
     });
-    const { flash } = usePage().props;
 
     useEffect(() => {
         if (dataEdit) {
@@ -24,18 +22,6 @@ export default function ModifyNasabahModal({ show, onClose, type, dataEdit }) {
 			});
         }
     }, [dataEdit]);
-
-    // useEffect(() => {
-    //     if (flash.message) {
-    //         reset();
-    //         swal({
-    //             title: "Success",
-    //             text: flash.message,
-    //             icon: "success",
-    //         });
-    //         onClose();
-    //     }
-    // }, [flash.message]);
 
     const submit = (e) => {
         e.preventDefault();

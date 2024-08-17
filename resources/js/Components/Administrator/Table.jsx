@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper";
 import { IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import swal from 'sweetalert';
-import { router, usePage } from '@inertiajs/react';
+import { router} from '@inertiajs/react';
 import AddSampahForm from "./AddSampahForm";
 
 import Modal from "../Modal";
@@ -45,7 +45,6 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
     const [editModal, setEditModal] = useState(false);
     const [id, setId] = useState('');
     const [data, setData] = useState('');
-    const { flash } = usePage().props;
 
     const formatHeaderName = (headerName) =>
         headerName.replace(/([a-z])([A-Z])/g, "$1 $2");
@@ -73,11 +72,10 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
             onSuccess: () => {
                 swal({
                     title: "Success",
-                    text: flash.message,
+                    text: "Data Berhasil Dihapus!",
                     icon: "success",
 					buttons : {
-						confirm : {text:'Ubah',className:'bg-primary'},
-						cancel : {text:'Cancel',className:'bg-primary'},
+						confirm : {text:'Lanjutkan',className:'bg-primary'},
 					}
                 });
                 setDeleteModal(false);
@@ -102,7 +100,7 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
 			{tableTitle == "Data Sampah" && (
 				<>
 				<Modal show={editModal} onClose={() => setEditModal(false)} >
-					<AddSampahForm dataNasabah={dataNasabah} dataKategori={dataKategori} type="edit" dataEdit={data}/>
+					<AddSampahForm onClose={() => setEditModal(false)} dataNasabah={dataNasabah} dataKategori={dataKategori} type="edit" dataEdit={data}/>
 				</Modal>
 				</>
 			)}
@@ -139,7 +137,7 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
                                     <StyledTableCell key={cellIndex}>
                                         {key === 'kategori' && row.kategori ? row.kategori.nama_kategori : ""}
                                         {key === 'user' && row.user ? row.user.full_name : ""}
-                                        {key === 'total_sampah' && row[key]+' KG'}
+                                        {key === 'total_sampah' && row[key]+' Kg'}
                                         {key !== 'kategori' && key !== 'user' && key !== 'total_sampah' && row[key]}
                                     </StyledTableCell>
                                 ))}

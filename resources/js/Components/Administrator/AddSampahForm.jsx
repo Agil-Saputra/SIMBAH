@@ -4,17 +4,10 @@ import InputLabel from "../InputLabel";
 import InputError from "../InputError";
 import Button from "../Button";
 import Dropdown from "./Dropdown";
-import Modal from "../Modal";
-import { useState, useEffect } from "react";
-import { TaskAlt, Cancel } from "@mui/icons-material";
+import { useEffect } from "react";
+import swal from 'sweetalert';
 
-export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
-
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isEditSuccess, setIsEditSuccess] = useState(false);
-    const [isEditError, setIsEditError] = useState(false);
-    const [isError, setIsError] = useState(false);
-
+export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit, onClose}) {
     const { data, setData, post, processing, errors,  reset } = useForm({
         nasabah: "",
         kategori: "",
@@ -38,17 +31,38 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
         if (dataEdit) {
             post(route("administrator.kelolaSampah.update", { id: dataEdit.id }), { // Menambahkan id di sini
                 onError: () => {
-                    setIsEditError(true);
+                    swal({
+						title: "Gagal",
+						text: "Data Gagal DiUpdate!, Cek koneksimu atau coba ulang menambahkan data",
+						icon: "error",
+						buttons : {
+							confirm : {text:'Lanjutkan',className:'bg-primary'},
+						}
+					});
                 },
                 onSuccess: () => {
-                    setIsEditSuccess(true);
-                    onClose();
+                    swal({
+						title: "Berhasil",
+						text: "Data Berhasil DiUpdate!",
+						icon: "success",
+						buttons : {
+							confirm : {text:'Lanjutkan',className:'bg-primary'},
+						}
+					});
+					onClose();
                 },
             });
         } else {
             post(route("administrator.kelolaSampah.store"), {
                 onError: () => {
-                    setIsError(true);
+                    swal({
+						title: "Gagal",
+						text: "Data Gagal Ditambahkan!, Cek koneksimu atau coba ulang menambahkan data",
+						icon: "error",
+						buttons : {
+							confirm : {text:'Lanjutkan',className:'bg-primary'},
+						}
+					});
                 },
                 onSuccess: () => {
                     setData(prevData => ({
@@ -56,7 +70,14 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
                         totalSampah: "",
                         kategori: "",
                     }));
-                    setIsSuccess(true);
+					swal({
+						title: "Success",
+						text: "Data Berhasil Ditambahkan!",
+						icon: "success",
+						buttons : {
+							confirm : {text:'Lanjutkan',className:'bg-primary'},
+						}
+					});
                 },
             });
         }
@@ -64,32 +85,6 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit}) {
 
     return (
         <>
-            <Modal show={isSuccess} onClose={() => setIsSuccess(false)}>
-                <TaskAlt className="text-green-600 " />
-                <h1 className="text-xl font-bold text-green-600">
-                    Data Berhasil Ditambahkan
-                </h1>
-            </Modal>
-            <Modal show={isError} onClose={() => setIsError(false)}>
-                <Cancel className="text-red-600" />
-                <h1 className="text-xl font-bold text-red-600">
-                    Data Gagal Ditambahkan!, Cek koneksimu atau coba ulang
-                    menambahkan data
-                </h1>
-            </Modal>
-            <Modal show={isEditSuccess} onClose={() => setIsEditSuccess(false)}>
-                <TaskAlt className="text-green-600 " />
-                <h1 className="text-xl font-bold text-green-600">
-                    Data Berhasil DiEdit
-                </h1>
-            </Modal>
-            <Modal show={isEditError} onClose={() => setIsEditError(false)}>
-                <Cancel className="text-red-600" />
-                <h1 className="text-xl font-bold text-red-600">
-                    Pengeditan Gagal!, Cek koneksimu atau coba ulang
-                    menambahkan data
-                </h1>
-            </Modal>
             <form onSubmit={submit} className="w-full">
                 <div>
                     <InputLabel value="Pilih Nasabah"/> 
