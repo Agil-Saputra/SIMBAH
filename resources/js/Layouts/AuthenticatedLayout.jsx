@@ -17,12 +17,14 @@ import {
 import { Logout, Menu, People, Dashboard } from "@mui/icons-material";
 
 export default function AuthenticatedLayout({ children }) {
-	useEffect(() => {
-		document.body.classList.add("bg-[#F3F4F6]");
-	}, [0])
     // Hooks
     const [mobileOpen, setMobileOpen] = useState(false);
     const drawerWidth = 240;
+	useEffect(() => {
+		document.body.classList.add("bg-[#F3F4F6]");
+		document.body.classList.remove("bg-[#ffffff]");
+	}, [])
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };

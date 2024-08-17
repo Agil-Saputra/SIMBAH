@@ -22,7 +22,7 @@ import { Logout, Menu, People, Category, Dashboard, Recycling } from "@mui/icons
 export default function AdministratorLayout({ children }) {
     useEffect(() => {
         document.body.classList.add("bg-[#F3F4F6]");
-    }, [0])
+    }, [])
     const { post } = useForm();
 
     const handleLogout = () => {
