@@ -6,6 +6,7 @@ import Baloon from "../../assets/baloon.png";
 // import data from "../../assets/data.svg";
 // import menu from "../../assets/menu.svg";
 import logo from "../../assets/logo.png";
+import logoV2 from "../../assets/logoHorizontaL.png";
 import heroVideo from "../../assets/hero-vid.mp4";
 import fotokegiatan1 from "../../assets/kegiatan1.jpg";
 import fotoVisiMisi from "../../assets/visimisi.jpg";
@@ -30,13 +31,13 @@ export default function HomePage({ auth }) {
         }
     }
 
-	useEffect(() => {
+    useEffect(() => {
         document.body.classList.add("bg-[#ffffff]");
         document.body.classList.remove("bg-[#F3F4F6]");
     }, []);
 
     // this is mock data for stats section
-	const menus = [
+    const menus = [
         {
             title: "Beranda",
             route: "/",
@@ -244,7 +245,7 @@ export default function HomePage({ auth }) {
                 </video>
             </section>
 
-            <section className="container flex gap-4 justify-between flex-col lg:flex-row mt-10" >
+            <section className="container flex gap-4 justify-between flex-col lg:flex-row mt-10">
                 <img
                     src={binIlustration}
                     alt="Trash Bin Ilustration"
@@ -265,8 +266,33 @@ export default function HomePage({ auth }) {
                     </Link>
                 </div>
             </section>
+			{/* About us */}
+            <section className="container mt-32 text-center" id="about">
+                <Heading title="Tentang Kami" description="" />
+               <div className="mt-10 flex items-start flex-col md:flex-row gap-10">
+			   <p className="text-justify text-xl">
+                    ATRAS hadir sebagai solusi inovatif dalam pengelolaan sampah
+                    di Triharjo, Sleman. Dengan semangat menjaga lingkungan yang
+                    berkelanjutan, kami berkomitmen untuk mengurangi dampak
+                    negatif sampah terhadap alam dan masyarakat. 
+					<br/>
+					<br/>
+					Melalui proses
+                    pengolahan yang modern dan ramah lingkungan, kami mengubah
+                    sampah menjadi sumber daya yang bernilai. AtraS tidak hanya
+                    sekadar tempat pembuangan sampah, tetapi juga pusat edukasi
+                    dan inspirasi bagi masyarakat untuk hidup lebih ramah
+                    lingkungan. Visi: Menjadi pemimpin dalam pengelolaan sampah
+                    berkelanjutan di Yogyakarta, menginspirasi masyarakat untuk
+                    turut serta dalam menjaga lingkungan.
+                </p>
+				<div className="p-4 rounded-md border bg-lightgray">
+					<img src={logoV2} alt="atras logo" />
+				</div>
+			   </div>
+            </section>
             {/* Statistik */}
-            <section className="container mt-32 text-center" >
+            <section className="container mt-32 text-center">
                 <Heading
                     title="Statistik"
                     description="Berikut adalah rincian data sampah yang berhasil kami tangani."
@@ -276,7 +302,7 @@ export default function HomePage({ auth }) {
                         return (
                             <div
                                 key={index}
-                                className="p-4 text-center bg-[#F1F1F1] rounded-lg "
+                                className="p-4 text-center bg-lightgray rounded-lg "
                             >
                                 <h1 className="text-[2.5rem] text-primary font-bold">
                                     {stat.total}
@@ -290,7 +316,7 @@ export default function HomePage({ auth }) {
                 </div>
             </section>
             {/* Kegiatan */}
-            <section className="container mt-32" id="about">
+            <section className="container mt-32" >
                 <Heading
                     title="Gerakan Bebas Sampah"
                     description="Bergabunglah dalam berbagai gerakan bebas sampah kami yang ada di desa Triharjo."
@@ -352,33 +378,47 @@ export default function HomePage({ auth }) {
                 </div>
             </section> */}
             {/* Visi Misi  */}
-            {/* <section className="container mt-32">
+            <section className="container mt-32">
                 <Heading
                     title="Visi dan Misi Atras"
                     description="Berikut Komitmen yang kami junjung dan menjadi pedoman kami mewujudkan lingkungan Bebas Sampah!"
                 />
-                <div className="grid md: grid-cols-2 justify-center mt-10 gap-16 md:flex-row flex-col">
+                <div className="grid md:grid-cols-2 justify-center mt-10 gap-16 md:flex-row flex-col">
                     <img
                         src={fotoVisiMisi}
                         alt=""
                         className="object-cover w-full rounded-lg"
                     />
-                    <div >
+                    <div>
                         <h1 className="text-[2rem] font-bold">Visi</h1>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Est hic quod obcaecati excepturi libero
-                            dolorum dicta adipisci in, repellendus eveniet.
+                            Menjadi pemimpin dalam pengelolaan sampah
+                            berkelanjutan di Yogyakarta dan menginspirasi
+                            masyarakat untuk turut serta dalam menjaga
+                            lingkungan.
                         </p>
                         <h1 className="text-[2rem] font-bold">Misi</h1>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Est hic quod obcaecati excepturi libero
-                            dolorum dicta adipisci in, repellendus eveniet.
-                        </p>
+                        <ul>
+                            <li>
+                                Mengurangi volume sampah yang berakhir di tempat
+                                pembuangan akhir.
+                            </li>
+                            <li>
+                                Mengolah sampah menjadi produk yang bernilai
+                                tambah.
+                            </li>
+                            <li>
+                                Meningkatkan kesadaran masyarakat tentang
+                                pentingnya pengelolaan sampah.
+                            </li>
+                            <li>
+                                Membangun kemitraan dengan berbagai pihak untuk
+                                mencapai tujuan bersama.
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </section> */}
+            </section>
             {/* Frequently Asked Questions  */}
             <section className="container mt-32" id="faq">
                 <Heading
@@ -393,7 +433,7 @@ export default function HomePage({ auth }) {
                                     key={index}
                                     onClick={() => handleToggle(index)}
                                 >
-                                    <div className="relative z-30 flex items-center justify-between w-full p-4 rounded-lg bg-primary">
+                                    <div className="relative z-30 flex items-center justify-between overflow-hidden w-full p-4 rounded-lg bg-primary">
                                         <p className="text-xl font-semibold text-left text-white">
                                             {faq.question}
                                         </p>
@@ -414,7 +454,7 @@ export default function HomePage({ auth }) {
 
                                     <div
                                         className={
-                                            "text-sm w-full font-medium text-white -translate-y-2 bg-gray-500 rounded-b-lg -z-10 origin-top transition-all " +
+                                            "text-md w-full font-medium -translate-y-2 bg-lightgray rounded-b-lg -z-10 origin-top transition-all overflow-hidden" +
                                             (faq.open ? "h-fit p-4" : " h-0")
                                         }
                                     >
