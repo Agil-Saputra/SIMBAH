@@ -1,9 +1,10 @@
 import React from "react";
 import AdministratorLayout from "@/Layouts/AdministratorLayout";
 import { Head } from "@inertiajs/react";
-import Table from "@/Components/Administrator/Table";
 import AddSampahForm from "@/Components/Administrator/AddSampahForm";
 import ElevatedContainer from "@/Components/ElevatedContainer";
+import SampahTable from "@/Components/Administrator/SampahTable";
+
 const headers = ["Tanggal", "Nama Nasabah", "Kategori", "Total Sampah"];
 const keys = ["tanggal", "user", "kategori", "total_sampah"];
 const KelolaSampah = (data) => {
@@ -12,7 +13,7 @@ const KelolaSampah = (data) => {
     const nasabah = data.nasabah;
     return (
         <>
-            <Head title="KelolaSampah" />
+            <Head title="Kelola Sampah" />
             <AdministratorLayout>
                 <ElevatedContainer>
                     <h1 className="text-2xl font-bold mb-6">
@@ -22,10 +23,10 @@ const KelolaSampah = (data) => {
                         dataKategori={kategori}
                         dataNasabah={nasabah}
                     />
-                </ElevatedContainer>
+                </ElevatedContainer>			
                 <div className="mt-16">
                     <ElevatedContainer>
-                        <Table
+                        <SampahTable
                             headers={headers}
                             rows={sampah}
                             keys={keys}
@@ -34,7 +35,7 @@ const KelolaSampah = (data) => {
                             dataNasabah={nasabah}
                         />
                     </ElevatedContainer>
-                </div>
+                </div>				
             </AdministratorLayout>
         </>
     );

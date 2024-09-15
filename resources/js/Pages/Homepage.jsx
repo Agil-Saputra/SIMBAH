@@ -249,7 +249,7 @@ export default function HomePage({ auth }) {
                 <img
                     src={binIlustration}
                     alt="Trash Bin Ilustration"
-                    class="max-w-[40rem] object-cover h-auto"
+                    className="max-w-[40rem] object-cover h-auto"
                 />
                 <div className="py-10 md:pl-10 flex flex-col gap-4">
                     <h1 className="text-4xl font-bold ">
@@ -270,6 +270,9 @@ export default function HomePage({ auth }) {
             <section className="container mt-32 text-center" id="about">
                 <Heading title="Tentang Kami" description="" />
                <div className="mt-10 flex items-start flex-col md:flex-row gap-10">
+			   <div className="p-4 rounded-md border bg-lightgray">
+					<img src={logoV2} alt="atras logo" />
+				</div>
 			   <p className="text-justify text-xl">
                     ATRAS hadir sebagai solusi inovatif dalam pengelolaan sampah
                     di Triharjo, Sleman. Dengan semangat menjaga lingkungan yang
@@ -286,9 +289,6 @@ export default function HomePage({ auth }) {
                     berkelanjutan di Yogyakarta, menginspirasi masyarakat untuk
                     turut serta dalam menjaga lingkungan.
                 </p>
-				<div className="p-4 rounded-md border bg-lightgray">
-					<img src={logoV2} alt="atras logo" />
-				</div>
 			   </div>
             </section>
             {/* Statistik */}

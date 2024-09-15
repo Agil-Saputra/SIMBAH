@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{sampah}', [Administrator\KelolaSampahController::class, 'destroy'])->name('delete');
         });
         Route::get('/keuangan', [Administrator\KeuanganController::class, 'index'])->name('keuangan');
+        Route::get('/kelola-konten', [Administrator\KelolaKontenController::class, 'index'])->name('kelolaKonten');
         // Logout Route
         Route::post('/logout', [Administrator\LogoutController::class, 'index'])->name('logout');
     });

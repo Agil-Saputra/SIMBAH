@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { FormControl, Select, MenuItem } from "@mui/material";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -29,15 +30,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function UserTable({ headers, rows, tableTitle, keys }) {
-
+	const [property, setProperty] = useState('')
     const formatHeaderName = (headerName) =>
         headerName.replace(/([a-z])([A-Z])/g, "$1 $2");
-
+	const handleSortChange = (event) => {
+		setProperty(event.target.value);
+	  };
 
     return (
         <>
 			<div className="flex items-start gap-4 max-md:flex-col justify-between mb-2">
-			<h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
+			<div className="flex items-center justify-between mb-2 w-full">
+				<h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
+				<FormControl>
+                    <Select
+                        value={property}
+						displayEmpty
+                        onChange={handleSortChange}
+						sx={{padding: 0}}
+                    >
+                        <MenuItem value='' disabled>Urutkan Data</MenuItem>
+                        <MenuItem value='Terbaru'>Tanggal (Terbaru)</MenuItem>
+                        <MenuItem value='Terberat'>Total Sampah (Terberat)</MenuItem>
+                        <MenuItem value='Terberat'>Total Sampah (Teringan)</MenuItem>
+                    </Select>
+				</FormControl>
+			</div>
 			</div>
             <TableContainer sx={{ width: '100%' }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">

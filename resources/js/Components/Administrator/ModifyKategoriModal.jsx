@@ -10,11 +10,15 @@ import Button from "../Button";
 export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
     const { data, setData, post, patch, processing, errors, reset } = useForm({
         namaKategori: "",
+		deskripsi: "",
+		harga : "",
     });
 
     useEffect(() => {
         if (dataEdit) {
             setData("namaKategori", dataEdit.nama_kategori);
+            setData("deskripsi", dataEdit.deskripsi);
+            setData("harga", dataEdit.deskripsi);
         }
     }, [dataEdit]);
 
@@ -63,7 +67,7 @@ export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
 
     return (
         <Modal show={show} onClose={onClose}>
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className="grid gap-4">
                 <div>
                     <InputLabel htmlFor="namaKategori" value="Nama Kategori" />
                     <TextInput
@@ -79,7 +83,46 @@ export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
                         }
                     />
                     <InputError
+                        message={errors.deskripsi}
+                        className="mt-2"
+                    />
+                </div>
+				<div>
+                    <InputLabel htmlFor="deskripsi" value="Deskripsi" />
+                    <TextInput
+                        id="deskripsi"
+                        name="deskripsi"
+                        placeholder="Masukkan Deskripsi"
+                        value={data.deskripsi}
+                        required
+                        className="block w-full mt-2"
+                        isFocused={true}
+                        onChange={(e) =>
+                            setData("deskripsi", e.target.value)
+                        }
+                    />
+                    <InputError
                         message={errors.namaKategori}
+                        className="mt-2"
+                    />
+                </div>
+                <div>
+                    <InputLabel htmlFor="harga" value="Harga (Rp)" />
+                    <TextInput
+                        id="harga"
+                        name="harga"
+						type="number"
+                        placeholder="Masukkan Harga"
+                        value={data.harga}
+                        required
+                        className="block w-full mt-2"
+                        isFocused={true}
+                        onChange={(e) =>
+                            setData("harga", e.target.value)
+                        }
+                    />
+                    <InputError
+                        message={errors.harga}
                         className="mt-2"
                     />
                 </div>

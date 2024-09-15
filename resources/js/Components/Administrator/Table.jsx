@@ -39,12 +39,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
+
 export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah, dataKategori }) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [addModal, setAddModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [id, setId] = useState('');
-    const [data, setData] = useState('');
+	const [data, setData] = useState([]);
+
 
     const formatHeaderName = (headerName) =>
         headerName.replace(/([a-z])([A-Z])/g, "$1 $2");
@@ -83,6 +85,7 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
             },
         });
     };
+  
 
     return (
         <>
@@ -97,13 +100,6 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
 				<ModifyNasabahModal type="add" show={addModal} onClose={() => setAddModal(false)}/>
 				</>
 			)}
-			{tableTitle == "Data Sampah" && (
-				<>
-				<Modal show={editModal} onClose={() => setEditModal(false)} >
-					<AddSampahForm onClose={() => setEditModal(false)} dataNasabah={dataNasabah} dataKategori={dataKategori} type="edit" dataEdit={data}/>
-				</Modal>
-				</>
-			)}
 			{tableTitle == "Data Kategori" && (
 				<>
 				<ModifyKategoriModal type="edit" show={editModal} onClose={() => setEditModal(false)} dataEdit={data}/>
@@ -112,7 +108,7 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
 			)}
 			<div className="flex items-start gap-4 justify-between w-full mb-2">
 			<h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
-			{tableTitle == "Data Sampah" ? null : <Button onClick={() => setAddModal(true)}>Tambah Data</Button>}
+			 <Button onClick={() => setAddModal(true)}>Tambah Data</Button>
 			</div>
             <TableContainer sx={{ width: '100%' }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -137,7 +133,6 @@ export default function DataTable({ headers, rows, tableTitle, keys, dataNasabah
                                     <StyledTableCell key={cellIndex}>
                                         {key === 'kategori' && row.kategori ? row.kategori.nama_kategori : ""}
                                         {key === 'user' && row.user ? row.user.full_name : ""}
-                                        {key === 'total_sampah' && row[key]+' Kg'}
                                         {key !== 'kategori' && key !== 'user' && key !== 'total_sampah' && row[key]}
                                     </StyledTableCell>
                                 ))}

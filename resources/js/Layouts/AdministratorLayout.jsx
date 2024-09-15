@@ -17,7 +17,7 @@ import {
     IconButton,
 } from "@mui/material";
 // import all icons
-import { Logout, Menu, People, Category, Dashboard, Recycling } from "@mui/icons-material";
+import { Logout, Menu, People, Category, Dashboard, Recycling, Source } from "@mui/icons-material";
 
 export default function AdministratorLayout({ children }) {
     useEffect(() => {
@@ -64,6 +64,11 @@ export default function AdministratorLayout({ children }) {
             title: "Kelola Sampah",
             path: "administrator.kelolaSampah.index",
             icon: <Recycling {...icon} />,
+        },
+        {
+            title: "Kelola Konten",
+            path: "administrator.kelolaKonten",
+            icon: <Source {...icon} />,
         },
         // {
         //     title: "Keuangan",

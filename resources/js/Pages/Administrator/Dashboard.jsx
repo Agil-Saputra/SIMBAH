@@ -4,6 +4,7 @@ import { Head } from "@inertiajs/react";
 import DataCard from "@/Components/Administrator/DataCard";
 import { BarChart } from "@mui/x-charts/BarChart";
 import ElevatedContainer from "@/Components/ElevatedContainer";
+
 const Dashboard = (data) => {
     const datasets = data.datasets;
     const totalSampah = data.totalSampah;

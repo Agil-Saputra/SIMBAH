@@ -6,6 +6,8 @@ import ElevatedContainer from '@/Components/ElevatedContainer'
 const Kategori = (kategoris) => {
 	const headers = [
 		'Nama Kategori',
+		'Deskripsi',
+		'Harga',
 		'Jumlah',
 	]
 	const keys = [

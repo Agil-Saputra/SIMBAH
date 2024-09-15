@@ -25,8 +25,6 @@ class KategoriController extends Controller
     
         return redirect()->back()->with('message', 'Kategori berhasil disimpan');
     }
-    
-    
     public function update(Request $request, Kategori $kategori){
         $request->validate([
             'namaKategori' => 'required|min:3',     
