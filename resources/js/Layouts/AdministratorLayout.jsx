@@ -23,7 +23,7 @@ export default function AdministratorLayout({ children }) {
     useEffect(() => {
         document.body.classList.add("bg-[#F3F4F6]");
     }, [])
-    const { post } = useForm();
+    const { post } = useForm(); 
 
     const handleLogout = () => {
         post(route('administrator.logout'), {
@@ -67,7 +67,7 @@ export default function AdministratorLayout({ children }) {
         },
         {
             title: "Kelola Konten",
-            path: "administrator.kelolaKonten",
+            path: "administrator.kelola-konten.index",
             icon: <Source {...icon} />,
         },
         // {

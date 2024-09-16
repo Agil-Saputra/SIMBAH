@@ -11,19 +11,49 @@ use App\Http\Controllers\Controller;
 
 class KelolaSampahController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $kategori = Kategori::all();
-        $nasabah = User::where('role', 'user')->orderBy('full_name','asc')->get();
-        $sampah = Sampah::with(['user', 'kategori'])->orderBy('id','desc')->get();
-        return Inertia::render('Administrator/KelolaSampah',compact('kategori','nasabah','sampah'));
+        $nasabah = User::where('role', 'user')->orderBy('full_name', 'asc')->get();
+        $sampah = Sampah::with(['user', 'kategori'])->orderBy('id', 'desc')->get();
+        return Inertia::render('Administrator/KelolaSampah', compact('kategori', 'nasabah', 'sampah'));
+    }
+    public function sort_by_date()
+    {
+        $sampah = Sampah::with(['user', 'kategori'])->orderBy('tanggal', 'desc')->get();
+        return json_encode($sampah);
+    }
+    public function sort_by_nama_nasabah_asc()
+    {
+        $sampah = Sampah::with(['user', 'kategori'])
+            ->join('users', 'sampahs.user_id', '=', 'users.id')
+            ->orderBy('users.full_name', 'asc')
+            ->get();
+        return json_encode($sampah);
+    }
+    public function sort_by_nama_nasabah_desc()
+    {
+        $sampah = Sampah::with(['user', 'kategori'])
+            ->join('users', 'sampahs.user_id', '=', 'users.id')
+            ->orderBy('users.full_name', 'desc')
+            ->get();
+        return json_encode($sampah);
+    }
+    public function total_sampah_desc(){
+        $sampah = Sampah::with(['user', 'kategori'])->orderBy('total_sampah', 'desc')->get();
+        return json_encode($sampah);
     } 
-
-    public function store(Request $request){
-        $request->validate([            
-            'nasabah' => 'required',     
-            'kategori' => 'required',     
-            'totalSampah' => 'required',     
-        ],[
+    public function total_sampah_asc(){
+        $sampah = Sampah::with(['user', 'kategori'])->orderBy('total_sampah', 'asc')->get();
+        return json_encode($sampah);
+    } 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nasabah' => 'required',
+            'kategori' => 'required',
+            'totalSampah' => 'required',
+        ], [
             'nasabah.required' => 'Nama Nasabah harus diisi',
             'kategori.required' => 'Nama Kategori harus diisi',
             'totalSampah.required' => 'Total sampah harus diisi',
@@ -42,12 +72,13 @@ class KelolaSampahController extends Controller
         return redirect()->back()->with('message', 'Data Sampah berhasil disimpan');
     }
 
-    public function update(Request $request, Sampah $sampah){ 
-        $request->validate([            
-            'nasabah' => 'required',     
-            'kategori' => 'required',     
-            'totalSampah' => 'required',     
-        ],[
+    public function update(Request $request, Sampah $sampah)
+    {
+        $request->validate([
+            'nasabah' => 'required',
+            'kategori' => 'required',
+            'totalSampah' => 'required',
+        ], [
             'nasabah.required' => 'Nama Nasabah harus diisi',
             'kategori.required' => 'Nama Kategori harus diisi',
             'totalSampah.required' => 'Total sampah harus diisi',
@@ -64,12 +95,13 @@ class KelolaSampahController extends Controller
         $kategoriBaru = Kategori::findOrFail($request->kategori);
         $sampahBaru = $request->totalSampah;
         $kategoriBaru->update(['jumlah' => $sampahBaru + $kategoriBaru->jumlah]);
-        return back()->with('message','Data sampah berhasil diupdate');
+        return back()->with('message', 'Data sampah berhasil diupdate');
     }
-    public function destroy(Sampah $sampah){
+    public function destroy(Sampah $sampah)
+    {
         $kategori = Kategori::findOrFail($sampah->kategori_id);
         $kategori->update(['jumlah' => $kategori->jumlah - $sampah->total_sampah]);
         $sampah->delete();
-        return back()->with('message','Data sampah berhasil dihapus');
-    } 
+        return back()->with('message', 'Data sampah berhasil dihapus');
+    }
 }

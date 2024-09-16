@@ -24,7 +24,14 @@ import {
 
 export default function HomePage({ auth }) {
     const [showNav, setShowNav] = useState(false);
-
+    axios.get(route('get-konten')) 
+    .then(function (response) {
+        console.log(response.data);
+    })
+    .catch(function (error) {
+        // Handle error jika gagal
+        console.error('Error fetching data:', error);
+    });
     function handelToggle() {
         {
             setShowNav(!showNav);

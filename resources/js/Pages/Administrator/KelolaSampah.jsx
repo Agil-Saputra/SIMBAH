@@ -11,6 +11,14 @@ const KelolaSampah = (data) => {
     const sampah = data.sampah;
     const kategori = data.kategori;
     const nasabah = data.nasabah;
+    axios.get(route('administrator.kelolaSampah.total_sampah_desc')) 
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            // Handle error jika gagal
+            console.error('Error fetching data:', error);
+        });
     return (
         <>
             <Head title="Kelola Sampah" />
@@ -23,7 +31,7 @@ const KelolaSampah = (data) => {
                         dataKategori={kategori}
                         dataNasabah={nasabah}
                     />
-                </ElevatedContainer>			
+                </ElevatedContainer>
                 <div className="mt-16">
                     <ElevatedContainer>
                         <SampahTable
@@ -31,11 +39,11 @@ const KelolaSampah = (data) => {
                             rows={sampah}
                             keys={keys}
                             tableTitle={"Data Sampah"}
-							dataKategori={kategori}
+                            dataKategori={kategori}
                             dataNasabah={nasabah}
                         />
                     </ElevatedContainer>
-                </div>				
+                </div>
             </AdministratorLayout>
         </>
     );

@@ -10,15 +10,16 @@ import Button from "../Button";
 export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
     const { data, setData, post, patch, processing, errors, reset } = useForm({
         namaKategori: "",
-		deskripsi: "",
-		harga : "",
+        deskripsi: "",
+        harga: "",
     });
-
     useEffect(() => {
         if (dataEdit) {
-            setData("namaKategori", dataEdit.nama_kategori);
-            setData("deskripsi", dataEdit.deskripsi);
-            setData("harga", dataEdit.deskripsi);
+            setData({
+                namaKategori: dataEdit.nama_kategori,
+                deskripsi: dataEdit.deskripsi,
+                harga: dataEdit.harga,
+            });
         }
     }, [dataEdit]);
 
@@ -50,7 +51,7 @@ export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
                         title: "Success",
                         text: "Kategori berhasil ditambahkan!",
                         icon: "success",
-						buttons: {
+                        buttons: {
                             confirm: {
                                 text: "Lanjutkan",
                                 className: "bg-primary",
@@ -87,7 +88,7 @@ export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
                         className="mt-2"
                     />
                 </div>
-				<div>
+                <div>
                     <InputLabel htmlFor="deskripsi" value="Deskripsi" />
                     <TextInput
                         id="deskripsi"
@@ -111,7 +112,7 @@ export default function ModifyKategoriModal({ show, onClose, type, dataEdit }) {
                     <TextInput
                         id="harga"
                         name="harga"
-						type="number"
+                        type="number"
                         placeholder="Masukkan Harga"
                         value={data.harga}
                         required

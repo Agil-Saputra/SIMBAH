@@ -11,7 +11,7 @@ const Kategori = (kategoris) => {
 		'Jumlah',
 	]
 	const keys = [
-		'nama_kategori', 'jumlah'
+		'nama_kategori','deskripsi','harga','jumlah'
 	]
 
 	return (
