@@ -20,7 +20,11 @@ class KelolaSampahController extends Controller
     }
     public function sort_by_date()
     {
-        $sampah = Sampah::with(['user', 'kategori'])->orderBy('tanggal', 'desc')->get();
+        if(auth()->user()->role == 'admin'){
+            $sampah = Sampah::with(['user', 'kategori'])->orderBy('tanggal', 'desc')->get();
+        }else{
+            $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('tanggal', 'desc')->get();
+        }
         return json_encode($sampah);
     }
     public function sort_by_nama_nasabah_asc()
@@ -40,12 +44,20 @@ class KelolaSampahController extends Controller
         return json_encode($sampah);
     }
     public function total_sampah_desc(){
+        if(auth()->user()->role == 'admin'){
         $sampah = Sampah::with(['user', 'kategori'])->orderBy('total_sampah', 'desc')->get();
+        }else{
+            $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'desc')->get();
+        }
         return json_encode($sampah);
     } 
     public function total_sampah_asc(){
+        if(auth()->user()->role == 'admin'){
         $sampah = Sampah::with(['user', 'kategori'])->orderBy('total_sampah', 'asc')->get();
-        return json_encode($sampah);
+        }else{
+            $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'asc')->get();
+        }
+        return json_encode($sampah);    
     } 
     public function store(Request $request)
     {
