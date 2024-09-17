@@ -15,13 +15,14 @@ Route::get('/', function () {
     ]);
 })->name('/');
 Route::get('/get-konten',[Administrator\KelolaKontenController::class,'get_content'])->name('get-konten');
-Route::get('/dashboard', DashboardController::class)->middleware(['auth'])->name('dashboard');
 Route::get('/administrator/login', [Administrator\LoginController::class, 'index'])->middleware('guest');
 Route::post('/administrator/login', [Administrator\LoginController::class, 'store'])->name('administrator.login');
-Route::get('/total_sampah_desc', [Administrator\KelolaSampahController::class, 'total_sampah_desc'])->name('total_sampah_desc');
-Route::get('/total_sampah_asc', [Administrator\KelolaSampahController::class, 'total_sampah_asc'])->name('total_sampah_asc');
-Route::get('/sort_by_date', [Administrator\KelolaSampahController::class, 'sort_by_date'])->name('sort_by_date');
-Route::get('/sort_by_nama_nasabah_asc', [Administrator\KelolaSampahController::class, 'sort_by_nama_nasabah_asc'])->name('sort_by_nama_nasabah_asc');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/sort_by_date_nasabah', [Administrator\KelolaSampahController::class, 'sort_by_date_nasabah'])->name('sort_by_date');
+    Route::get('/total_sampah_nasabah_desc', [Administrator\KelolaSampahController::class, 'total_sampah_nasabah_desc'])->name('total_sampah_desc');
+    Route::get('/total_sampah_nasabah_asc', [Administrator\KelolaSampahController::class, 'total_sampah_nasabah_asc'])->name('total_sampah_asc');
+});
 Route::middleware([AdminMiddleware::class,'auth'])->group(function () {
     Route::prefix('administrator')->name('administrator.')->group(function () {
         Route::get('/dashboard', [Administrator\DashboardController::class, 'index'])->name('dashboard');
@@ -45,9 +46,11 @@ Route::middleware([AdminMiddleware::class,'auth'])->group(function () {
             Route::post('/', [Administrator\KelolaSampahController::class, 'store'])->name('store');
             Route::post('/update/{sampah}', [Administrator\KelolaSampahController::class, 'update'])->name('update');
             Route::delete('/delete/{sampah}', [Administrator\KelolaSampahController::class, 'destroy'])->name('delete');
+            Route::get('/sort_by_date', [Administrator\KelolaSampahController::class, 'sort_by_date'])->name('sort_by_date');
             Route::get('/sort_by_nama_nasabah_asc', [Administrator\KelolaSampahController::class, 'sort_by_nama_nasabah_asc'])->name('sort_by_nama_nasabah_asc');
             Route::get('/sort_by_nama_nasabah_desc', [Administrator\KelolaSampahController::class, 'sort_by_nama_nasabah_desc'])->name('sort_by_nama_nasabah_desc');
-           
+            Route::get('/total_sampah_desc', [Administrator\KelolaSampahController::class, 'total_sampah_desc'])->name('total_sampah_desc');
+            Route::get('/total_sampah_asc', [Administrator\KelolaSampahController::class, 'total_sampah_asc'])->name('total_sampah_asc');
         });
         Route::get('/keuangan', [Administrator\KeuanganController::class, 'index'])->name('keuangan');
         // Kelola Konten

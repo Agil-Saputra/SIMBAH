@@ -20,11 +20,12 @@ class KelolaSampahController extends Controller
     }
     public function sort_by_date()
     {
-        if(auth()->user()->role == 'admin'){
-            $sampah = Sampah::with(['user', 'kategori'])->orderBy('tanggal', 'desc')->get();
-        }else{
-            $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('tanggal', 'desc')->get();
-        }
+        $sampah = Sampah::with(['user', 'kategori'])->orderBy('tanggal', 'desc')->get();
+        return json_encode($sampah);
+    }
+    public function sort_by_date_nasabah()
+    {
+        $sampah = $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('tanggal', 'desc')->get();
         return json_encode($sampah);
     }
     public function sort_by_nama_nasabah_asc()
@@ -44,19 +45,19 @@ class KelolaSampahController extends Controller
         return json_encode($sampah);
     }
     public function total_sampah_desc(){
-        if(auth()->user()->role == 'admin'){
         $sampah = Sampah::with(['user', 'kategori'])->orderBy('total_sampah', 'desc')->get();
-        }else{
-            $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'desc')->get();
-        }
+        return json_encode($sampah);
+    } 
+    public function total_sampah_nasabah_desc(){
+        $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'desc')->get();
         return json_encode($sampah);
     } 
     public function total_sampah_asc(){
-        if(auth()->user()->role == 'admin'){
         $sampah = Sampah::with(['user', 'kategori'])->orderBy('total_sampah', 'asc')->get();
-        }else{
-            $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'asc')->get();
-        }
+        return json_encode($sampah);    
+    } 
+    public function total_sampah_nasabah_asc(){
+        $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'asc')->get();
         return json_encode($sampah);    
     } 
     public function store(Request $request)
