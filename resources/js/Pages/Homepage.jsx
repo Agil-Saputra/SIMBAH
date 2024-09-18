@@ -24,23 +24,31 @@ import {
 
 export default function HomePage({ auth }) {
     const [showNav, setShowNav] = useState(false);
-    axios.get(route('get-konten')) 
-    .then(function (response) {
-        console.log(response.data);
-    })
-    .catch(function (error) {
-        // Handle error jika gagal
-        console.error('Error fetching data:', error);
-    });
-    function handelToggle() {
-        {
-            setShowNav(!showNav);
-        }
+    const [activities, setActivites] = useState([]);
+
+    function getAllActivitiesData() {
+        axios
+            .get(route("get-konten"))
+            .then(function (response) {
+                console.log(response.data);
+                setActivites(response.data);
+            })
+            .catch(function (error) {
+                // Handle error jika gagal
+                console.error("Error fetching data:", error);
+            });
     }
+
+	function handelToggle() {
+		{
+			setShowNav(!showNav);
+		}
+	}
 
     useEffect(() => {
         document.body.classList.add("bg-[#ffffff]");
         document.body.classList.remove("bg-[#F3F4F6]");
+        getAllActivitiesData();
     }, []);
 
     // this is mock data for stats section
@@ -76,38 +84,6 @@ export default function HomePage({ auth }) {
             total: 45,
         },
     ];
-    const activities = [
-        {
-            title: "Sosialisasi Pengelolaan Sampah Terpadu",
-            description:
-                "Dalam Kegiatan ini kami melakukan sosialisasi terkait pengelolaan sampah terpadu kepada masyarakat Desa Triharjo Sleman Yogyakarta, kegiatan ini kami lakukan untuk mengatasi permasalahan sampah yang ada di sekitar Desa Triharjo. ",
-            bannerImage: fotokegiatan1,
-            date: "5 Agustus 2024",
-        },
-    ];
-    // const dataSampah = [
-    //     {
-    //         title: "daur ulang",
-    //         image: recycle,
-    //         description:
-    //             "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
-    //         data: [],
-    //     },
-    //     {
-    //         title: "daur ulang",
-    //         image: data,
-    //         description:
-    //             "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
-    //         data: [],
-    //     },
-    //     {
-    //         title: "daur ulang",
-    //         image: menu,
-    //         description:
-    //             "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione facilis esse vel hic incidunt asperiores labore quos est expedita obcaecati.",
-    //         data: [],
-    //     },
-    // ];
     const [faqs, setFaqs] = useState([
         {
             question: "Bagaimana Cara Setor Sampah?",
@@ -273,30 +249,31 @@ export default function HomePage({ auth }) {
                     </Link>
                 </div>
             </section>
-			{/* About us */}
+            {/* About us */}
             <section className="container mt-32 text-center" id="about">
                 <Heading title="Tentang Kami" description="" />
-               <div className="mt-10 flex items-start flex-col md:flex-row gap-10">
-			   <div className="p-4 rounded-md border bg-lightgray">
-					<img src={logoV2} alt="atras logo" />
-				</div>
-			   <p className="text-justify text-xl">
-                    ATRAS hadir sebagai solusi inovatif dalam pengelolaan sampah
-                    di Triharjo, Sleman. Dengan semangat menjaga lingkungan yang
-                    berkelanjutan, kami berkomitmen untuk mengurangi dampak
-                    negatif sampah terhadap alam dan masyarakat. 
-					<br/>
-					<br/>
-					Melalui proses
-                    pengolahan yang modern dan ramah lingkungan, kami mengubah
-                    sampah menjadi sumber daya yang bernilai. AtraS tidak hanya
-                    sekadar tempat pembuangan sampah, tetapi juga pusat edukasi
-                    dan inspirasi bagi masyarakat untuk hidup lebih ramah
-                    lingkungan. Visi: Menjadi pemimpin dalam pengelolaan sampah
-                    berkelanjutan di Yogyakarta, menginspirasi masyarakat untuk
-                    turut serta dalam menjaga lingkungan.
-                </p>
-			   </div>
+                <div className="mt-10 flex items-start flex-col md:flex-row gap-10">
+                    <div className="p-4 rounded-md border bg-lightgray">
+                        <img src={logoV2} alt="atras logo" />
+                    </div>
+                    <p className="text-justify text-xl">
+                        ATRAS hadir sebagai solusi inovatif dalam pengelolaan
+                        sampah di Triharjo, Sleman. Dengan semangat menjaga
+                        lingkungan yang berkelanjutan, kami berkomitmen untuk
+                        mengurangi dampak negatif sampah terhadap alam dan
+                        masyarakat.
+                        <br />
+                        <br />
+                        Melalui proses pengolahan yang modern dan ramah
+                        lingkungan, kami mengubah sampah menjadi sumber daya
+                        yang bernilai. AtraS tidak hanya sekadar tempat
+                        pembuangan sampah, tetapi juga pusat edukasi dan
+                        inspirasi bagi masyarakat untuk hidup lebih ramah
+                        lingkungan. Visi: Menjadi pemimpin dalam pengelolaan
+                        sampah berkelanjutan di Yogyakarta, menginspirasi
+                        masyarakat untuk turut serta dalam menjaga lingkungan.
+                    </p>
+                </div>
             </section>
             {/* Statistik */}
             <section className="container mt-32 text-center">
@@ -323,7 +300,7 @@ export default function HomePage({ auth }) {
                 </div>
             </section>
             {/* Kegiatan */}
-            <section className="container mt-32" >
+            <section className="container mt-32">
                 <Heading
                     title="Gerakan Bebas Sampah"
                     description="Bergabunglah dalam berbagai gerakan bebas sampah kami yang ada di desa Triharjo."
@@ -342,16 +319,16 @@ export default function HomePage({ auth }) {
                                 className="shadow-lg rounded-xl snap-end snap-always w-full"
                             >
                                 <img
-                                    src={item.bannerImage}
-                                    alt={item.title}
+                                    src={`../storage/konten/${item.foto_kegiatan}`}
+                                    alt={item.nama_kegiatan}
                                     className="object-cover w-full h-[32rem] rounded-t-xl"
                                 />
                                 <div className="p-4">
                                     <h2 className="text-2xl font-bold">
-                                        {item.title}
+                                        {item.nama_kegiatan}
                                     </h2>
                                     <p className="text-[1.1rem] mb-10">
-                                        {item.description}
+                                        {item.deskripsi}
                                     </p>
                                     <hr />
                                     <footer>
@@ -359,7 +336,7 @@ export default function HomePage({ auth }) {
                                             Tanggal Kegiatan :
                                         </p>
                                         <p className="text-md">
-                                            <span>{item.date}</span>
+                                            <span>{item.tanggal_kegiatan}</span>
                                         </p>
                                     </footer>
                                 </div>

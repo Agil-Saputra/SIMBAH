@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdministratorLayout from "@/Layouts/AdministratorLayout";
 import ElevatedContainer from "@/Components/ElevatedContainer";
 import InputLabel from "@/Components/InputLabel";
@@ -9,14 +9,14 @@ import Button from "@/Components/Button";
 import { Head } from "@inertiajs/react";
 import ActivityCard from "./ActivityCard";
 import { CameraAlt, Delete } from "@mui/icons-material";
-import axios from 'axios';
+import axios from "axios";
 import swal from "sweetalert";
 
 export default function KelolaKonten(dataKonten) {
     const [previewImage, setPreviewImage] = useState(null); // Hanya satu preview
     const [imageFile, setImageFile] = useState(null); // Hanya satu file
     const rows = dataKonten.konten;
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset, progress } = useForm({
         namaKegiatan: "",
         deskripsiKegiatan: "",
         tanggalKegiatan: "",
@@ -35,7 +35,6 @@ export default function KelolaKonten(dataKonten) {
             reader.readAsDataURL(file); // Membuat preview
         }
     };
-
     const submit = (e) => {
         e.preventDefault();
 
@@ -49,9 +48,6 @@ export default function KelolaKonten(dataKonten) {
         }
 
         axios.post(route("administrator.kelola-konten.store"), formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
         })
             .then(response => {
                 swal({
@@ -173,6 +169,11 @@ export default function KelolaKonten(dataKonten) {
                                 <CameraAlt className="mr-2" />
                                 Tambahkan Foto Kegiatan
                             </label>
+                            {progress && (
+                                <progress value={progress.percentage} max="100">
+                                    {progress.percentage}%
+                                </progress>
+                            )}
                         </div>
                         <div className="grid grid-cols-1 gap-4">
                             {previewImage && ( // Menampilkan hanya satu gambar
@@ -184,7 +185,9 @@ export default function KelolaKonten(dataKonten) {
                                         width={100}
                                         height={100}
                                     />
-                                    <button onClick={() => setPreviewImage(null)}>
+                                    <button
+                                        onClick={() => setPreviewImage(null)}
+                                    >
                                         <Delete
                                             size={25}
                                             className="absolute left-1 top-1 text-red-600"
@@ -201,17 +204,20 @@ export default function KelolaKonten(dataKonten) {
                             Tambah Kegiatan
                         </Button>
                     </form>
-
                 </ElevatedContainer>
                 <ElevatedContainer>
-                    <h1 className="text-2xl font-bold mb-6">
-                        Daftar Kegiatan
-                    </h1>
-                    <div className="grid grid-cols-2 gap-6">
-                        {rows.map((row, rowIndex) => (
-                            <ActivityCard key={rowIndex} dataEdit={row} />
-                        ))}
-                    </div>
+                    <h1 className="text-2xl font-bold mb-6">Daftar Kegiatan</h1>
+                    {rows.length > 0 ? (
+                        <div className="grid grid-cols-2 gap-6">
+                            {rows.map((row, index) => (
+                                <ActivityCard key={index} dataEdit={row} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="grid place-items-center w-full">
+                            <h1>Belum ada Kegiatan...</h1>
+                        </div>
+                    )}
                 </ElevatedContainer>
             </AdministratorLayout>
         </>

@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { FormControl, Select, MenuItem } from "@mui/material";
+import axios from "axios";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -30,13 +31,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function UserTable({ headers, rows, tableTitle, keys }) {
-	const [property, setProperty] = useState('')
+	const [sortedRows, setSortedRows] = useState(rows)
+
     const formatHeaderName = (headerName) =>
         headerName.replace(/([a-z])([A-Z])/g, "$1 $2");
 	const handleSortChange = (event) => {
-		setProperty(event.target.value);
+		axios.get(route(event.target.value))
+            .then(response => {
+				setSortedRows(response.data)
+            })
+            .catch(error => {
+                console.log("Error response:", error);
+            });
 	  };
-
     return (
         <>
 			<div className="flex items-start gap-4 max-md:flex-col justify-between mb-2">
@@ -44,15 +51,15 @@ export default function UserTable({ headers, rows, tableTitle, keys }) {
 				<h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
 				<FormControl>
                     <Select
-                        value={property}
+                        value=""
 						displayEmpty
                         onChange={handleSortChange}
 						sx={{padding: 0}}
                     >
                         <MenuItem value='' disabled>Urutkan Data</MenuItem>
-                        <MenuItem value='Terbaru'>Tanggal (Terbaru)</MenuItem>
-                        <MenuItem value='Terberat'>Total Sampah (Terberat)</MenuItem>
-                        <MenuItem value='Terberat'>Total Sampah (Teringan)</MenuItem>
+                        <MenuItem value='sort_by_date_nasabah'>Tanggal (Terbaru)</MenuItem>
+                        <MenuItem value='total_sampah_nasabah_desc'>Total Sampah (Terberat)</MenuItem>
+                        <MenuItem value='total_sampah_nasabah_asc'>Total Sampah (Teringan)</MenuItem>
                     </Select>
 				</FormControl>
 			</div>
@@ -70,7 +77,7 @@ export default function UserTable({ headers, rows, tableTitle, keys }) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row, rowIndex) => (
+                        {sortedRows.map((row, rowIndex) => (
                             <StyledTableRow key={rowIndex}>
                                 <StyledTableCell component="th" scope="row">
                                     {rowIndex + 1}

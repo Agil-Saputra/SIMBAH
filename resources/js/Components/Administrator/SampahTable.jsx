@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,10 +12,11 @@ import { Edit, Delete } from "@mui/icons-material";
 import swal from "sweetalert";
 import { router } from "@inertiajs/react";
 import AddSampahForm from "./AddSampahForm";
+import axios from "axios";
 
 import Modal from "../Modal";
 import DangerButton from "../DangerButton";
-import {Select, MenuItem, FormControl } from "@mui/material";
+import { Select, MenuItem, FormControl } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -48,7 +49,7 @@ export default function DataTable3({
     const [editModal, setEditModal] = useState(false);
     const [id, setId] = useState("");
     const [data, setData] = useState([]);
-	const [property, setProperty] = useState('')
+    const [sortedRows, setSortedRows] = useState(rows);
 
     const formatHeaderName = (headerName) =>
         headerName.replace(/([a-z])([A-Z])/g, "$1 $2");
@@ -88,10 +89,23 @@ export default function DataTable3({
             }
         );
     };
-	
-  	const handleSortChange = (event) => {
-		setProperty(event.target.value);
-  	};
+
+    const handleSortChange = (event) => {
+        axios
+            .get(route(`administrator.kelolaSampah.${event.target.value}`))
+            .then((response) => {
+                setSortedRows(response.data);
+            })
+            .catch((error) => {
+                console.log("Error response:", error);
+            });
+    };
+
+	useEffect(() => {
+		setSortedRows(rows);
+	}, [rows])
+
+    console.log(sortedRows);
 
     return (
         <>
@@ -116,21 +130,33 @@ export default function DataTable3({
             </Modal>
             <div className="flex items-center gap-4 justify-between w-full mb-2">
                 <h1 className="text-2xl font-bold mb-6">{tableTitle}</h1>
-				<FormControl>
+                <FormControl>
                     <Select
-                        value={property}
-						displayEmpty
+                        defaultValue=""
+                        displayEmpty
                         onChange={handleSortChange}
-						sx={{padding: 0}}
+                        sx={{ padding: 0 }}
                     >
-                        <MenuItem value='' disabled>Urutkan Data</MenuItem>
-                        <MenuItem value='Terbaru'>Tanggal (Terbaru)</MenuItem>
-                        <MenuItem value='A - Z'>Nama Nasabah (A - Z)</MenuItem>
-                        <MenuItem value='Z - A'>Nama Nasabah (Z - A)</MenuItem>
-                        <MenuItem value='Terberat'>Total Sampah (Terberat)</MenuItem>
-                        <MenuItem value='Terberat'>Total Sampah (Teringan)</MenuItem>
+                        <MenuItem value="" disabled>
+                            Urutkan Data
+                        </MenuItem>
+                        <MenuItem value="sort_by_date">
+                            Tanggal (Terbaru)
+                        </MenuItem>
+                        <MenuItem value="sort_by_nama_nasabah_asc">
+                            Nama Nasabah (A - Z)
+                        </MenuItem>
+                        <MenuItem value="sort_by_nama_nasabah_desc">
+                            Nama Nasabah (Z - A)
+                        </MenuItem>
+                        <MenuItem value="total_sampah_desc">
+                            Total Sampah (Terberat)
+                        </MenuItem>
+                        <MenuItem value="total_sampah_asc">
+                            Total Sampah (Teringan)
+                        </MenuItem>
                     </Select>
-				</FormControl>
+                </FormControl>
             </div>
             <TableContainer sx={{ width: "100%" }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -149,7 +175,7 @@ export default function DataTable3({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row, rowIndex) => (
+                        {sortedRows.map((row, rowIndex) => (
                             <StyledTableRow key={rowIndex}>
                                 <StyledTableCell component="th" scope="row">
                                     {rowIndex + 1}
