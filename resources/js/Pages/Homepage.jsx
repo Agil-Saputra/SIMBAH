@@ -308,7 +308,7 @@ export default function HomePage({ auth }) {
 
                 <div
                     className={
-                        "grid grid-flow-col gap-10 pb-10 mt-16 px-2 overflow-auto overflow-x-scroll overflow-y-hidden no-scrollbar snap-x snap-mandatory snap-always [mask-image:_linear-gradient(to_right,transparent_0,_black_0px,_black_calc(100%-0px),transparent_100%)] w-full " +
+                        "grid grid-flow-col gap-10 pb-10 mt-16 px-2 overflow-auto overflow-x-scroll overflow-y-hidden no-scrollbar snap-x snap-mandatory snap-always [mask-image:_linear-gradient(to_right,transparent_0,_black_10px,_black_calc(100%-40px),transparent_100%)] w-full " +
                         (activities.length <= 3 && "lg:justify-center")
                     }
                 >
@@ -316,7 +316,7 @@ export default function HomePage({ auth }) {
                         return (
                             <div
                                 key={index}
-                                className="shadow-lg rounded-xl snap-end snap-always w-full"
+                                className="shadow-lg rounded-xl snap-start snap-always w-[25rem]"
                             >
                                 <img
                                     src={`../storage/konten/${item.foto_kegiatan}`}
