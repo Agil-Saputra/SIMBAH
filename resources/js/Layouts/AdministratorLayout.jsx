@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
-import logo from "../../assets/logo.png"
 import { useForm } from '@inertiajs/react';
-
-// import all material UI components
-import {
-    Drawer,
-    Box,
-    Divider,
-    AppBar,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemButton,
-    ListItemIcon,
-    IconButton,
-} from "@mui/material";
-// import all icons
-import { Logout, Menu, People, Category, Dashboard, Recycling, Source } from "@mui/icons-material";
+import { 
+    LayoutDashboard, 
+    Users, 
+    LogOut, 
+    Menu, 
+    Tag,
+    Recycle,
+    FileText,
+    Leaf
+} from "lucide-react";
+import { Button } from "../Components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../Components/ui/sheet";
+import { 
+    Sidebar, 
+    SidebarHeader, 
+    SidebarContent, 
+    SidebarFooter, 
+    SidebarNav, 
+    SidebarNavItem 
+} from "../Components/ui/sidebar";
+import { cn } from "../lib/utils";
 
 export default function AdministratorLayout({ children }) {
-    useEffect(() => {
-        document.body.classList.add("bg-[#F3F4F6]");
-    }, [])
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const { post } = useForm(); 
+
+    useEffect(() => {
+        document.body.classList.add("bg-background");
+        document.body.classList.remove("bg-white", "bg-gray-50", "bg-[#F3F4F6]");
+    }, []);
 
     const handleLogout = () => {
         post(route('administrator.logout'), {
@@ -32,168 +39,149 @@ export default function AdministratorLayout({ children }) {
             },
         });
     };
-    // Hooks
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const drawerWidth = 240;
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
-    // Computed Properties
-    const currPath = window.location.href.split('/')
-    const pageName = currPath[currPath.length - 1].replace("-", " ")
-    const icon = {
-        sx: { color: "primary.main", fontSize: { sm: "1.6rem", xs: "1.2rem" } },
-    };
-    const menus = [
+
+    // Get current path for active state
+    const currPath = window.location.pathname;
+    const pageName = currPath.split("/").pop().replace("-", " ");
+
+    const menuItems = [
         {
             title: "Dashboard",
             path: "administrator.dashboard",
-            icon: <Dashboard {...icon} />,
+            icon: LayoutDashboard,
         },
         {
             title: "Kategori",
             path: "administrator.kategori.index",
-            icon: <Category {...icon} />,
+            icon: Tag,
         },
         {
             title: "Nasabah",
             path: "administrator.nasabah.index",
-            icon: <People {...icon} />,
+            icon: Users,
         },
         {
             title: "Kelola Sampah",
             path: "administrator.kelolaSampah.index",
-            icon: <Recycling {...icon} />,
+            icon: Recycle,
         },
         {
             title: "Kelola Konten",
             path: "administrator.kelola-konten.index",
-            icon: <Source {...icon} />,
+            icon: FileText,
         },
-        // {
-        //     title: "Keuangan",
-        //     path: "administrator.keuangan",
-        //     icon: <Paid {...icon} />,
-        // },
     ];
-    const drawer = (
-        <>
-            <Box sx={{ display: "flex", alignItems: "center", p: 2 }}>
-                <Link href="/">
-                    <img src={logo} alt="atras logo" className="w-[70%]" />
+
+    const isActive = (path) => {
+        const currentRoute = route().current();
+        return currentRoute === path;
+    };
+
+    const SidebarComponent = ({ isMobile = false }) => (
+        <Sidebar className={cn(
+            "bg-card border-r",
+            isMobile ? "w-full max-w-sm" : "w-64"
+        )}>
+            <SidebarHeader className={cn(isMobile && "pr-12")}>
+                <Link href="/" className="flex items-center space-x-2">
+                    <Leaf className="w-8 h-8 text-primary" />
+                    <span className="text-xl font-bold text-foreground">SIMBAH</span>
+                    <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded-full">Admin</span>
                 </Link>
-            </Box>
-            <List>
-                {menus.map((menu, i) => (
-                    <ListItem disablePadding key={i} className={pageName.toLocaleLowerCase() == menu.title.toLocaleLowerCase() ? "bg-[#f5f5f5]" : null}>
-                        <Link className="w-full" href={route(menu.path)}>
-                            <ListItemButton sx={{ gap: 2 }} >
-                                <ListItemIcon sx={{ minWidth: "30px" }}>
-                                    {menu.icon}
-                                </ListItemIcon>
-                                <ListItemText sx={{ fontWeight: 'bold' }}>{menu.title}</ListItemText>
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                ))}
-                <ListItemButton sx={{ gap: 2 }} onClick={handleLogout}>
-                    <ListItemIcon sx={{ minWidth: "30px" }}>
-                        <Logout {...icon} />
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Link
-                            href={route('logout')}
-                            method="post"
-                            as="button"
-                        >
-                            Log Out
-                        </Link>
-                    </ListItemText>
-                </ListItemButton>
-            </List>
-        </>
-    );
-    return (
-        <Box sx={{ display: "flex", position: "relative" }}>
-            <Drawer
-                anchor="left"
-                variant="temporary"
-                open={mobileOpen}
-                onClose={handleDrawerToggle}
-                ModalProps={{
-                    keepMounted: true,
-                }}
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    zIndex: 99,
-                    display: { xs: "block", sm: "none" },
-                    "& .MuiDrawer-paper": {
-                        width: drawerWidth,
-                        boxSizing: "border-box",
-                    },
-                }}
-            >
-                {drawer}
-            </Drawer>
-
-            <Drawer
-                anchor="left"
-                variant="permanent"
-                sx={{
-                    width: drawerWidth,
-                    display: { xs: "none", sm: "block" },
-                    zIndex: 99,
-                    "& .MuiDrawer-paper": {
-                        boxSizing: "border-box",
-                        width: drawerWidth,
-                    },
-                }}
-            >
-                {drawer}
-            </Drawer>
-            {/* create top appbar  */}
-            <Box sx={{ width: "100%", height: "100%" }}>
-                <AppBar
-                    component="nav"
-                    sx={{
-                        width: "100%",
-                        bgcolor: "#fff",
-                        boxShadow: "none",
-                        borderBottom: "solid rgba(0, 0, 0, 0.12)",
-                        borderBottomWidth: "thin",
-                        zIndex: 99,
-                    }}
-                    position="sticky"
-                >
-                    <Box
-                        component="div"
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            minHeight: "56px",
-                            px: 2,
-                        }}
-                    >
-                        <div className="items-center flex gap-2">
-                            <IconButton
-                                aria-label="open drawer"
-                                onClick={handleDrawerToggle}
-                                sx={{ display: { sm: "none" }, border: "1px solid #ababab", borderRadius: "5px", }}
+            </SidebarHeader>
+            
+            <SidebarContent>
+                <SidebarNav>
+                    {menuItems.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                            <Link
+                                key={item.path}
+                                href={route(item.path)}
+                                className="block"
+                                onClick={() => isMobile && setSidebarOpen(false)}
                             >
-                                <Menu {...icon} />
-                            </IconButton>
+                                <SidebarNavItem 
+                                    active={isActive(item.path)}
+                                    className={cn(
+                                        "cursor-pointer group",
+                                        isActive(item.path) && "bg-accent border-r-2 border-primary"
+                                    )}
+                                >
+                                    <Icon className={cn(
+                                        "w-5 h-5",
+                                        isActive(item.path) ? "text-primary" : "text-muted-foreground group-hover:text-accent-foreground"
+                                    )} />
+                                    <span>{item.title}</span>
+                                </SidebarNavItem>
+                            </Link>
+                        );
+                    })}
+                </SidebarNav>
+            </SidebarContent>
 
-                            <h2 className="text-black text-2xl font-bold capitalize">{pageName}</h2>
+            <SidebarFooter>
+                <Button
+                    variant="ghost"
+                    className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={handleLogout}
+                >
+                    <LogOut className="w-5 h-5 mr-3" />
+                    Log Out
+                </Button>
+            </SidebarFooter>
+        </Sidebar>
+    );
+
+    return (
+        <div className="min-h-screen bg-background">
+            {/* Mobile Sidebar */}
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+                <SheetContent side="left" className="p-0 w-80" open={sidebarOpen} onOpenChange={setSidebarOpen}>
+                    <SidebarComponent isMobile={true} />
+                </SheetContent>
+            </Sheet>
+
+            {/* Desktop Sidebar */}
+            <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
+                <SidebarComponent />
+            </div>
+
+            {/* Main content */}
+            <div className="lg:pl-64">
+                {/* Top bar */}
+                <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+                    <div className="flex items-center justify-between h-16 px-4">
+                        <div className="flex items-center space-x-4">
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="lg:hidden"
+                                onClick={() => setSidebarOpen(true)}
+                            >
+                                <Menu className="w-6 h-6" />
+                                <span className="sr-only">Toggle sidebar</span>
+                            </Button>
+                            <div>
+                                <h1 className="text-2xl font-bold text-foreground capitalize">
+                                    {pageName || 'Dashboard'}
+                                </h1>
+                                <div className="w-12 h-1 bg-gradient-to-r from-primary/80 to-primary rounded-full mt-1"></div>
+                            </div>
                         </div>
-                    </Box>
-                </AppBar>
+                        <div className="flex items-center space-x-2">
+                            <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium">
+                                Admin Panel
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-                <Box component="main" sx={{ maxWidth: "100%" }}>
-                    <Box sx={{ py: 3, px: '1rem' }}>{children}</Box>
-                </Box>
-            </Box>
-        </Box>
+                {/* Page content */}
+                <main className="p-6">
+                    {children}
+                </main>
+            </div>
+        </div>
     );
 }

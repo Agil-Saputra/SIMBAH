@@ -1,8 +1,9 @@
 import React from 'react'
 import AdministratorLayout from '@/Layouts/AdministratorLayout'
 import { Head } from '@inertiajs/react'
-import Table from '@/Components/Administrator/Table'
+import ModernDataTable from '@/Components/Administrator/ModernDataTable'
 import ElevatedContainer from '@/Components/ElevatedContainer'
+
 const Kategori = (kategoris) => {
 	const headers = [
 		'Nama Kategori',
@@ -19,7 +20,12 @@ const Kategori = (kategoris) => {
 			<Head title="Kategori" />
 			<AdministratorLayout>
 				<ElevatedContainer>
-					<Table headers={headers} rows={kategoris.kategoris} tableTitle={"Data Kategori"} keys={keys} />
+					<ModernDataTable 
+						headers={headers} 
+						rows={kategoris.kategoris} 
+						tableTitle={"Data Kategori"} 
+						keys={keys} 
+					/>
 				</ElevatedContainer>
 			</AdministratorLayout>
 		</>

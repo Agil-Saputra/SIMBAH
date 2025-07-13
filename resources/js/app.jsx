@@ -6,6 +6,7 @@ import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { red } from '@mui/material/colors';
+import { Toaster } from 'react-hot-toast';
 
 const theme = createTheme({
     palette: {
@@ -30,6 +31,16 @@ createInertiaApp({
         root.render(
             <ThemeProvider theme={theme}>
                 <App {...props} />
+                <Toaster 
+                    position="top-right"
+                    toastOptions={{
+                        duration: 4000,
+                        style: {
+                            background: '#363636',
+                            color: '#fff',
+                        },
+                    }}
+                />
             </ThemeProvider>
         );
     },

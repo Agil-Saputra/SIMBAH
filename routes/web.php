@@ -23,7 +23,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/sort_by_date_nasabah', [Administrator\KelolaSampahController::class, 'sort_by_date_nasabah'])->name('sort_by_date_nasabah');
     Route::get('/total_sampah_nasabah_desc', [Administrator\KelolaSampahController::class, 'total_sampah_nasabah_desc'])->name('total_sampah_nasabah_desc');
     Route::get('/total_sampah_nasabah_asc', [Administrator\KelolaSampahController::class, 'total_sampah_nasabah_asc'])->name('total_sampah_nasabah_asc');
+    
+    // Profile Routes - moved here to be accessible by all authenticated users
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 Route::middleware([AdminMiddleware::class,'auth'])->group(function () {
     Route::prefix('administrator')->name('administrator.')->group(function () {
         Route::get('/dashboard', [Administrator\DashboardController::class, 'index'])->name('dashboard');
@@ -64,11 +70,6 @@ Route::middleware([AdminMiddleware::class,'auth'])->group(function () {
         // Logout Route
         Route::post('/logout', [Administrator\LogoutController::class, 'index'])->name('logout');
     });
-
-    // Profile Routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 

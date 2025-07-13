@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class KelolaSampahController extends Controller
 {
@@ -25,8 +26,8 @@ class KelolaSampahController extends Controller
     }
     public function sort_by_date_nasabah()
     {
-        $sampah = $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('tanggal', 'desc')->get();
-        return json_encode($sampah);
+        $sampah = Sampah::with(['user', 'kategori'])->where('user_id', Auth::user()->id)->orderBy('tanggal', 'desc')->get();
+        return response()->json($sampah);
     }
     public function sort_by_nama_nasabah_asc()
     {
@@ -49,16 +50,16 @@ class KelolaSampahController extends Controller
         return json_encode($sampah);
     } 
     public function total_sampah_nasabah_desc(){
-        $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'desc')->get();
-        return json_encode($sampah);
+        $sampah = Sampah::with(['user', 'kategori'])->where('user_id', Auth::user()->id)->orderBy('total_sampah', 'desc')->get();
+        return response()->json($sampah);
     } 
     public function total_sampah_asc(){
         $sampah = Sampah::with(['user', 'kategori'])->orderBy('total_sampah', 'asc')->get();
-        return json_encode($sampah);    
+        return response()->json($sampah);    
     } 
     public function total_sampah_nasabah_asc(){
-        $sampah = Sampah::with(['user', 'kategori'])->where('user_id', auth()->user()->id)->orderBy('total_sampah', 'asc')->get();
-        return json_encode($sampah);    
+        $sampah = Sampah::with(['user', 'kategori'])->where('user_id', Auth::user()->id)->orderBy('total_sampah', 'asc')->get();
+        return response()->json($sampah);    
     } 
     public function store(Request $request)
     {

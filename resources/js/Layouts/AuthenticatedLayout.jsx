@@ -1,170 +1,154 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
-import logo from "../../assets/logo.png";
-// import all material UI components
-import {
-    Drawer,
-    Box,
-    AppBar,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemButton,
-    ListItemIcon,
-    IconButton,
-} from "@mui/material";
-// import all icons
-import { Logout, Menu, People, Dashboard } from "@mui/icons-material";
+import { 
+    LayoutDashboard, 
+    User, 
+    LogOut, 
+    Menu, 
+    X,
+    Leaf
+} from "lucide-react";
+import { Button } from "../Components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../Components/ui/sheet";
+import { 
+    Sidebar, 
+    SidebarHeader, 
+    SidebarContent, 
+    SidebarFooter, 
+    SidebarNav, 
+    SidebarNavItem 
+} from "../Components/ui/sidebar";
+import { cn } from "../lib/utils";
 
 export default function AuthenticatedLayout({ children }) {
-    // Hooks
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const drawerWidth = 240;
-	useEffect(() => {
-		document.body.classList.add("bg-[#F3F4F6]");
-		document.body.classList.remove("bg-[#ffffff]");
-	}, [])
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    
+    useEffect(() => {
+        document.body.classList.add("bg-background");
+        document.body.classList.remove("bg-white", "bg-gray-50");
+    }, []);
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
-    // Computed Properties
-    const currPath = window.location.href.split("/");
-    const pageName = currPath[currPath.length - 1].replace("-", " ");
+    // Get current path for active state
+    const currPath = window.location.pathname;
+    const pageName = currPath.split("/").pop().replace("-", " ");
 
-    const icon = {
-        sx: { color: "primary.main", fontSize: { sm: "1.6rem", xs: "1.2rem" } },
-    };
-	const menus = [
+    const menuItems = [
         {
             title: "Dashboard",
             path: "/dashboard",
-            icon: <Dashboard {...icon} />,
+            icon: LayoutDashboard,
         },
         {
             title: "Profile",
             path: "/profile",
-            icon: <People {...icon} />,
+            icon: User,
         },
-	]
+    ];
 
-    const drawer = (
-        <>
-            <Box sx={{ display: "flex", alignItems: "center", p: 2 }}>
-                <Link href="/">
-                    <img src={logo} alt="atras logo" className="w-[70%]" />
-                </Link>
-            </Box>
-            <List>
-			{menus.map((menu, i) => (
-                    <ListItem disablePadding key={i} className={pageName.toLocaleLowerCase() == menu.title.toLocaleLowerCase() ? "bg-[#f5f5f5]" : null}>
-                        <Link className="w-full" href={menu.path}>
-                            <ListItemButton sx={{gap: 2}} >
-                                <ListItemIcon sx={{ minWidth: "30px" }}>
-                                    {menu.icon}
-                                </ListItemIcon>
-                                <ListItemText sx={{fontWeight: 'bold'}}>{menu.title}</ListItemText>
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                ))}
-               
-    
-                <Link className="w-full"  method="post" href={route("logout")} as="button">
-                    <ListItemButton  sx={{gap: 2}}>
-                        <ListItemIcon sx={{ minWidth: "30px" }}>
-                            <Logout {...icon} />
-                        </ListItemIcon>
-                        <ListItemText>Log Out</ListItemText>
-                    </ListItemButton>
-                </Link>
-            </List>
-        </>
-    );
-    return (
-        <Box sx={{ display: "flex", position: "relative" }}>
-            <Drawer
-                anchor="left"
-                variant="temporary"
-                open={mobileOpen}
-                onClose={handleDrawerToggle}
-                ModalProps={{
-                    keepMounted: true,
-                }}
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    display: { xs: "block", sm: "none" },
-                    "& .MuiDrawer-paper": {
-                        width: drawerWidth,
-                        boxSizing: "border-box",
-                    },
-                }}
-            >
-                {drawer}
-            </Drawer>
+    const isActive = (path) => currPath === path;
 
-            <Drawer
-                anchor="left"
-                variant="permanent"
-                sx={{
-                    width: drawerWidth,
-                    display: { xs: "none", sm: "block" },
-                    "& .MuiDrawer-paper": {
-                        boxSizing: "border-box",
-                        width: drawerWidth,
-                    },
-                }}
-            >
-                {drawer}
-            </Drawer>
-            {/* create top appbar  */}
-            <Box sx={{ width: "100%", height: "100%" }}>
-                <AppBar
-                    component="nav"
-                    sx={{
-                        width: "100%",
-                        bgcolor: "#fff",
-                        boxShadow: "none",
-                        borderBottom: "solid rgba(0, 0, 0, 0.12)",
-                        borderBottomWidth: "thin",
-                    }}
-                    position="sticky"
-                >
-                    <Box
-                        component="div"
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            minHeight: "56px",
-                            px: 2,
-                        }}
-                    >
-                        <div className="items-center flex gap-2">
-                            <IconButton
-                                aria-label="open drawer"
-                                onClick={handleDrawerToggle}
-                                sx={{
-                                    display: { sm: "none" },
-                                    border: "1px solid #ababab",
-                                    borderRadius: "5px",
-                                }}
+    const SidebarComponent = ({ isMobile = false }) => (
+        <Sidebar className={cn(
+            "bg-card border-r",
+            isMobile ? "w-full max-w-sm" : "w-64"
+        )}>
+            <SidebarHeader className={cn(isMobile && "pr-12")}>
+                <Link href="/" className="flex items-center space-x-2">
+                    <Leaf className="w-8 h-8 text-primary" />
+                    <span className="text-xl font-bold text-foreground">SIMBAH</span>
+                </Link>
+            </SidebarHeader>
+            
+            <SidebarContent>
+                <SidebarNav>
+                    {menuItems.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                            <Link
+                                key={item.path}
+                                href={item.path}
+                                className="block"
+                                onClick={() => isMobile && setSidebarOpen(false)}
                             >
-                                <Menu {...icon} />
-                            </IconButton>
+                                <SidebarNavItem 
+                                    active={isActive(item.path)}
+                                    className={cn(
+                                        "cursor-pointer group",
+                                        isActive(item.path) && "bg-accent border-r-2 border-primary"
+                                    )}
+                                >
+                                    <Icon className={cn(
+                                        "w-5 h-5",
+                                        isActive(item.path) ? "text-primary" : "text-muted-foreground group-hover:text-accent-foreground"
+                                    )} />
+                                    <span>{item.title}</span>
+                                </SidebarNavItem>
+                            </Link>
+                        );
+                    })}
+                </SidebarNav>
+            </SidebarContent>
 
-                            <h2 className="text-black text-2xl font-bold capitalize">
-                                {pageName}
-                            </h2>
+            <SidebarFooter>
+                <Link
+                    method="post"
+                    href={route("logout")}
+                    as="button"
+                    className="block w-full"
+                >
+                    <Button
+                        variant="ghost"
+                        className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
+                    >
+                        <LogOut className="w-5 h-5 mr-3" />
+                        Log Out
+                    </Button>
+                </Link>
+            </SidebarFooter>
+        </Sidebar>
+    );
+
+    return (
+        <div className="min-h-screen bg-background">
+            {/* Mobile Sidebar */}
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+                <SheetContent side="left" className="p-0 w-80" open={sidebarOpen} onOpenChange={setSidebarOpen}>
+                    <SidebarComponent isMobile={true} />
+                </SheetContent>
+            </Sheet>
+
+            {/* Desktop Sidebar */}
+            <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
+                <SidebarComponent />
+            </div>
+
+            {/* Main content */}
+            <div className="lg:pl-64">
+                {/* Top bar */}
+                <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+                    <div className="flex items-center justify-between h-16 px-4">
+                        <div className="flex items-center space-x-4">
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="lg:hidden"
+                                onClick={() => setSidebarOpen(true)}
+                            >
+                                <Menu className="w-6 h-6" />
+                                <span className="sr-only">Toggle sidebar</span>
+                            </Button>
+                            <h1 className="text-2xl font-bold text-foreground capitalize">
+                                {pageName || 'Dashboard'}
+                            </h1>
                         </div>
-                    </Box>
-                </AppBar>
+                    </div>
+                </div>
 
-                <Box component="main" sx={{ maxWidth: "100%", }}>
-                    <Box sx={{ py: 3, px: 2 }}>{children}</Box>
-                </Box>
-            </Box>
-        </Box>
+                {/* Page content */}
+                <main className="p-6">
+                    {children}
+                </main>
+            </div>
+        </div>
     );
 }

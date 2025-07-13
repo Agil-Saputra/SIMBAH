@@ -48,13 +48,14 @@ export default function UserTable({ headers, rows, tableTitle, keys }) {
         <>
 			<div className="flex items-start gap-4 max-md:flex-col justify-between mb-2">
 			<div className="flex items-center justify-between mb-2 w-full">
-				<h1 className='text-2xl font-bold mb-6'>{tableTitle}</h1>
+				<h1 className='md:text-2xl text-lg font-bold mb-6'>{tableTitle}</h1>
 				<FormControl>
                     <Select
                         value=""
 						displayEmpty
                         onChange={handleSortChange}
 						sx={{padding: 0}}
+						className="md:text-2xl text-lg"
                     >
                         <MenuItem value='' disabled>Urutkan Data</MenuItem>
                         <MenuItem value='sort_by_date_nasabah'>Tanggal (Terbaru)</MenuItem>

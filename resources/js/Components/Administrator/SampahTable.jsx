@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import swal from "sweetalert";
+import { success, error } from '@/lib/notify';
 import { router } from "@inertiajs/react";
 import AddSampahForm from "./AddSampahForm";
 import axios from "axios";

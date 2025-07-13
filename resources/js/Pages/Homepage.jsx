@@ -1,459 +1,639 @@
-import { useState, useEffect } from "react";
-// Assets
-import binIlustration from "../../assets/bin-Ilustration.png";
-import Baloon from "../../assets/baloon.png";
-// import recycle from "../../assets/recycle.svg";
-// import data from "../../assets/data.svg";
-// import menu from "../../assets/menu.svg";
-import logo from "../../assets/logo.png";
-import logoV2 from "../../assets/logoHorizontaL.png";
-import heroVideo from "../../assets/hero-vid.mp4";
-import fotokegiatan1 from "../../assets/kegiatan1.jpg";
-import fotoVisiMisi from "../../assets/visimisi.jpg";
-// Components
-// import OperationalCard from "@/Components/OperationalCard";
-import Button from "@/Components/Button";
-import Heading from "@/Components/Heading";
-import { Link, Head } from "@inertiajs/react";
-import {
-    IoMenu,
-    IoClose,
-    IoArrowDownCircle,
-    IoArrowUpCircle,
-} from "react-icons/io5";
+import React, { useState, useEffect } from 'react';
+import { 
+  Leaf, 
+  ChevronDown, 
+  Recycle, 
+  Users, 
+  Sprout, 
+  Heart, 
+  Handshake, 
+  Lightbulb, 
+  Shield, 
+  Calendar, 
+  Trash2, 
+  Eye, 
+  Target, 
+  Check, 
+  Facebook, 
+  Twitter, 
+  Instagram, 
+  Linkedin, 
+  MapPin, 
+  Phone, 
+  Mail, 
+  ChevronUp, 
+  Menu, 
+  X 
+} from 'lucide-react';
 
-export default function HomePage({ auth }) {
-    const [showNav, setShowNav] = useState(false);
-    const [activities, setActivites] = useState([]);
+const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
-    function getAllActivitiesData() {
-        axios
-            .get(route("get-konten"))
-            .then(function (response) {
-                console.log(response.data);
-                setActivites(response.data);
-            })
-            .catch(function (error) {
-                // Handle error jika gagal
-                console.error("Error fetching data:", error);
-            });
-    }
-
-	function handelToggle() {
-		{
-			setShowNav(!showNav);
-		}
-	}
-
-    useEffect(() => {
-        document.body.classList.add("bg-[#ffffff]");
-        document.body.classList.remove("bg-[#F3F4F6]");
-        getAllActivitiesData();
-    }, []);
-
-    // this is mock data for stats section
-    const menus = [
-        {
-            title: "Beranda",
-            route: "/",
-        },
-        {
-            title: "Tentang Kami",
-            route: "#about",
-        },
-        {
-            title: "Bantuan",
-            route: "#faq",
-        },
-    ];
-    const stats = [
-        {
-            name: "Jenis Sampah",
-            total: 15,
-        },
-        {
-            name: "Kegiatan",
-            total: 12,
-        },
-        {
-            name: "Total Berat Sampah",
-            total: 839,
-        },
-        {
-            name: "Nasabah",
-            total: 45,
-        },
-    ];
-    const [faqs, setFaqs] = useState([
-        {
-            question: "Bagaimana Cara Setor Sampah?",
-            answer: "Mampir aja ke posko kami, ya! Petugas kami siap bantuin kamu dari awal sampai akhir.",
-            open: false,
-        },
-        {
-            question: "Apa Benefit yang saya dapatkan?",
-            answer: "Dengan menyetorkan sampah, Anda turut berkontribusi dalam menjaga lingkungan agar tetap bersih dan sehat dalam kehidupan sehari-hari, Anda akan mendapat manfaat yang sangat berarti.",
-            open: false,
-        },
-        {
-            question:
-                "Bagaimana cara memastikan sampah tidak mencemari lingkungan sekitar?",
-            answer: "Kami memiliki prosedur ketat dalam pengelolaan sampah, mulai dari pengumpulan hingga pengolahan akhir. Semua proses dilakukan sesuai dengan standar lingkungan yang berlaku. Kami juga bekerja sama dengan lembaga terkait untuk memastikan limbah hasil pengolahan tidak mencemari lingkungan.",
-            open: false,
-        },
-        {
-            question: "Apa yang membuat Atras Berbeda dengan yang lain?",
-            answer: "Kami tidak hanya mengelola sampah, tetapi juga mendaur ulang semaksimal mungkin untuk mengurangi dampak lingkungan. Berbeda dengan layanan lain, kami berkomitmen untuk memberikan solusi pengelolaan sampah yang berkelanjutan",
-            open: false,
-        },
-        {
-            question: "Jenis sampah apa saja yang bisa dikelola oleh Atras?",
-            answer: "Layanan kami menerima berbagai jenis sampah, mulai dari sampah organik (sisa makanan, daun-daun kering), anorganik (plastik, kertas, kaleng), hingga sampah B3 (baterai bekas, lampu fluorescent) dengan syarat dan ketentuan tertentu. Kami memiliki fasilitas pengolahan yang lengkap untuk mengelola setiap jenis sampah secara terpisah.",
-            open: false,
-        },
-        {
-            question:
-                "Bagaimana cara memastikan sampah tidak mencemari lingkungan sekitar?",
-            answer: "Kami memiliki prosedur ketat dalam pengelolaan sampah, mulai dari pengumpulan hingga pengolahan akhir. Semua proses dilakukan sesuai dengan standar lingkungan yang berlaku. Kami juga bekerja sama dengan lembaga terkait untuk memastikan limbah hasil pengolahan tidak mencemari lingkungan",
-            open: false,
-        },
-    ]);
-
-    const handleToggle = (index) => {
-        setFaqs(
-            faqs.map((faq, i) => {
-                if (i === index) {
-                    faq.open = !faq.open;
-                } else {
-                    faq.open = false;
-                }
-
-                return faq;
-            })
-        );
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+      setShowBackToTop(window.pageYOffset > 300);
     };
 
-    return (
-        <>
-            <Head title="Beranda" />
-            <nav className="sticky top-0 z-50 bg-white shadow-md">
-                <div className="container flex items-center justify-between py-4">
-                    <Link href="/">
-                        <img
-                            src={logo}
-                            alt="atras logo"
-                            className="md:w-[8rem] w-[5rem]"
-                        />
-                    </Link>
-                    <div className="hidden gap-12 lg:flex ">
-                        {menus.map((menu, index) => {
-                            return (
-                                <a
-                                    key={index}
-                                    href={menu.route}
-                                    className="text-lg font-bold text-black"
-                                >
-                                    {menu.title}
-                                </a>
-                            );
-                        })}
-                    </div>
-                    <div className="items-center hidden gap-4 lg:flex">
-                        {auth.user ? (
-                            <Button>
-                                <Link href={route("dashboard")}>Dashboard</Link>
-                            </Button>
-                        ) : (
-                            <>
-                                <Link href={route("login")}>
-                                    <Button>Log in</Button>
-                                </Link>
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-                                <Link href={route("register")}>
-                                    <Button type="secondary">Register</Button>
-                                </Link>
-                            </>
-                        )}
-                    </div>
-                    <div
-                        className={
-                            "lg:hidden absolute bg-white top-16 z-40 origin-top left-0 shadow-md w-full transtion-all ease-in-out duration-100 " +
-                            (showNav ? "scale-y-100" : "scale-y-0")
-                        }
-                    >
-                        <div className="container flex flex-col gap-4 py-8">
-                            {menus.map((menu, index) => {
-                                return (
-                                    <Link
-                                        key={index}
-                                        href={menu.route}
-                                        className="text-lg font-bold text-black"
-                                    >
-                                        {menu.title}
-                                    </Link>
-                                );
-                            })}
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
-                            {auth.user ? (
-                                <Link href={route("dashboard")}>
-                                    <Button>Dashboard</Button>
-                                </Link>
-                            ) : (
-                                <>
-                                    <Link href={route("login")}>
-                                        <Button>Log in</Button>
-                                    </Link>
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offsetTop = element.offsetTop - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+    }
+    setIsMenuOpen(false);
+  };
 
-                                    <Link href={route("register")}>
-                                        <Button type="secondary">
-                                            Register
-                                        </Button>
-                                    </Link>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                    <button
-                        className="z-50 block p-1 bg-opacity-50 rounded-lg bg-slate-300 hover:bg-opacity-100 lg:hidden"
-                        onClick={handelToggle}
-                    >
-                        {showNav ? <IoClose size={30} /> : <IoMenu size={30} />}
-                    </button>
-                </div>
-            </nav>
+  return (
+    <div className="min-h-screen bg-slate-50">
+      {/* Navigation */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white/90 shadow-lg' : 'bg-white/95 shadow-md'
+      }`}>
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-2">
+              <Leaf className="text-green-500 text-xl" />
+              <span className="text-xl font-bold text-gray-800">SIMBAH</span>
+            </div>
+            
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              <button 
+                onClick={() => scrollToSection('beranda')}
+                className="text-gray-700 hover:text-green-500 transition-colors duration-300 relative group"
+              >
+                Beranda
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+              </button>
+              <button 
+                onClick={() => scrollToSection('tentang')}
+                className="text-gray-700 hover:text-green-500 transition-colors duration-300 relative group"
+              >
+                Tentang Kami
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+              </button>
+              <button 
+                onClick={() => scrollToSection('statistik')}
+                className="text-gray-700 hover:text-green-500 transition-colors duration-300 relative group"
+              >
+                Statistik
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+              </button>
+              <button 
+                onClick={() => scrollToSection('bantuan')}
+                className="text-gray-700 hover:text-green-500 transition-colors duration-300 relative group"
+              >
+                Bantuan
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+              </button>
+              <div className="flex space-x-3">
+                <a href="/login" className="px-4 py-2 border border-green-500 text-green-500 rounded-full hover:bg-green-50 transition-colors duration-300">
+                  Masuk
+                </a>
+                <a href="/register"  className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors duration-300">
+                  Daftar
+                </a>
+              </div>
+            </div>
 
-            <section className="h-fit w-screen bg-gray-200 relative">
-                <video autoPlay muted loop id="myVideo">
-                    <source src={heroVideo} type="video/mp4" />
-                </video>
-            </section>
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2"
+            >
+              {isMenuOpen ? <X className="text-gray-700" /> : <Menu className="text-gray-700" />}
+            </button>
+          </div>
 
-            <section className="container flex gap-4 justify-between flex-col lg:flex-row mt-10">
-                <img
-                    src={binIlustration}
-                    alt="Trash Bin Ilustration"
-                    className="max-w-[40rem] object-cover h-auto"
-                />
-                <div className="py-10 md:pl-10 flex flex-col gap-4">
-                    <h1 className="text-4xl font-bold ">
-                        Yuk, bersama kita bersihkan Indonesia! Jadilah bagian
-                        dari solusi
-                    </h1>
-                    <p>
-                        Ayo Bergabung Menjadi individu yang memiliki kesadaran
-                        akan permasalahan persampahan dan ingin menjadi bagian
-                        dalam solusi mewujudkan Indonesia Bebas Sampah
-                    </p>
-                    <Link href={route("register")}>
-                        <Button className="w-fit">Daftar Sekarang</Button>
-                    </Link>
-                </div>
-            </section>
-            {/* About us */}
-            <section className="container mt-32 text-center" id="about">
-                <Heading title="Tentang Kami" description="" />
-                <div className="mt-10 flex items-start flex-col md:flex-row gap-10">
-                    <div className="p-4 rounded-md border bg-lightgray">
-                        <img src={logoV2} alt="atras logo" />
-                    </div>
-                    <p className="text-justify text-xl">
-                        ATRAS hadir sebagai solusi inovatif dalam pengelolaan
-                        sampah di Triharjo, Sleman. Dengan semangat menjaga
-                        lingkungan yang berkelanjutan, kami berkomitmen untuk
-                        mengurangi dampak negatif sampah terhadap alam dan
-                        masyarakat.
-                        <br />
-                        <br />
-                        Melalui proses pengolahan yang modern dan ramah
-                        lingkungan, kami mengubah sampah menjadi sumber daya
-                        yang bernilai. AtraS tidak hanya sekadar tempat
-                        pembuangan sampah, tetapi juga pusat edukasi dan
-                        inspirasi bagi masyarakat untuk hidup lebih ramah
-                        lingkungan. Visi: Menjadi pemimpin dalam pengelolaan
-                        sampah berkelanjutan di Yogyakarta, menginspirasi
-                        masyarakat untuk turut serta dalam menjaga lingkungan.
-                    </p>
-                </div>
-            </section>
-            {/* Statistik */}
-            <section className="container mt-32 text-center">
-                <Heading
-                    title="Statistik"
-                    description="Berikut adalah rincian data sampah yang berhasil kami tangani."
-                />
-                <div className="grid mt-12 md:grid-cols-2 gap-7">
-                    {stats.map((stat, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className="p-4 text-center bg-lightgray rounded-lg "
-                            >
-                                <h1 className="text-[2.5rem] text-primary font-bold">
-                                    {stat.total}
-                                </h1>
-                                <p className="text-[1rem] text-[#777777]">
-                                    {stat.name}
-                                </p>
-                            </div>
-                        );
-                    })}
-                </div>
-            </section>
-            {/* Kegiatan */}
-            <section className="container mt-32">
-                <Heading
-                    title="Gerakan Bebas Sampah"
-                    description="Bergabunglah dalam berbagai gerakan bebas sampah kami yang ada di desa Triharjo."
-                />
-
-                <div
-                    className={
-                        "grid grid-flow-col gap-10 pb-10 mt-16 px-2 overflow-auto overflow-x-scroll overflow-y-hidden no-scrollbar snap-x snap-mandatory snap-always [mask-image:_linear-gradient(to_right,transparent_0,_black_10px,_black_calc(100%-40px),transparent_100%)] w-full " +
-                        (activities.length <= 3 && "lg:justify-center")
-                    }
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <div className="md:hidden py-4 border-t border-gray-200">
+              <div className="flex flex-col space-y-4">
+                <button 
+                  onClick={() => scrollToSection('beranda')}
+                  className="text-gray-700 hover:text-green-500 transition-colors duration-300 text-left"
                 >
-                    {activities.map((item, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className="shadow-lg rounded-xl snap-start snap-always w-[25rem]"
-                            >
-                                <img
-                                    src={`../storage/konten/${item.foto_kegiatan}`}
-                                    alt={item.nama_kegiatan}
-                                    className="object-cover w-full h-[32rem] rounded-t-xl"
-                                />
-                                <div className="p-4">
-                                    <h2 className="text-2xl font-bold">
-                                        {item.nama_kegiatan}
-                                    </h2>
-                                    <p className="text-[1.1rem] mb-10">
-                                        {item.deskripsi}
-                                    </p>
-                                    <hr />
-                                    <footer>
-                                        <p className="text-xl font-semibold mt-2">
-                                            Tanggal Kegiatan :
-                                        </p>
-                                        <p className="text-md">
-                                            <span>{item.tanggal_kegiatan}</span>
-                                        </p>
-                                    </footer>
-                                </div>
-                            </div>
-                        );
-                    })}
+                  Beranda
+                </button>
+                <button 
+                  onClick={() => scrollToSection('tentang')}
+                  className="text-gray-700 hover:text-green-500 transition-colors duration-300 text-left"
+                >
+                  Tentang Kami
+                </button>
+                <button 
+                  onClick={() => scrollToSection('statistik')}
+                  className="text-gray-700 hover:text-green-500 transition-colors duration-300 text-left"
+                >
+                  Statistik
+                </button>
+                <button 
+                  onClick={() => scrollToSection('bantuan')}
+                  className="text-gray-700 hover:text-green-500 transition-colors duration-300 text-left"
+                >
+                  Bantuan
+                </button>
+                <div className="flex space-x-3 pt-4">
+                  <a href="/login" className="px-4 py-2 border border-green-500 text-green-500 rounded-full hover:bg-green-50 transition-colors duration-300">
+                    Masuk
+                  </a>
+                  <a href="/register" className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors duration-300">
+                    Daftar
+                  </a>
                 </div>
-            </section>
-            {/* Data Operasional Sampah */}
-            {/* <section className="container mt-32">
-                <Heading
-                    title="Data Operasional Sampah"
-                    description="Ikut berbagai gerakan Indonesia bebas sampah "
-                />
-                <div className="flex items-center max-md:flex-col justify-between gap-10">
-                    {dataSampah.map((item, index) => (
-                        <OperationalCard
-                            title={item.title}
-                            image={item.image}
-                            desc={item.description}
-                        />
-                    ))}
-                </div>
-            </section> */}
-            {/* Visi Misi  */}
-            <section className="container mt-32">
-                <Heading
-                    title="Visi dan Misi Atras"
-                    description="Berikut Komitmen yang kami junjung dan menjadi pedoman kami mewujudkan lingkungan Bebas Sampah!"
-                />
-                <div className="grid md:grid-cols-2 justify-center mt-10 gap-16 md:flex-row flex-col">
-                    <img
-                        src={fotoVisiMisi}
-                        alt=""
-                        className="object-cover w-full rounded-lg"
-                    />
-                    <div>
-                        <h1 className="text-[2rem] font-bold">Visi</h1>
-                        <p>
-                            Menjadi pemimpin dalam pengelolaan sampah
-                            berkelanjutan di Yogyakarta dan menginspirasi
-                            masyarakat untuk turut serta dalam menjaga
-                            lingkungan.
-                        </p>
-                        <h1 className="text-[2rem] font-bold">Misi</h1>
-                        <ul>
-                            <li>
-                                Mengurangi volume sampah yang berakhir di tempat
-                                pembuangan akhir.
-                            </li>
-                            <li>
-                                Mengolah sampah menjadi produk yang bernilai
-                                tambah.
-                            </li>
-                            <li>
-                                Meningkatkan kesadaran masyarakat tentang
-                                pentingnya pengelolaan sampah.
-                            </li>
-                            <li>
-                                Membangun kemitraan dengan berbagai pihak untuk
-                                mencapai tujuan bersama.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            {/* Frequently Asked Questions  */}
-            <section className="container mt-32" id="faq">
-                <Heading
-                    title="Bantuan"
-                    description="Apakah Anda masih bingung dengan Atras?, Berikut Beberapa Pertanyaan yang Sering ditanyakan pada kami "
-                />
-                <div className="grid mt-16 place-items-center">
-                    <div className="grid gap-6">
-                        {faqs.map((faq, index) => {
-                            return (
-                                <div
-                                    key={index}
-                                    onClick={() => handleToggle(index)}
-                                >
-                                    <div className="relative z-30 flex items-center justify-between overflow-hidden w-full p-4 rounded-lg bg-primary">
-                                        <p className="text-xl font-semibold text-left text-white">
-                                            {faq.question}
-                                        </p>
-                                        <div>
-                                            {faq.open ? (
-                                                <IoArrowUpCircle
-                                                    size={35}
-                                                    className="text-white"
-                                                />
-                                            ) : (
-                                                <IoArrowDownCircle
-                                                    size={35}
-                                                    className="text-white"
-                                                />
-                                            )}
-                                        </div>
-                                    </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
 
-                                    <div
-                                        className={
-                                            "text-md w-full font-medium -translate-y-2 bg-lightgray rounded-b-lg -z-10 origin-top transition-all overflow-hidden" +
-                                            (faq.open ? "h-fit p-4" : " h-0")
-                                        }
-                                    >
-                                        {faq.answer}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            </section>
+      {/* Hero Section */}
+      <section id="beranda" className="bg-gradient-to-br from-green-500 to-green-600 min-h-screen flex items-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/90 to-green-600/90"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="text-white">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Bersama Membangun
+                <span className="text-green-200 block">Masa Depan</span>
+                yang Bersih
+              </h1>
+              <p className="text-lg md:text-xl mb-8 text-white/90">
+                Mari bergabung dalam gerakan lingkungan bersih untuk Indonesia
+                yang lebih hijau dan berkelanjutan
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="px-8 py-3 bg-white text-green-600 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1">
+                  Gabung Sekarang
+                </button>
+                <button className="px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-green-600 transition-all duration-300 transform hover:-translate-y-1">
+                  Pelajari Lebih Lanjut
+                </button>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <img 
+                src="/assets/1.jpg" 
+                alt="Hero" 
+                className="w-full max-w-md rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+          <ChevronDown className="text-2xl" />
+        </div>
+      </section>
 
-            <footer className="grid place-items-center mt-16 bg-slate-50 font-bold">
-                ATRAS - Copyright@2024
-            </footer>
-        </>
+      {/* Mission Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <img 
+                src="/assets/2.jpg" 
+                alt="People Recycling" 
+                className="w-full rounded-3xl shadow-lg"
+              />
+            </div>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
+                Yuk, bersama kita bersihkan Indonesia!
+                <span className="text-green-500 block">Jadilah bagian dari solusi</span>
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Ayo bergabung di Gerakan Atras untuk menciptakan lingkungan yang
+                bersih dan sehat. Setiap langkah kecil yang kita ambil hari ini
+                akan memberikan dampak besar untuk masa depan.
+              </p>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center space-x-4">
+                  <Recycle className="text-green-500 text-xl" />
+                  <span className="text-lg font-medium text-gray-700">Program Daur Ulang Terpadu</span>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <Users className="text-green-500 text-xl" />
+                  <span className="text-lg font-medium text-gray-700">Komunitas Peduli Lingkungan</span>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <Sprout className="text-green-500 text-xl" />
+                  <span className="text-lg font-medium text-gray-700">Edukasi Lingkungan Berkelanjutan</span>
+                </div>
+              </div>
+              <button className="px-8 py-4 bg-green-500 text-white rounded-full font-semibold text-lg hover:bg-green-600 transition-all duration-300 transform hover:-translate-y-1">
+                Gabung Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="tentang" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Tentang Kami</h2>
+            <div className="w-20 h-1 bg-green-500 mx-auto rounded-full"></div>
+          </div>
+          <div className="grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-4 text-center">
+              <div className="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <Leaf className="text-4xl text-green-500" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">SIMBAH</h3>
+            </div>
+            <div className="md:col-span-8">
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                SIMBAH hadir sebagai solusi inovatif dalam pengelolaan sampah di desa
+                Triharjo, Sleman, Yogyakarta. Dengan semangat mengajak masyarakat lingkungan
+                yang berkelanjutan, kami berkomitmen untuk mengubah sampah
+                menjadi sumber daya yang bermanfaat.
+              </p>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                Melalui proses pengelolaan yang modern dan ramah lingkungan,
+                kami mengubah sampah menjadi sumber daya yang berharga. Atras
+                tidak hanya sekadar dengan pengelolaan sampah, tetapi juga turut
+                serta membangun kesadaran masyarakat akan pentingnya menjaga
+                lingkungan untuk generasi mendatang.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex items-center space-x-3">
+                  <Heart className="text-green-500" />
+                  <span className="font-semibold text-gray-700">Peduli Lingkungan</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Handshake className="text-green-500" />
+                  <span className="font-semibold text-gray-700">Kolaborasi Komunitas</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Lightbulb className="text-green-500" />
+                  <span className="font-semibold text-gray-700">Inovasi Berkelanjutan</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Shield className="text-green-500" />
+                  <span className="font-semibold text-gray-700">Komitmen Kualitas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section id="statistik" className="py-20 bg-gradient-to-br from-gray-800 to-gray-900 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800/90 to-gray-900/90"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Statistik</h2>
+            <p className="text-gray-300 text-lg">
+              Berikut adalah rekor data sampah yang berhasil kami tangani
+            </p>
+            <div className="w-20 h-1 bg-green-500 mx-auto rounded-full mt-4"></div>
+          </div>
+          <div className="grid md:grid-cols-4 gap-8">
+            <StatCard 
+              icon={<Calendar className="text-2xl text-green-500" />}
+              number="15"
+              label="Bulan Beroperasi"
+            />
+            <StatCard 
+              icon={<Users className="text-2xl text-green-500" />}
+              number="12"
+              label="Anggota Aktif"
+            />
+            <StatCard 
+              icon={<Trash2 className="text-2xl text-green-500" />}
+              number="839"
+              label="Kg Sampah Terkumpul"
+            />
+            <StatCard 
+              icon={<Recycle className="text-2xl text-green-500" />}
+              number="45"
+              label="Produk Daur Ulang"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Movement Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Gerakan Bebas Sampah</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Bergabunglah dalam berbagai gerakan bebas sampah yang kami adakan di
+              Jawa Tengah
+            </p>
+            <div className="w-20 h-1 bg-green-500 mx-auto rounded-full mt-4"></div>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <MovementCard 
+              image="/assets/p.jpg"
+              title="Pembersihan Pantai"
+              description="Aksi bersih-bersih pantai untuk menjaga ekosistem laut"
+            />
+            <MovementCard 
+              image="/assets/k.jpg"
+              title="Bersih Taman Kota"
+              description="Menjaga kebersihan taman untuk ruang hijau yang nyaman"
+            />
+            <MovementCard 
+              image="/assets/s.jpg"
+              title="Pembersihan Sungai"
+              description="Menjaga kebersihan sungai untuk air yang lebih bersih"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Vision Mission Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Visi dan Misi SIMBAH</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Berikut Komitmen yang kami buat untuk menciptakan lingkungan Bebas
+              Sampah!
+            </p>
+            <div className="w-20 h-1 bg-green-500 mx-auto rounded-full mt-4"></div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <img 
+                src="/assets/3.jpg" 
+                alt="Team Photo" 
+                className="w-full rounded-3xl shadow-lg"
+              />
+            </div>
+            <div>
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-green-500 mb-4 flex items-center">
+                  <Eye className="mr-3" />Visi
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Menjadi organisasi terdepan dalam pengelolaan sampah
+                  berkelanjutan di Yogyakarta dan sekitarnya, menciptakan
+                  lingkungan yang bersih dan sehat untuk generasi mendatang.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-green-500 mb-4 flex items-center">
+                  <Target className="mr-3" />Misi
+                </h3>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-start">
+                    <Check className="text-green-500 mr-3 mt-1" />
+                    <span>Mengembangkan sistem pengelolaan sampah yang inovatif dan berkelanjutan</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-green-500 mr-3 mt-1" />
+                    <span>Meningkatkan kesadaran masyarakat tentang pentingnya pengelolaan sampah</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-green-500 mr-3 mt-1" />
+                    <span>Membangun komunitas yang peduli lingkungan dan berkelanjutan</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-green-500 mr-3 mt-1" />
+                    <span>Menciptakan solusi daur ulang yang memberikan nilai ekonomis</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="bantuan" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Bantuan</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Apakah Anda memiliki pertanyaan? Berikut beberapa yang sering
+              ditanyakan pada kami
+            </p>
+            <div className="w-20 h-1 bg-green-500 mx-auto rounded-full mt-4"></div>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <FAQAccordion />
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <Leaf className="text-green-500 text-xl" />
+                <span className="text-xl font-bold">SIMBAH</span>
+              </div>
+              <p className="text-gray-300 mb-4">
+                Gerakan lingkungan bersih untuk Indonesia yang lebih hijau dan berkelanjutan.
+              </p>
+              <div className="flex space-x-4">
+                <a href="#" className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors duration-300">
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors duration-300">
+                  <Twitter className="w-4 h-4" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors duration-300">
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors duration-300">
+                  <Linkedin className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-lg font-bold mb-4">Tautan Cepat</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Beranda</a></li>
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Tentang Kami</a></li>
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Program</a></li>
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Kontak</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-bold mb-4">Program</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Daur Ulang</a></li>
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Edukasi</a></li>
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Komunitas</a></li>
+                <li><a href="#" className="hover:text-green-500 transition-colors duration-300">Volunteer</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-bold mb-4">Kontak</h4>
+              <div className="space-y-2 text-gray-300">
+                <p className="flex items-center"><MapPin className="mr-2 w-4 h-4" />Yogyakarta, Indonesia</p>
+                <p className="flex items-center"><Phone className="mr-2 w-4 h-4" />+62 812 3456 7890</p>
+                <p className="flex items-center"><Mail className="mr-2 w-4 h-4" />info@simbah.id</p>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 SIMBAH. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button 
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-all duration-300 transform hover:scale-110 shadow-lg z-50"
+        >
+          <ChevronUp className="w-4 h-4" />
+        </button>
+      )}
+    </div>
+  );
+};
+
+// Stat Card Component
+const StatCard = ({ icon, number, label }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+          const target = parseInt(number);
+          const duration = 2000;
+          const step = target / (duration / 16);
+          let current = 0;
+
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, 16);
+        }
+      },
+      { threshold: 0.5 }
     );
-}
+
+    const element = document.getElementById(`stat-${label}`);
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => observer.disconnect();
+  }, [number, label, isVisible]);
+
+  return (
+    <div id={`stat-${label}`} className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        {icon}
+      </div>
+      <div className="text-4xl font-bold text-green-500 mb-2">{count}</div>
+      <div className="text-gray-600 font-medium">{label}</div>
+    </div>
+  );
+};
+
+// Movement Card Component
+const MovementCard = ({ image, title, description }) => {
+  return (
+    <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+      <div className="relative overflow-hidden">
+        <img 
+          src={image} 
+          alt={title} 
+          className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+        />
+      </div>
+      <div className="p-6">
+        <h4 className="text-xl font-bold text-gray-800 mb-3">{title}</h4>
+        <p className="text-gray-600 mb-4">{description}</p>
+        <button className="px-6 py-2 border-2 border-green-500 text-green-500 rounded-full hover:bg-green-500 hover:text-white transition-all duration-300">
+          Ikut Serta
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// FAQ Accordion Component
+const FAQAccordion = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const faqs = [
+    {
+      question: "Apa itu SIMBAH?",
+      answer: "SIMBAH adalah gerakan lingkungan bersih yang bertujuan untuk menciptakan Indonesia yang lebih hijau dan berkelanjutan melalui program pengelolaan sampah yang inovatif."
+    },
+    {
+      question: "Bagaimana cara bergabung dengan SIMBAH?",
+      answer: "Anda dapat bergabung dengan SIMBAH melalui website ini atau mengunjungi kantor pusat kami di Yogyakarta. Tim kami akan membantu Anda untuk mulai berkontribusi dalam gerakan lingkungan bersih."
+    },
+    {
+      question: "Apa saja program yang tersedia di SIMBAH?",
+      answer: "SIMBAH memiliki berbagai program seperti daur ulang terpadu, edukasi lingkungan, pembersihan pantai, bersih taman kota, dan pembersihan sungai."
+    },
+    {
+      question: "Apakah ada biaya untuk bergabung?",
+      answer: "Tidak ada biaya untuk bergabung dengan SIMBAH. Kami adalah organisasi nirlaba yang terbuka untuk semua orang yang peduli dengan lingkungan."
+    }
+  ];
+
+  const toggleAccordion = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  return (
+    <div className="space-y-4">
+      {faqs.map((faq, index) => (
+        <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden">
+          <button
+            onClick={() => toggleAccordion(index)}
+            className={`w-full px-6 py-4 text-left font-semibold text-gray-800 hover:bg-gray-50 transition-colors duration-300 ${
+              activeIndex === index ? 'bg-green-50 text-green-600' : ''
+            }`}
+          >
+            <div className="flex justify-between items-center">
+              <span>{faq.question}</span>
+              <ChevronDown className={`transition-transform duration-300 ${
+                activeIndex === index ? 'rotate-180' : ''
+              }`} />
+            </div>
+          </button>
+          {activeIndex === index && (
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+              <p className="text-gray-700">{faq.answer}</p>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default App;

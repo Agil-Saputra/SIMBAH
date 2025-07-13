@@ -1,11 +1,12 @@
 import { useForm } from "@inertiajs/react";
-import TextInput from "../TextInput";
 import InputLabel from "../InputLabel";
 import InputError from "../InputError";
 import Button from "../Button";
-import Dropdown from "./Dropdown";
 import { useEffect } from "react";
-import swal from 'sweetalert';
+import { success, error } from '@/lib/notify';
+import { User, Tag, Scale, Plus } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
+import { router } from "@inertiajs/react";
 
 export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit, onClose}) {
     const { data, setData, post, processing, errors,  reset } = useForm({
@@ -29,40 +30,19 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit, onC
     const submit = (e) => {
         e.preventDefault();
         if (dataEdit) {
-            post(route("administrator.kelolaSampah.update", { id: dataEdit.id }), { // Menambahkan id di sini
+            post(route("administrator.kelolaSampah.update", { id: dataEdit.id }), {
                 onError: () => {
-                    swal({
-						title: "Gagal",
-						text: "Data Gagal DiUpdate!, Cek koneksimu atau coba ulang menambahkan data",
-						icon: "error",
-						buttons : {
-							confirm : {text:'Lanjutkan',className:'bg-primary'},
-						}
-					});
+                    error("Data Gagal DiUpdate! Cek koneksimu atau coba ulang menambahkan data");
                 },
                 onSuccess: () => {
-                    swal({
-						title: "Berhasil",
-						text: "Data Berhasil DiUpdate!",
-						icon: "success",
-						buttons : {
-							confirm : {text:'Lanjutkan',className:'bg-primary'},
-						}
-					});
-					onClose();
+                    success("Data Berhasil DiUpdate!");
+                    onClose();
                 },
             });
         } else {
             post(route("administrator.kelolaSampah.store"), {
                 onError: () => {
-                    swal({
-						title: "Gagal",
-						text: "Data Gagal Ditambahkan!, Cek koneksimu atau coba ulang menambahkan data",
-						icon: "error",
-						buttons : {
-							confirm : {text:'Lanjutkan',className:'bg-primary'},
-						}
-					});
+                    error("Data Gagal Ditambahkan! Cek koneksimu atau coba ulang menambahkan data");
                 },
                 onSuccess: () => {
                     setData(prevData => ({
@@ -70,14 +50,7 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit, onC
                         totalSampah: "",
                         kategori: "",
                     }));
-					swal({
-						title: "Success",
-						text: "Data Berhasil Ditambahkan!",
-						icon: "success",
-						buttons : {
-							confirm : {text:'Lanjutkan',className:'bg-primary'},
-						}
-					});
+                    success("Data Berhasil Ditambahkan!");
                 },
             });
         }
@@ -85,49 +58,110 @@ export default function AddSampahForm({ dataNasabah, dataKategori, dataEdit, onC
 
     return (
         <>
-            <form onSubmit={submit} className="w-full">
-                <div>
-                    <InputLabel value="Pilih Nasabah"/> 
-                    <Dropdown
-                        placeholder="Masukkan Nasabah"
-                        value={data.nasabah}
-                        menuItems={sortedNasabah?.map((nasabah) => ({
-                            value: nasabah.id,
-                            label: nasabah.full_name
-                        }))}
-                        onChange={(e) => setData("nasabah", e.target.value)}
-                    />
+            <form onSubmit={submit} className="w-full space-y-6">
+                <div className="space-y-2">
+                    <InputLabel value="Pilih Nasabah" className="text-sm font-semibold text-gray-700" />
+                    <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                            <User className="h-5 w-5 text-gray-400" />
+                        </div>
+                        <Select value={data.nasabah} onValueChange={(value) => setData("nasabah", value)}>
+                            <SelectTrigger className="pl-10">
+                                <SelectValue 
+                                    placeholder="Masukkan Nasabah" 
+                                    options={sortedNasabah?.map((nasabah) => ({
+                                        value: nasabah.id,
+                                        label: nasabah.full_name
+                                    }))}
+                                    value={data.nasabah}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {sortedNasabah?.map((nasabah) => (
+                                    <SelectItem 
+                                        key={nasabah.id} 
+                                        value={nasabah.id}
+                                        onValueChange={(value) => setData("nasabah", value)}
+                                        currentValue={data.nasabah}
+                                    >
+                                        {nasabah.full_name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                     <InputError message={errors.nasabah} />
                 </div>
-                <div>
-                    <InputLabel value="Pilih Kategori Sampah" />
-                    <Dropdown
-                        placeholder="Masukkan Kategori Sampah"
-                        value={data.kategori}
-                        menuItems={sortedKategori?.map((kategori) => ({
-                            value: kategori.id,
-                            label: kategori.nama_kategori
-                        }))}
-                        onChange={(e) => setData("kategori", e.target.value)}
-                    />
+
+                <div className="space-y-2">
+                    <InputLabel value="Pilih Kategori Sampah" className="text-sm font-semibold text-gray-700" />
+                    <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                            <Tag className="h-5 w-5 text-gray-400" />
+                        </div>
+                        <Select value={data.kategori} onValueChange={(value) => setData("kategori", value)}>
+                            <SelectTrigger className="pl-10">
+                                <SelectValue 
+                                    placeholder="Masukkan Kategori Sampah" 
+                                    options={sortedKategori?.map((kategori) => ({
+                                        value: kategori.id,
+                                        label: kategori.nama_kategori
+                                    }))}
+                                    value={data.kategori}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {sortedKategori?.map((kategori) => (
+                                    <SelectItem 
+                                        key={kategori.id} 
+                                        value={kategori.id}
+                                        onValueChange={(value) => setData("kategori", value)}
+                                        currentValue={data.kategori}
+                                    >
+                                        {kategori.nama_kategori}
+                                    </SelectItem>
+                                ))}
+                                <div className="px-3 py-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => router.visit(route('administrator.kategori.index'))}
+                                        className="flex items-center w-full px-3 py-2 text-sm text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200"
+                                    >
+                                        <Plus className="h-4 w-4 mr-2" />
+                                        Tambah Kategori Baru
+                                    </button>
+                                </div>
+                            </SelectContent>
+                        </Select>
+                    </div>
                     <InputError message={errors.kategori} />
                 </div>
-                <div className="mt-4">
-                    <InputLabel htmlFor="totalSampah" value="Total Sampah(Kg)" />
-                    <TextInput
-                        id="totalSampah"
-                        name="totalSampah"
-                        type="number" 
-                        placeholder="Masukkan Total Berat Sampah(Kg)"
-                        value={data.totalSampah}
-                        className="block w-full mt-2 text-black"
-                        autoComplete="current-totalSampah" required
-                        onChange={(e) => setData("totalSampah", e.target.value)}
-                    />
-                    <InputError message={errors.totalSampah} className="mt-2" />
+
+                <div className="space-y-2">
+                    <InputLabel htmlFor="totalSampah" value="Total Sampah (Kg)" className="text-sm font-semibold text-gray-700" />
+                    <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Scale className="h-5 w-5 text-gray-400" />
+                        </div>
+                        <input
+                            id="totalSampah"
+                            name="totalSampah"
+                            type="number"
+                            placeholder="Masukkan Total Berat Sampah (Kg)"
+                            value={data.totalSampah}
+                            required
+                            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none transition-colors duration-200 text-gray-900 placeholder-gray-400"
+                            onChange={(e) => setData("totalSampah", e.target.value)}
+                        />
+                    </div>
+                    <InputError message={errors.totalSampah} className="mt-1" />
                 </div>
-                <Button className="w-full mt-6 mb-3" disabled={processing}>
-                    {dataEdit ? "Edit Data Sampah" : "Tambah Data Sampah"}
+
+                <Button 
+                    className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl" 
+                    disabled={processing}
+                >
+                    {processing ? 'Memproses...' : (dataEdit ? "Edit Data Sampah" : "Tambah Data Sampah")}
                 </Button>
             </form>
         </>
