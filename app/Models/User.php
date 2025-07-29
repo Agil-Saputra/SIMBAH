@@ -48,4 +48,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sampah::class);
     }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    public function kontens()
+    {
+        return $this->belongsToMany(Konten::class, 'user_kegiatan')
+                    ->withPivot('status_kehadiran')
+                    ->withTimestamps();
+    }
 }
